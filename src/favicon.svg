@@ -1,30 +1,47 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 50" fill="none">
-  <!-- Background -->
-  <rect width="80" height="50" rx="8" fill="#0F1F2E"/>
-  <!-- Motion lines -->
-  <line x1="2" y1="20" x2="16" y2="20" stroke="#3982AA" stroke-width="2.5" stroke-linecap="round"/>
-  <line x1="4" y1="26" x2="16" y2="26" stroke="#3982AA" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-  <line x1="6" y1="32" x2="16" y2="32" stroke="#3982AA" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
-  <!-- Cargo body -->
-  <rect x="16" y="10" width="44" height="30" rx="2" fill="#3982AA"/>
-  <!-- Cab section -->
-  <path d="M60 10 L60 40 L72 40 L76 32 L76 22 L68 10 Z" fill="#3982AA"/>
-  <!-- Windshield -->
-  <path d="M61 13 L67.5 13 L73 22 L61 22 Z" fill="rgba(255,255,255,0.75)"/>
-  <!-- Side window 1 -->
-  <rect x="18" y="14" width="12" height="10" rx="1.5" fill="rgba(255,255,255,0.6)"/>
-  <!-- Side window 2 -->
-  <rect x="33" y="14" width="12" height="10" rx="1.5" fill="rgba(255,255,255,0.6)"/>
-  <!-- Door separator -->
-  <line x1="30" y1="10" x2="30" y2="40" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-  <!-- Headlight -->
-  <rect x="73" y="22" width="5" height="6" rx="1" fill="#f0c040"/>
-  <!-- Wheel 1 -->
-  <circle cx="27" cy="41" r="7" fill="#1a2b3c"/>
-  <circle cx="27" cy="41" r="4.5" fill="#3982AA"/>
-  <circle cx="27" cy="41" r="2" fill="white"/>
-  <!-- Wheel 2 -->
-  <circle cx="62" cy="41" r="7" fill="#1a2b3c"/>
-  <circle cx="62" cy="41" r="4.5" fill="#3982AA"/>
-  <circle cx="62" cy="41" r="2" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+
+  <!-- Rounded square background -->
+  <rect x="0" y="0" width="512" height="512" rx="96" fill="#3982AA"/>
+
+  <!-- Subtle inner gradient overlay -->
+  <rect x="0" y="0" width="512" height="512" rx="96" fill="url(#grad)" opacity="0.25"/>
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#1a5a80;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Subtle bottom stripe accent -->
+  <rect x="0" y="420" width="512" height="92" rx="0" fill="#2a6a90" opacity="0.4"/>
+  <rect x="0" y="460" width="512" height="52" rx="0" fill="#1e5a7a" opacity="0.3"/>
+
+  <!-- Van silhouette small (top area) -->
+  <g transform="translate(140, 108) scale(1.5)">
+    <!-- Van body -->
+    <rect x="0" y="0" width="62" height="44" rx="4" fill="white" opacity="0.2"/>
+    <!-- Cab -->
+    <path d="M62,12 L62,44 L80,44 L80,26 Q80,12 70,12 Z" fill="white" opacity="0.2"/>
+    <!-- Windshield -->
+    <path d="M64,16 L64,30 L78,30 L78,26 Q78,16 70,16 Z" fill="white" opacity="0.15"/>
+    <!-- Wheels -->
+    <circle cx="18" cy="44" r="10" fill="white" opacity="0.15"/>
+    <circle cx="66" cy="44" r="10" fill="white" opacity="0.15"/>
+    <!-- Motion lines -->
+    <line x1="-18" y1="14" x2="-4" y2="14" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.25"/>
+    <line x1="-15" y1="22" x2="-2" y2="22" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.35"/>
+    <line x1="-18" y1="30" x2="-4" y2="30" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.25"/>
+  </g>
+
+  <!-- EKS large centered text -->
+  <text
+    x="256" y="390"
+    text-anchor="middle"
+    font-family="Montserrat, Helvetica Neue, Arial, sans-serif"
+    font-weight="800"
+    font-size="188"
+    letter-spacing="-4"
+    fill="white"
+  >EKS</text>
+
 </svg>
