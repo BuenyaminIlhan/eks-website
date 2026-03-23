@@ -49,11 +49,11 @@ export class AboutComponent implements OnInit {
   ];
 
   readonly timeline = [
-    { year: '2012', event: 'Gründung der Euro-Kurier-Su GmbH in Berlin mit 3 Fahrzeugen.' },
-    { year: '2015', event: 'Expansion ins Brandenburger Umland, Flottenaufstockung auf 12 Fahrzeuge.' },
+    { year: '2008', event: 'Gründung der Euro-Kurier-Su durch Osman Ilhan in Sankt Augustin mit 3 Fahrzeugen.' },
+    { year: '2012', event: 'Expansion in die Region Bonn/Rhein-Sieg, Flottenaufstockung auf 12 Fahrzeuge.' },
     { year: '2018', event: 'Einführung des digitalen Live-Tracking-Systems für alle Kunden.' },
-    { year: '2019', event: 'Auszeichnung als „Kurierdienst des Jahres" Berlin-Brandenburg.' },
-    { year: '2021', event: 'Start des grenzüberschreitenden EU-Services und erstes Auslandsbüro.' },
+    { year: '2020', event: 'Übernahme der Geschäftsführung durch Didem Ilhan.' },
+    { year: '2021', event: 'Start des grenzüberschreitenden EU-Services.' },
     { year: '2024', event: 'Mehr als 500.000 erfolgreiche Lieferungen und 800+ Stammkunden.' },
   ];
 
@@ -62,8 +62,8 @@ export class AboutComponent implements OnInit {
     this.seoService.updateSeo({
       title: lang === 'de' ? 'Über uns – Euro-Kurier-Su GmbH' : 'About Us – Euro-Kurier-Su GmbH',
       description: lang === 'de'
-        ? 'Erfahren Sie mehr über EKS Euro-Kurier-Su: unsere Geschichte, Werte und das Team hinter Berlins zuverlässigstem Kurierdienst.'
-        : 'Learn more about EKS Euro-Kurier-Su: our history, values and the team behind Berlin\'s most reliable courier service.',
+        ? 'Erfahren Sie mehr über EKS Euro-Kurier-Su: unsere Geschichte, Werte und das Familienunternehmen Ilhan aus Sankt Augustin.'
+        : 'Learn more about EKS Euro-Kurier-Su: our history, values and the Ilhan family business from Sankt Augustin.',
       canonicalUrl: this.seoService.getPageUrl('about'),
     });
   }
