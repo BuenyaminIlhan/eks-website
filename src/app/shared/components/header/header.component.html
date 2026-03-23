@@ -1,0 +1,163 @@
+<header
+  class="header"
+  [class.header--scrolled]="isScrolled()"
+  [class.header--menu-open]="isMobileMenuOpen()"
+  role="banner"
+>
+  <div class="header__container">
+    <!-- Logo -->
+    <a
+      class="header__logo"
+      routerLink="/home"
+      (click)="closeMobileMenu()"
+      aria-label="EKS Euro-Kurier-Su – Zur Startseite"
+    >
+      <!-- Van SVG Icon -->
+      <svg
+        class="header__logo-icon"
+        width="48"
+        height="32"
+        viewBox="0 0 80 50"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <!-- Motion lines -->
+        <line x1="2" y1="20" x2="16" y2="20" stroke="#3982AA" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="4" y1="26" x2="16" y2="26" stroke="#3982AA" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+        <line x1="6" y1="32" x2="16" y2="32" stroke="#3982AA" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+        <!-- Cargo body -->
+        <rect x="16" y="10" width="44" height="30" rx="2" fill="#3982AA"/>
+        <!-- Cab section -->
+        <path d="M60 10 L60 40 L72 40 L76 32 L76 22 L68 10 Z" fill="#3982AA"/>
+        <!-- Windshield -->
+        <path d="M61 13 L67.5 13 L73 22 L61 22 Z" fill="rgba(255,255,255,0.75)" rx="1"/>
+        <!-- Side window 1 -->
+        <rect x="18" y="14" width="12" height="10" rx="1.5" fill="rgba(255,255,255,0.6)"/>
+        <!-- Side window 2 -->
+        <rect x="33" y="14" width="12" height="10" rx="1.5" fill="rgba(255,255,255,0.6)"/>
+        <!-- Door separator -->
+        <line x1="30" y1="10" x2="30" y2="40" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <!-- Headlight (amber) -->
+        <rect x="73" y="22" width="5" height="6" rx="1" fill="#f0c040"/>
+        <!-- Wheel 1 -->
+        <circle cx="27" cy="41" r="7" fill="#1a2b3c"/>
+        <circle cx="27" cy="41" r="4.5" fill="#3982AA"/>
+        <circle cx="27" cy="41" r="2" fill="white"/>
+        <!-- Wheel 2 -->
+        <circle cx="62" cy="41" r="7" fill="#1a2b3c"/>
+        <circle cx="62" cy="41" r="4.5" fill="#3982AA"/>
+        <circle cx="62" cy="41" r="2" fill="white"/>
+      </svg>
+
+      <!-- Logo Text -->
+      <div class="header__logo-text">
+        <span class="header__logo-eks">EKS</span>
+        <span class="header__logo-tagline">EURO-KURIER-SU</span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="header__nav" aria-label="Hauptnavigation">
+      <ul class="header__nav-list" role="list">
+        @for (link of navLinks; track link.path) {
+          <li class="header__nav-item">
+            <a
+              class="header__nav-link"
+              [routerLink]="link.path"
+              routerLinkActive="header__nav-link--active"
+              [routerLinkActiveOptions]="{ exact: false }"
+            >
+              {{ link.key | t }}
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <!-- Right actions -->
+    <div class="header__actions">
+      <!-- Language Switcher -->
+      <button
+        class="header__lang-switch"
+        (click)="toggleLanguage()"
+        [attr.aria-label]="'lang.switchTo' | t"
+        [attr.title]="'lang.switchTo' | t"
+        type="button"
+      >
+        <span class="header__lang-current" [class.active]="currentLang === 'de'">DE</span>
+        <span class="header__lang-sep" aria-hidden="true">|</span>
+        <span class="header__lang-other" [class.active]="currentLang === 'en'">EN</span>
+      </button>
+
+      <!-- CTA Button (desktop) -->
+      <a
+        class="header__cta btn btn--primary btn--sm"
+        routerLink="/contact"
+        (click)="closeMobileMenu()"
+      >
+        {{ 'common.requestQuote' | t }}
+      </a>
+
+      <!-- Mobile Hamburger -->
+      <button
+        class="header__hamburger"
+        (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="isMobileMenuOpen()"
+        [attr.aria-label]="(isMobileMenuOpen() ? 'nav.close' : 'nav.menu') | t"
+        type="button"
+        aria-controls="mobile-menu"
+      >
+        <span class="header__hamburger-line" [class.open]="isMobileMenuOpen()"></span>
+        <span class="header__hamburger-line" [class.open]="isMobileMenuOpen()"></span>
+        <span class="header__hamburger-line" [class.open]="isMobileMenuOpen()"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  @if (isMobileMenuOpen()) {
+    <nav
+      id="mobile-menu"
+      class="header__mobile-menu"
+      aria-label="Mobile Navigation"
+      [@mobileMenu]
+    >
+      <ul class="header__mobile-nav-list" role="list">
+        @for (link of navLinks; track link.path) {
+          <li>
+            <a
+              class="header__mobile-nav-link"
+              [routerLink]="link.path"
+              routerLinkActive="header__mobile-nav-link--active"
+              (click)="closeMobileMenu()"
+            >
+              {{ link.key | t }}
+            </a>
+          </li>
+        }
+      </ul>
+
+      <div class="header__mobile-footer">
+        <button
+          class="header__mobile-lang"
+          (click)="toggleLanguage()"
+          type="button"
+        >
+          <span [class.active]="currentLang === 'de'">Deutsch</span>
+          <span aria-hidden="true"> / </span>
+          <span [class.active]="currentLang === 'en'">English</span>
+        </button>
+
+        <a
+          class="btn btn--primary"
+          routerLink="/contact"
+          (click)="closeMobileMenu()"
+        >
+          {{ 'common.requestQuote' | t }}
+        </a>
+      </div>
+    </nav>
+  }
+</header>

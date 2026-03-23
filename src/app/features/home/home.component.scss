@@ -1,0 +1,548 @@
+@use '../../../assets/styles/variables' as *;
+@use '../../../assets/styles/mixins' as *;
+
+// =============================================
+// HERO
+// =============================================
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background-color: $color-dark;
+  overflow: hidden;
+
+  &__bg-overlay {
+    @include absolute-overlay;
+    background: linear-gradient(
+      135deg,
+      rgba(15, 31, 46, 0.97) 0%,
+      rgba(15, 31, 46, 0.88) 50%,
+      rgba(57, 130, 170, 0.25) 100%
+    );
+    z-index: 1;
+  }
+
+  // Animated particles
+  &__particles {
+    @include absolute-overlay;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  &__particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(57, 130, 170, 0.08);
+
+    &--1 {
+      width: 500px;
+      height: 500px;
+      top: -200px;
+      right: -100px;
+      animation: float1 18s ease-in-out infinite;
+    }
+
+    &--2 {
+      width: 300px;
+      height: 300px;
+      bottom: -100px;
+      left: 10%;
+      background: rgba(240, 192, 64, 0.05);
+      animation: float2 14s ease-in-out infinite;
+    }
+
+    &--3 {
+      width: 200px;
+      height: 200px;
+      top: 30%;
+      left: 35%;
+      animation: float1 22s ease-in-out infinite reverse;
+    }
+  }
+
+  &__container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+
+    @include respond-to('lg') {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    &--visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: $font-semibold;
+    letter-spacing: 0.05em;
+    color: $color-accent;
+    background: rgba(240, 192, 64, 0.12);
+    border: 1px solid rgba(240, 192, 64, 0.25);
+    padding: 0.375rem 0.875rem;
+    border-radius: $radius-full;
+    margin-bottom: 1.25rem;
+  }
+
+  &__badge-dot {
+    width: 7px;
+    height: 7px;
+    background: $color-accent;
+    border-radius: 50%;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  &__van {
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    @include respond-to('lg') {
+      display: flex;
+    }
+  }
+
+  &__van-svg {
+    filter: drop-shadow(0 20px 40px rgba(57, 130, 170, 0.3));
+    animation: van-float 5s ease-in-out infinite;
+    max-width: 100%;
+  }
+
+  &__text {
+    order: -1;
+
+    @include respond-to('lg') {
+      order: 0;
+    }
+  }
+
+  &__title {
+    font-size: clamp(2.25rem, 5.5vw, 4rem);
+    font-weight: $font-black;
+    line-height: 1.07;
+    color: $color-white;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.25rem;
+
+    span {
+      color: $color-accent;
+    }
+  }
+
+  &__subtitle {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 2rem;
+  }
+
+  &__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.875rem;
+    margin-bottom: 2rem;
+  }
+
+  &__trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  &__trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+
+    svg {
+      color: $color-accent;
+      flex-shrink: 0;
+    }
+  }
+
+  // Stats bar
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: $radius-lg;
+    overflow: hidden;
+    margin-top: 3rem;
+
+    @include respond-to('md') {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    text-align: center;
+    transition: background-color $transition-base;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.07);
+    }
+  }
+
+  &__stat-value {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: $font-black;
+    color: $color-white;
+    line-height: 1;
+    margin-bottom: 0.375rem;
+    letter-spacing: -0.02em;
+  }
+
+  &__stat-label {
+    font-size: 0.8125rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: $font-medium;
+    letter-spacing: 0.02em;
+  }
+
+  // Scroll indicator
+  &__scroll-indicator {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: none;
+
+    @include respond-to('md') {
+      display: block;
+    }
+  }
+
+  &__scroll-line {
+    width: 2px;
+    height: 48px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    margin: 0 auto;
+    border-radius: 1px;
+    animation: scroll-line 2.5s ease-in-out infinite;
+  }
+}
+
+// =============================================
+// SERVICES SECTION
+// =============================================
+.services-section {
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    @include respond-to('md') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to('lg') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__cta {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .service-card {
+    &__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.875rem;
+      font-weight: $font-semibold;
+      color: $color-primary;
+      text-decoration: none;
+      margin-top: 1rem;
+      transition: gap $transition-base, color $transition-base;
+
+      &:hover {
+        gap: 0.625rem;
+        color: $color-primary-dark;
+      }
+
+      @include focus-ring($color-primary);
+    }
+  }
+}
+
+// =============================================
+// WHY EKS SECTION
+// =============================================
+.why-section {
+  &__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+
+    @include respond-to('lg') {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+  }
+
+  &__text {
+    .eyebrow {
+      margin-bottom: 1rem;
+    }
+
+    .heading-xl {
+      margin-bottom: 1rem;
+    }
+
+    .lead {
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      margin-top: 1.5rem;
+    }
+  }
+
+  &__features {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__visual {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.why-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+
+  &__icon {
+    width: 44px;
+    height: 44px;
+    background: rgba(57, 130, 170, 0.1);
+    border-radius: $radius-md;
+    @include flex-center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-size: 0.9375rem;
+    font-weight: $font-bold;
+    color: $color-dark;
+    margin-bottom: 0.25rem;
+  }
+
+  &__desc {
+    font-size: 0.875rem;
+    color: $color-text-muted;
+    line-height: 1.6;
+  }
+}
+
+// Tracking card visual
+.why-visual-card {
+  background: $color-white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-xl;
+  overflow: hidden;
+  width: 100%;
+  max-width: 320px;
+  border: 1px solid $color-gray-200;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.875rem 1.25rem;
+    background: $color-gray-100;
+    border-bottom: 1px solid $color-gray-200;
+    font-size: 0.8125rem;
+    font-weight: $font-semibold;
+    color: $color-text-muted;
+  }
+
+  &__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: $color-gray-300;
+
+    &--green { background: #28a745; }
+    &--amber { background: $color-accent; }
+  }
+
+  &__body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__footer {
+    padding: 0.75rem 1.25rem;
+    background: rgba(40, 167, 69, 0.06);
+    border-top: 1px solid rgba(40, 167, 69, 0.1);
+  }
+
+  &__badge {
+    font-size: 0.8125rem;
+    font-weight: $font-semibold;
+    color: #1a7a32;
+  }
+}
+
+.tracking-step {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+
+  &__icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: $color-gray-200;
+    @include flex-center;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    color: $color-text-muted;
+
+    &--pulse {
+      background: $color-primary;
+      animation: pulse-dot 1.5s ease-in-out infinite;
+    }
+
+    &--pending {
+      border: 2px solid $color-gray-200;
+      background: transparent;
+    }
+  }
+
+  &--done &__icon {
+    background: #28a745;
+    color: white;
+    font-size: 0.875rem;
+  }
+
+  &--active &__icon {
+    background: $color-primary;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  &__title {
+    font-size: 0.875rem;
+    font-weight: $font-semibold;
+    color: $color-dark;
+  }
+
+  &__time {
+    font-size: 0.75rem;
+    color: $color-text-muted;
+  }
+
+  &--done &__title {
+    color: #28a745;
+  }
+}
+
+// =============================================
+// CTA SECTION
+// =============================================
+.cta-section {
+  &__inner {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  &__title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: $font-black;
+    color: $color-white;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    letter-spacing: -0.015em;
+  }
+
+  &__desc {
+    font-size: 1.0625rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+}
+
+// =============================================
+// ANIMATIONS
+// =============================================
+@keyframes float1 {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(20px) rotate(5deg); }
+}
+
+@keyframes van-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.15); }
+}
+
+@keyframes scroll-line {
+  0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+  40% { opacity: 1; transform: scaleY(1); }
+  80% { opacity: 0; transform: scaleY(1); transform-origin: bottom; }
+  100% { opacity: 0; }
+}

@@ -1,0 +1,110 @@
+<!-- Page Header -->
+<section class="page-header" aria-label="Seitenheader">
+  <div class="page-header__overlay" aria-hidden="true"></div>
+  <div class="container page-header__container">
+    <div class="page-header__content" appAnimateOnScroll>
+      <span class="eyebrow" style="color: #d4e8f4; background: rgba(212,232,244,0.12); border-left-color: #d4e8f4;">
+        {{ 'nav.services' | t }}
+      </span>
+      <h1 class="page-header__title">{{ 'services.title' | t }}</h1>
+      <p class="page-header__subtitle">{{ 'services.subtitle' | t }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Services Detail Section -->
+<section class="section services-detail" aria-labelledby="services-detail-heading">
+  <div class="container">
+    <h2 id="services-detail-heading" class="visually-hidden">{{ 'services.title' | t }}</h2>
+
+    <div class="services-detail__grid">
+      @for (service of services; track service.titleKey; let i = $index) {
+        <article
+          class="service-detail-card"
+          [class.service-detail-card--highlight]="service.highlight"
+          appAnimateOnScroll
+          [animationDelay]="i * 60"
+        >
+          @if (service.highlight) {
+            <div class="service-detail-card__badge">Beliebteste Wahl</div>
+          }
+          <div class="service-detail-card__icon" aria-hidden="true">{{ service.icon }}</div>
+          <h3 class="service-detail-card__title">{{ service.titleKey | t }}</h3>
+          <p class="service-detail-card__desc">{{ service.descKey | t }}</p>
+          <ul class="service-detail-card__features" role="list">
+            @for (feature of service.features; track feature) {
+              <li class="service-detail-card__feature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                {{ feature }}
+              </li>
+            }
+          </ul>
+          <a
+            class="btn btn--primary service-detail-card__cta"
+            routerLink="/contact"
+            [attr.aria-label]="('common.requestQuote' | t) + ' – ' + (service.titleKey | t)"
+          >
+            {{ 'common.requestQuote' | t }}
+          </a>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Features Strip -->
+<section class="section section--alt features-strip" aria-labelledby="features-strip-heading">
+  <div class="container">
+    <div appAnimateOnScroll>
+      <app-section-title
+        id="features-strip-heading"
+        [title]="'services.features.title' | t"
+        [subtitle]="'services.features.subtitle' | t"
+        align="center"
+      />
+    </div>
+
+    <div class="features-strip__grid">
+      <div class="feature-box" appAnimateOnScroll [animationDelay]="0">
+        <div class="feature-box__icon" aria-hidden="true">🛡️</div>
+        <h3 class="feature-box__title">{{ 'services.features.insured.title' | t }}</h3>
+        <p class="feature-box__desc">{{ 'services.features.insured.desc' | t }}</p>
+      </div>
+      <div class="feature-box" appAnimateOnScroll [animationDelay]="80">
+        <div class="feature-box__icon" aria-hidden="true">📡</div>
+        <h3 class="feature-box__title">{{ 'services.features.realtime.title' | t }}</h3>
+        <p class="feature-box__desc">{{ 'services.features.realtime.desc' | t }}</p>
+      </div>
+      <div class="feature-box" appAnimateOnScroll [animationDelay]="160">
+        <div class="feature-box__icon" aria-hidden="true">💬</div>
+        <h3 class="feature-box__title">{{ 'services.features.support.title' | t }}</h3>
+        <p class="feature-box__desc">{{ 'services.features.support.desc' | t }}</p>
+      </div>
+      <div class="feature-box" appAnimateOnScroll [animationDelay]="240">
+        <div class="feature-box__icon" aria-hidden="true">🌿</div>
+        <h3 class="feature-box__title">{{ 'services.features.green.title' | t }}</h3>
+        <p class="feature-box__desc">{{ 'services.features.green.desc' | t }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section services-cta section--dark" aria-labelledby="services-cta-heading">
+  <div class="container">
+    <div class="services-cta__inner" appAnimateOnScroll>
+      <h2 id="services-cta-heading" class="services-cta__title">
+        Bereit für Ihren nächsten Auftrag?
+      </h2>
+      <p class="services-cta__desc">
+        Kontaktieren Sie uns jetzt für ein maßgeschneidertes Angebot.
+      </p>
+      <div class="services-cta__actions">
+        <a class="btn btn--accent btn--lg" routerLink="/contact">{{ 'common.requestQuote' | t }}</a>
+        <a class="btn btn--secondary btn--lg" routerLink="/faq">{{ 'nav.faq' | t }}</a>
+      </div>
+    </div>
+  </div>
+</section>

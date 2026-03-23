@@ -1,0 +1,132 @@
+<!-- Page Header -->
+<section class="page-header" aria-label="Impressum">
+  <div class="page-header__overlay" aria-hidden="true"></div>
+  <div class="container page-header__container">
+    <div class="page-header__content" appAnimateOnScroll>
+      <span class="eyebrow" style="color: #d4e8f4; background: rgba(212,232,244,0.12); border-left-color: #d4e8f4;">
+        {{ 'footer.links.imprint' | t }}
+      </span>
+      <h1 class="page-header__title">{{ 'imprint.title' | t }}</h1>
+      <p class="page-header__subtitle">{{ 'imprint.subtitle' | t }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Imprint Content -->
+<section class="section legal-section" aria-labelledby="imprint-content-heading">
+  <div class="container">
+    <h2 id="imprint-content-heading" class="visually-hidden">Impressum Inhalt</h2>
+
+    <div class="legal-content" appAnimateOnScroll>
+      <div class="legal-grid">
+
+        <!-- Company Info Card -->
+        <div class="legal-card">
+          <h2 class="legal-card__title">{{ 'imprint.company.label' | t }}</h2>
+          <dl class="legal-dl">
+            <dt>{{ 'imprint.company.name' | t }}</dt>
+            <dd>{{ 'imprint.company.legal' | t }}</dd>
+          </dl>
+        </div>
+
+        <!-- Address Card -->
+        <div class="legal-card">
+          <h2 class="legal-card__title">{{ 'imprint.address.label' | t }}</h2>
+          <address class="legal-address">
+            <p>{{ 'imprint.address.street' | t }}</p>
+            <p>{{ 'imprint.address.zip' | t }} {{ 'imprint.address.city' | t }}</p>
+            <p>{{ 'imprint.address.country' | t }}</p>
+          </address>
+        </div>
+
+        <!-- Contact Card -->
+        <div class="legal-card">
+          <h2 class="legal-card__title">{{ 'imprint.contact.label' | t }}</h2>
+          <dl class="legal-dl">
+            <dt>Telefon:</dt>
+            <dd>
+              <a href="tel:+493012345678" class="legal-link">{{ 'imprint.contact.phone' | t }}</a>
+            </dd>
+            <dt>Fax:</dt>
+            <dd>{{ 'imprint.contact.fax' | t }}</dd>
+            <dt>E-Mail:</dt>
+            <dd>
+              <a href="mailto:info@euro-kurier-su.de" class="legal-link">{{ 'imprint.contact.email' | t }}</a>
+            </dd>
+          </dl>
+        </div>
+
+        <!-- Registration Card -->
+        <div class="legal-card">
+          <h2 class="legal-card__title">{{ 'imprint.registration.label' | t }}</h2>
+          <dl class="legal-dl">
+            <dt>Registergericht:</dt>
+            <dd>{{ 'imprint.registration.court' | t }}</dd>
+            <dt>Registernummer:</dt>
+            <dd>{{ 'imprint.registration.number' | t }}</dd>
+          </dl>
+        </div>
+
+        <!-- VAT Card -->
+        <div class="legal-card">
+          <h2 class="legal-card__title">{{ 'imprint.vat.label' | t }}</h2>
+          <p class="legal-text">{{ 'imprint.vat.number' | t }}</p>
+        </div>
+
+        <!-- Director Card -->
+        <div class="legal-card">
+          <h2 class="legal-card__title">{{ 'imprint.director.label' | t }}</h2>
+          <p class="legal-text">{{ 'imprint.director.name' | t }}</p>
+        </div>
+
+      </div>
+
+      <!-- Responsible for content -->
+      <div class="legal-section-block">
+        <h2 class="legal-section-block__title">{{ 'imprint.responsible.label' | t }}</h2>
+        <p class="legal-text">{{ 'imprint.responsible.name' | t }}</p>
+        <p class="legal-text">{{ 'imprint.responsible.address' | t }}</p>
+      </div>
+
+      <!-- Dispute resolution -->
+      <div class="legal-section-block">
+        <h2 class="legal-section-block__title">{{ 'imprint.dispute.title' | t }}</h2>
+        <p class="legal-text">{{ 'imprint.dispute.text' | t }}</p>
+      </div>
+
+      <!-- Liability for content -->
+      <div class="legal-section-block">
+        <h2 class="legal-section-block__title">{{ 'imprint.liability.content.title' | t }}</h2>
+        <p class="legal-text">{{ 'imprint.liability.content.text' | t }}</p>
+      </div>
+
+      <!-- Liability for links -->
+      <div class="legal-section-block">
+        <h2 class="legal-section-block__title">{{ 'imprint.liability.links.title' | t }}</h2>
+        <p class="legal-text">{{ 'imprint.liability.links.text' | t }}</p>
+      </div>
+
+      <!-- Copyright -->
+      <div class="legal-section-block">
+        <h2 class="legal-section-block__title">{{ 'imprint.copyright.title' | t }}</h2>
+        <p class="legal-text">{{ 'imprint.copyright.text' | t }}</p>
+      </div>
+
+      <!-- Back link -->
+      <div class="legal-back">
+        <a class="btn btn--outline" routerLink="/home">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Zurück zur Startseite
+        </a>
+        <a class="btn btn--outline" routerLink="/privacy">
+          {{ 'footer.links.privacy' | t }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

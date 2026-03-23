@@ -1,0 +1,91 @@
+<!-- Page Header -->
+<section class="page-header" aria-label="Datenschutz">
+  <div class="page-header__overlay" aria-hidden="true"></div>
+  <div class="container page-header__container">
+    <div class="page-header__content" appAnimateOnScroll>
+      <span class="eyebrow" style="color: #d4e8f4; background: rgba(212,232,244,0.12); border-left-color: #d4e8f4;">
+        {{ 'footer.links.privacy' | t }}
+      </span>
+      <h1 class="page-header__title">{{ 'privacy.title' | t }}</h1>
+      <p class="page-header__subtitle">{{ 'privacy.subtitle' | t }}</p>
+      <p class="page-header__updated">{{ 'privacy.lastUpdated' | t }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Privacy Content -->
+<section class="section privacy-section" aria-labelledby="privacy-content-heading">
+  <div class="container">
+    <h2 id="privacy-content-heading" class="visually-hidden">Datenschutzerklärung Inhalt</h2>
+
+    <div class="privacy-layout">
+
+      <!-- Table of Contents (sticky sidebar) -->
+      <nav class="privacy-toc" aria-label="Inhaltsverzeichnis">
+        <h3 class="privacy-toc__title">Inhalt</h3>
+        <ol class="privacy-toc__list" role="list">
+          @for (section of sections; track section.id) {
+            <li>
+              <button
+                class="privacy-toc__link"
+                [class.privacy-toc__link--active]="activeSection() === section.id"
+                (click)="scrollToSection(section.id)"
+                type="button"
+              >
+                {{ section.titleKey | t }}
+              </button>
+            </li>
+          }
+        </ol>
+      </nav>
+
+      <!-- Main content -->
+      <div class="privacy-content" appAnimateOnScroll>
+
+        @for (section of sections; track section.id) {
+          <article
+            class="privacy-block"
+            [id]="'privacy-' + section.id"
+          >
+            <h2 class="privacy-block__title">{{ section.titleKey | t }}</h2>
+
+            @if (section.id === 'cookies') {
+              <!-- Special handling for cookies section with sub-sections -->
+              <div class="privacy-block__text prose">
+                @for (paragraph of formatText(section.textKey | t); track $index) {
+                  <p>{{ paragraph }}</p>
+                }
+                @for (paragraph of formatText('privacy.cookies.analytics' | t); track $index) {
+                  <p>{{ paragraph }}</p>
+                }
+                @for (paragraph of formatText('privacy.cookies.marketing' | t); track $index) {
+                  <p>{{ paragraph }}</p>
+                }
+              </div>
+            } @else {
+              <div class="privacy-block__text prose">
+                @for (paragraph of formatText(section.textKey | t); track $index) {
+                  <p>{{ paragraph }}</p>
+                }
+              </div>
+            }
+          </article>
+        }
+
+        <!-- Back links -->
+        <div class="privacy-back">
+          <a class="btn btn--outline" routerLink="/home">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            Zur Startseite
+          </a>
+          <a class="btn btn--outline" routerLink="/imprint">
+            {{ 'footer.links.imprint' | t }}
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

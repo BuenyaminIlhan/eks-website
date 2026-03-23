@@ -1,0 +1,232 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ============================================================
+// EKS Typography System
+// ============================================================
+
+// Display headings
+.display-1 {
+  font-family: $font-primary;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: $font-black;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: $color-dark;
+}
+
+.display-2 {
+  font-family: $font-primary;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: $font-extrabold;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: $color-dark;
+}
+
+// Section headings
+.heading-xl {
+  font-family: $font-primary;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: $font-bold;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: $color-dark;
+}
+
+.heading-lg {
+  font-family: $font-primary;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: $font-bold;
+  line-height: 1.2;
+  color: $color-dark;
+}
+
+.heading-md {
+  font-family: $font-primary;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: $font-semibold;
+  line-height: 1.3;
+  color: $color-dark;
+}
+
+.heading-sm {
+  font-family: $font-primary;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: $font-semibold;
+  line-height: 1.4;
+  color: $color-dark;
+}
+
+// Body text
+.body-lg {
+  font-size: $text-lg;
+  line-height: 1.75;
+  color: $color-text;
+}
+
+.body-base {
+  font-size: $text-base;
+  line-height: 1.7;
+  color: $color-text;
+}
+
+.body-sm {
+  font-size: $text-sm;
+  line-height: 1.65;
+  color: $color-text-muted;
+}
+
+// Lead text
+.lead {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: $font-regular;
+  line-height: 1.7;
+  color: $color-text-muted;
+}
+
+// Caption / label
+.caption {
+  font-size: $text-xs;
+  font-weight: $font-medium;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $color-gray-500;
+}
+
+.label {
+  font-size: $text-sm;
+  font-weight: $font-semibold;
+  letter-spacing: 0.03em;
+  color: $color-text;
+}
+
+// Eyebrow / badge text above headings
+.eyebrow {
+  display: inline-block;
+  font-size: $text-sm;
+  font-weight: $font-bold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $color-primary;
+  padding: 0.25rem 0.75rem;
+  background: rgba(57, 130, 170, 0.1);
+  border-radius: $radius-full;
+  border-left: 3px solid $color-primary;
+  margin-bottom: 1rem;
+}
+
+// Text colors
+.text-primary   { color: $color-primary !important; }
+.text-dark      { color: $color-dark !important; }
+.text-accent    { color: $color-accent !important; }
+.text-muted     { color: $color-text-muted !important; }
+.text-white     { color: $color-white !important; }
+.text-success   { color: $color-success !important; }
+.text-error     { color: $color-error !important; }
+
+// Font weights
+.fw-light     { font-weight: $font-light !important; }
+.fw-regular   { font-weight: $font-regular !important; }
+.fw-medium    { font-weight: $font-medium !important; }
+.fw-semibold  { font-weight: $font-semibold !important; }
+.fw-bold      { font-weight: $font-bold !important; }
+.fw-extrabold { font-weight: $font-extrabold !important; }
+.fw-black     { font-weight: $font-black !important; }
+
+// Text alignment
+.text-left    { text-align: left !important; }
+.text-center  { text-align: center !important; }
+.text-right   { text-align: right !important; }
+
+// Text transform
+.text-upper  { text-transform: uppercase !important; }
+.text-lower  { text-transform: lowercase !important; }
+.text-cap    { text-transform: capitalize !important; }
+
+// Letter spacing
+.tracking-tight  { letter-spacing: -0.025em !important; }
+.tracking-normal { letter-spacing: 0 !important; }
+.tracking-wide   { letter-spacing: 0.05em !important; }
+.tracking-wider  { letter-spacing: 0.1em !important; }
+
+// Line height
+.leading-tight  { line-height: 1.2 !important; }
+.leading-snug   { line-height: 1.375 !important; }
+.leading-normal { line-height: 1.5 !important; }
+.leading-relaxed{ line-height: 1.625 !important; }
+.leading-loose  { line-height: 2 !important; }
+
+// Highlight / mark
+.highlight {
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(240, 192, 64, 0.35) 50%
+  );
+  padding: 0 0.125rem;
+}
+
+// Gradient text
+.gradient-text {
+  background: linear-gradient(135deg, $color-primary, $color-primary-light);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Prose (for long-form content)
+.prose {
+  max-width: 72ch;
+  color: $color-text;
+
+  h2, h3, h4 {
+    color: $color-dark;
+    margin-top: 2em;
+    margin-bottom: 0.75em;
+  }
+
+  p {
+    margin-bottom: 1.25em;
+    line-height: 1.75;
+  }
+
+  ul, ol {
+    margin-bottom: 1.25em;
+    padding-left: 1.5em;
+
+    li {
+      margin-bottom: 0.5em;
+      list-style: disc;
+    }
+  }
+
+  a {
+    color: $color-primary;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover {
+      color: $color-primary-dark;
+    }
+  }
+
+  strong {
+    font-weight: $font-semibold;
+    color: $color-dark;
+  }
+
+  blockquote {
+    border-left: 4px solid $color-primary;
+    margin: 1.5em 0;
+    padding: 0.75em 1.25em;
+    background: rgba(57, 130, 170, 0.05);
+    border-radius: 0 $radius-md $radius-md 0;
+
+    p {
+      margin: 0;
+      font-style: italic;
+      color: $color-text-muted;
+    }
+  }
+}

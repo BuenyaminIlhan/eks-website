@@ -1,0 +1,279 @@
+@use '../../../../assets/styles/variables' as *;
+@use '../../../../assets/styles/mixins' as *;
+
+.footer {
+  background-color: $color-dark;
+  color: rgba(255, 255, 255, 0.75);
+  position: relative;
+
+  &__main {
+    padding: 4rem 0 3rem;
+
+    @include respond-to('md') {
+      padding: 5rem 0 4rem;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+
+    @include respond-to('md') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to('lg') {
+      grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+      gap: 3rem;
+    }
+  }
+
+  // Brand column
+  &__col {
+    &--brand {
+      @include respond-to('lg') {
+        padding-right: 2rem;
+      }
+    }
+  }
+
+  &__col-heading {
+    font-size: 0.8125rem;
+    font-weight: $font-bold;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $color-white;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  // Logo
+  &__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    text-decoration: none;
+    margin-bottom: 1.25rem;
+    transition: opacity $transition-base;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    @include focus-ring($color-accent);
+  }
+
+  &__logo-icon {
+    width: 48px;
+    height: auto;
+    flex-shrink: 0;
+  }
+
+  &__logo-text {
+    @include flex-column;
+    gap: 0.1rem;
+  }
+
+  &__logo-eks {
+    font-size: 1.375rem;
+    font-weight: $font-black;
+    color: $color-white;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  &__logo-tagline {
+    font-size: 0.5rem;
+    font-weight: $font-semibold;
+    color: $color-ice-blue;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  &__brand-desc {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 1.5rem;
+  }
+
+  &__contact-quick {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  &__contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    transition: color $transition-base;
+
+    svg {
+      flex-shrink: 0;
+      color: $color-primary;
+    }
+
+    &:hover {
+      color: $color-white;
+    }
+
+    @include focus-ring($color-accent);
+  }
+
+  // Link list
+  &__link-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__link {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    transition: color $transition-base, padding-left $transition-base;
+    display: inline-block;
+    padding: 0.2rem 0;
+    position: relative;
+
+    &::before {
+      content: '→';
+      position: absolute;
+      left: -1rem;
+      opacity: 0;
+      transition: opacity $transition-base, transform $transition-base;
+      color: $color-primary;
+      font-size: 0.8rem;
+    }
+
+    &:hover {
+      color: $color-white;
+      padding-left: 1rem;
+
+      &::before {
+        opacity: 1;
+        transform: translateX(0.25rem);
+      }
+    }
+
+    @include focus-ring($color-accent);
+  }
+
+  // Address
+  &__address {
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__address-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+
+    svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: $color-primary;
+    }
+  }
+
+  &__cta {
+    width: 100%;
+    justify-content: center;
+
+    @include respond-to('sm') {
+      width: auto;
+    }
+  }
+
+  // Bottom bar
+  &__bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 1.25rem 0;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  &__bottom-inner {
+    @include flex-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  &__copyright {
+    font-size: 0.8125rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  &__legal-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+
+    span {
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 0.75rem;
+    }
+  }
+
+  &__legal-link {
+    font-size: 0.8125rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    transition: color $transition-base;
+
+    &:hover {
+      color: $color-white;
+    }
+
+    &--btn {
+      background: none;
+      border: none;
+      font-family: $font-primary;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    @include focus-ring($color-accent);
+  }
+
+  // Back to top
+  &__back-to-top {
+    position: absolute;
+    top: -1.25rem;
+    right: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: $color-primary;
+    border: none;
+    border-radius: $radius-md;
+    @include flex-center;
+    cursor: pointer;
+    transition: background-color $transition-base, transform $transition-base;
+    color: $color-white;
+    box-shadow: 0 4px 12px rgba(57, 130, 170, 0.4);
+
+    &:hover {
+      background: $color-primary-dark;
+      transform: translateY(-2px);
+    }
+
+    @include focus-ring($color-accent);
+
+    @include respond-to('md') {
+      right: 2.5rem;
+    }
+  }
+}

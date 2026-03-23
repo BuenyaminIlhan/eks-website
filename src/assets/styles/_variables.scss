@@ -1,0 +1,125 @@
+// ============================================================
+// EKS Brand Variables
+// ============================================================
+
+// Brand Colors
+$color-primary:   #3982AA;   // Steel Blue
+$color-dark:      #0F1F2E;   // Navy
+$color-accent:    #f0c040;   // Amber headlight
+$color-ice-blue:  #d4e8f4;   // Ice Blue
+
+// Extended Palette
+$color-primary-light:   #5ba0c8;
+$color-primary-dark:    #2d6e94;
+$color-primary-xdark:   #1e4f6b;
+$color-dark-mid:        #1a2f42;
+$color-dark-light:      #243b52;
+$color-accent-light:    #f8d670;
+$color-accent-dark:     #d4a800;
+
+// Neutral Colors
+$color-white:       #ffffff;
+$color-off-white:   #f8fafc;
+$color-gray-100:    #f0f5f8;
+$color-gray-200:    #e0eaf0;
+$color-gray-300:    #c8d8e4;
+$color-gray-400:    #9eb5c4;
+$color-gray-500:    #6e8fa0;
+$color-gray-600:    #4e6e80;
+$color-gray-700:    #2e4e60;
+$color-text:        #1a2b3c;
+$color-text-muted:  #5a7080;
+
+// Semantic Colors
+$color-success:  #28a745;
+$color-warning:  #ffc107;
+$color-error:    #dc3545;
+$color-info:     #17a2b8;
+
+// Typography
+$font-primary: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-mono: 'Courier New', Courier, monospace;
+
+// Font Sizes
+$text-xs:   0.75rem;    // 12px
+$text-sm:   0.875rem;   // 14px
+$text-base: 1rem;       // 16px
+$text-lg:   1.125rem;   // 18px
+$text-xl:   1.25rem;    // 20px
+$text-2xl:  1.5rem;     // 24px
+$text-3xl:  1.875rem;   // 30px
+$text-4xl:  2.25rem;    // 36px
+$text-5xl:  3rem;       // 48px
+$text-6xl:  3.75rem;    // 60px
+
+// Font Weights
+$font-light:      300;
+$font-regular:    400;
+$font-medium:     500;
+$font-semibold:   600;
+$font-bold:       700;
+$font-extrabold:  800;
+$font-black:      900;
+
+// Spacing Scale
+$space-1:   0.25rem;   // 4px
+$space-2:   0.5rem;    // 8px
+$space-3:   0.75rem;   // 12px
+$space-4:   1rem;      // 16px
+$space-5:   1.25rem;   // 20px
+$space-6:   1.5rem;    // 24px
+$space-8:   2rem;      // 32px
+$space-10:  2.5rem;    // 40px
+$space-12:  3rem;      // 48px
+$space-16:  4rem;      // 64px
+$space-20:  5rem;      // 80px
+$space-24:  6rem;      // 96px
+$space-32:  8rem;      // 128px
+
+// Border Radius
+$radius-sm:   4px;
+$radius-md:   8px;
+$radius-lg:   16px;
+$radius-xl:   24px;
+$radius-full: 9999px;
+
+// Shadows
+$shadow-xs:   0 1px 3px rgba(15, 31, 46, 0.06);
+$shadow-sm:   0 2px 8px rgba(15, 31, 46, 0.08);
+$shadow-md:   0 4px 20px rgba(15, 31, 46, 0.12);
+$shadow-lg:   0 8px 40px rgba(15, 31, 46, 0.16);
+$shadow-xl:   0 16px 60px rgba(15, 31, 46, 0.20);
+$shadow-focus: 0 0 0 3px rgba(57, 130, 170, 0.4);
+
+// Transitions
+$transition-fast:   0.15s ease;
+$transition-base:   0.3s ease;
+$transition-slow:   0.5s ease;
+$transition-spring: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// Z-Index Scale
+$z-base:    0;
+$z-raised:  10;
+$z-sticky:  100;
+$z-overlay: 200;
+$z-modal:   300;
+$z-toast:   400;
+$z-tooltip: 500;
+
+// Breakpoints
+$breakpoint-xs:   320px;
+$breakpoint-sm:   576px;
+$breakpoint-md:   768px;
+$breakpoint-lg:   1024px;
+$breakpoint-xl:   1280px;
+$breakpoint-2xl:  1440px;
+
+// Layout
+$container-max-width:  1200px;
+$header-height:        72px;
+$header-height-mobile: 64px;
+$footer-min-height:    300px;
+
+// Grid
+$grid-columns:  12;
+$grid-gap:      1.5rem;

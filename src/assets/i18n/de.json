@@ -1,0 +1,391 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "services": "Leistungen",
+    "about": "Über uns",
+    "contact": "Kontakt",
+    "faq": "FAQ",
+    "menu": "Menü öffnen",
+    "close": "Menü schließen"
+  },
+  "common": {
+    "learnMore": "Mehr erfahren",
+    "requestQuote": "Angebot anfordern",
+    "readMore": "Weiterlesen",
+    "backToTop": "Nach oben",
+    "loading": "Wird geladen...",
+    "error": "Ein Fehler ist aufgetreten",
+    "viewAll": "Alle anzeigen",
+    "close": "Schließen",
+    "send": "Absenden",
+    "required": "Pflichtfeld",
+    "optional": "Optional",
+    "yes": "Ja",
+    "no": "Nein"
+  },
+  "lang": {
+    "de": "DE",
+    "en": "EN",
+    "switchTo": "Switch to English",
+    "current": "Aktuelle Sprache: Deutsch"
+  },
+  "cookies": {
+    "title": "Cookie-Einstellungen",
+    "description": "Wir verwenden Cookies, um Ihnen die bestmögliche Erfahrung auf unserer Website zu bieten. Einige Cookies sind notwendig für den Betrieb der Website, während andere uns helfen, die Website zu verbessern und Ihnen relevante Inhalte anzuzeigen.",
+    "acceptAll": "Alle akzeptieren",
+    "declineAll": "Alle ablehnen",
+    "customize": "Anpassen",
+    "save": "Einstellungen speichern",
+    "details": "Details",
+    "necessary": "Notwendig",
+    "analytics": "Analyse",
+    "marketing": "Marketing",
+    "necessary_desc": "Diese Cookies sind für den grundlegenden Betrieb der Website erforderlich und können nicht deaktiviert werden. Sie umfassen Sitzungs-Cookies, Sicherheitscookies und Einstellungscookies.",
+    "analytics_desc": "Diese Cookies helfen uns zu verstehen, wie Besucher unsere Website nutzen. Alle Daten werden anonymisiert gesammelt. Wir verwenden Google Analytics nur mit Ihrer ausdrücklichen Zustimmung.",
+    "marketing_desc": "Diese Cookies werden verwendet, um Ihnen relevante Werbung anzuzeigen. Wir geben Ihre Daten nicht ohne Ihre Zustimmung an Dritte weiter.",
+    "learnMore": "Mehr über unsere Cookie-Richtlinie",
+    "lastUpdated": "Zuletzt aktualisiert"
+  },
+  "hero": {
+    "badge": "Ihr Partner für Expresslieferungen",
+    "title": "Schnell. Zuverlässig. Europaweit.",
+    "subtitle": "Euro-Kurier-Su liefert Ihre Sendungen pünktlich und sicher – von Berlin bis Brüssel, vom Express bis zur Spedition.",
+    "ctaPrimary": "Jetzt Angebot anfragen",
+    "ctaSecondary": "Unsere Leistungen",
+    "scrollDown": "Nach unten scrollen",
+    "stats": {
+      "deliveries": "Lieferungen",
+      "clients": "Stammkunden",
+      "cities": "Städte",
+      "years": "Jahre Erfahrung"
+    }
+  },
+  "services": {
+    "title": "Unsere Leistungen",
+    "subtitle": "Maßgeschneiderte Kurierlösungen für jede Anforderung – zuverlässig, schnell und transparent.",
+    "cta": "Alle Leistungen ansehen",
+    "express": {
+      "title": "Express-Kurier",
+      "desc": "Dringende Sendungen werden innerhalb von 2–4 Stunden abgeholt und zugestellt. Ideal für zeitkritische Dokumente und Pakete.",
+      "icon": "⚡"
+    },
+    "sameDay": {
+      "title": "Same-Day-Lieferung",
+      "desc": "Garantierte Zustellung am selben Tag bis 20:00 Uhr. Verfügbar im gesamten Berliner Stadtgebiet und Umland bis 80 km.",
+      "icon": "🌅"
+    },
+    "crossBorder": {
+      "title": "Grenzüberschreitend",
+      "desc": "Kurierdienste innerhalb der EU ohne Zollhindernisse. Wir liefern zuverlässig nach Polen, Tschechien, Österreich und in weitere Länder.",
+      "icon": "🌍"
+    },
+    "scheduled": {
+      "title": "Terminlieferung",
+      "desc": "Planen Sie Ihre Lieferung auf den Minute genau. Wir liefern zum vereinbarten Zeitfenster – garantiert.",
+      "icon": "📅"
+    },
+    "b2b": {
+      "title": "B2B-Logistik",
+      "desc": "Maßgeschneiderte Logistiklösungen für Unternehmen. Regelmäßige Routen, Vertragskonditionen und dedizierte Ansprechpartner.",
+      "icon": "🏢"
+    },
+    "tracking": {
+      "title": "Live-Tracking",
+      "desc": "Verfolgen Sie Ihre Sendung in Echtzeit. Automatische SMS- und E-Mail-Benachrichtigungen halten Sie immer auf dem Laufenden.",
+      "icon": "📍"
+    },
+    "features": {
+      "title": "Warum EKS?",
+      "subtitle": "Wir setzen auf Qualität, Transparenz und persönlichen Service.",
+      "insured": {
+        "title": "Vollkasko-versichert",
+        "desc": "Alle Sendungen sind bis 50.000 € versichert."
+      },
+      "realtime": {
+        "title": "Echtzeit-Tracking",
+        "desc": "GPS-Tracking rund um die Uhr verfügbar."
+      },
+      "support": {
+        "title": "24/7 Support",
+        "desc": "Unser Team ist immer für Sie erreichbar."
+      },
+      "green": {
+        "title": "Umweltfreundlich",
+        "desc": "CO₂-neutrale Zustellung auf Wunsch."
+      }
+    }
+  },
+  "about": {
+    "title": "Über Euro-Kurier-Su",
+    "subtitle": "Seit über einem Jahrzehnt Ihr verlässlicher Partner für schnelle und sichere Zustellungen.",
+    "story": {
+      "title": "Unsere Geschichte",
+      "text": "Euro-Kurier-Su GmbH wurde 2012 in Berlin gegründet mit einer einfachen Vision: einen Kurierdienst zu schaffen, der Zuverlässigkeit, Schnelligkeit und persönlichen Service vereint. Was mit drei Fahrzeugen und einem kleinen Team begann, ist heute zu einem der führenden Kurierdienste Berlins und Brandenburgs gewachsen.\n\nUnser Gründer Sergei Ulrich brachte mehr als 15 Jahre Erfahrung in der Logistikbranche mit und verstand von Anfang an, was Unternehmen und Privatpersonen wirklich brauchen: einen Partner, dem man vertrauen kann. Heute beschäftigen wir über 45 erfahrene Kuriere und bedienen mehr als 800 Stammkunden.\n\nDurch kontinuierliche Investitionen in moderne Technologie, Fahrzeuge und Schulungen gewährleisten wir höchste Standards bei jeder Lieferung. Unser digitales Tracking-System wurde 2019 als eines der fortschrittlichsten in der Branche ausgezeichnet.",
+      "imageAlt": "EKS Team bei der Arbeit"
+    },
+    "values": {
+      "title": "Unsere Werte",
+      "reliability": {
+        "title": "Zuverlässigkeit",
+        "desc": "Pünktlichkeit ist kein Versprechen – es ist unser Standard. 98,7 % aller Sendungen werden rechtzeitig zugestellt."
+      },
+      "transparency": {
+        "title": "Transparenz",
+        "desc": "Klare Preise, keine versteckten Gebühren. Sie wissen immer, was Sie zahlen und wo Ihre Sendung ist."
+      },
+      "quality": {
+        "title": "Qualität",
+        "desc": "Jeder Kurier wird intensiv geschult. Regelmäßige Audits sichern die Einhaltung unserer hohen Standards."
+      },
+      "partnership": {
+        "title": "Partnerschaft",
+        "desc": "Wir denken langfristig. Ihre Zufriedenheit ist der Maßstab unserer Arbeit – persönlicher Service inklusive."
+      }
+    },
+    "stats": {
+      "years": { "value": "12+", "label": "Jahre Erfahrung" },
+      "deliveries": { "value": "500K+", "label": "Erfolgreiche Lieferungen" },
+      "cities": { "value": "150+", "label": "Städte & Regionen" },
+      "clients": { "value": "800+", "label": "Stammkunden" }
+    },
+    "team": {
+      "title": "Unser Team",
+      "subtitle": "Erfahrene Profis, die für Ihre Sendungen brennen."
+    },
+    "certifications": {
+      "title": "Zertifizierungen & Partnerschaften"
+    }
+  },
+  "contact": {
+    "title": "Kontakt aufnehmen",
+    "subtitle": "Haben Sie Fragen oder möchten Sie ein Angebot anfordern? Wir freuen uns auf Ihre Nachricht.",
+    "form": {
+      "name": "Vollständiger Name",
+      "namePlaceholder": "Max Mustermann",
+      "email": "E-Mail-Adresse",
+      "emailPlaceholder": "max@unternehmen.de",
+      "company": "Unternehmen",
+      "companyPlaceholder": "Ihr Unternehmen GmbH (optional)",
+      "phone": "Telefonnummer",
+      "phonePlaceholder": "+49 30 123 456 (optional)",
+      "message": "Ihre Nachricht",
+      "messagePlaceholder": "Beschreiben Sie Ihr Anliegen oder Ihre Anforderungen...",
+      "consent": "Ich stimme der Verarbeitung meiner personenbezogenen Daten gemäß der Datenschutzerklärung zu.",
+      "submit": "Nachricht senden",
+      "submitting": "Wird gesendet...",
+      "success": "Vielen Dank für Ihre Nachricht! Wir melden uns innerhalb von 24 Stunden bei Ihnen.",
+      "error": "Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns telefonisch.",
+      "required": "Pflichtfeld",
+      "errors": {
+        "nameRequired": "Bitte geben Sie Ihren Namen ein.",
+        "nameMinLength": "Der Name muss mindestens 2 Zeichen lang sein.",
+        "emailRequired": "Bitte geben Sie Ihre E-Mail-Adresse ein.",
+        "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+        "messageRequired": "Bitte geben Sie eine Nachricht ein.",
+        "messageMinLength": "Die Nachricht muss mindestens 20 Zeichen lang sein.",
+        "consentRequired": "Bitte stimmen Sie der Datenschutzerklärung zu."
+      }
+    },
+    "info": {
+      "title": "Kontaktinformationen",
+      "address": {
+        "label": "Adresse",
+        "value": "Berliner Allee 42, 10115 Berlin"
+      },
+      "phone": {
+        "label": "Telefon",
+        "value": "+49 30 123 456 789"
+      },
+      "email": {
+        "label": "E-Mail",
+        "value": "info@euro-kurier-su.de"
+      },
+      "hours": {
+        "label": "Öffnungszeiten",
+        "weekdays": "Mo–Fr: 07:00–20:00 Uhr",
+        "saturday": "Sa: 08:00–14:00 Uhr",
+        "sunday": "So: Notfallservice verfügbar"
+      }
+    },
+    "map": {
+      "title": "Unser Standort",
+      "ariaLabel": "Karte mit unserem Standort in Berlin"
+    }
+  },
+  "faq": {
+    "title": "Häufig gestellte Fragen",
+    "subtitle": "Hier finden Sie Antworten auf die häufigsten Fragen zu unseren Kurierdiensten.",
+    "q1": {
+      "question": "Wie schnell können Sie eine Sendung abholen?",
+      "answer": "Bei unserem Express-Service holen wir Ihre Sendung innerhalb von 60–90 Minuten nach Auftragserteilung ab. Bei Same-Day-Aufträgen erfolgt die Abholung in der Regel innerhalb von 2–3 Stunden. Für geplante Lieferungen können Sie die Abholzeit frei wählen."
+    },
+    "q2": {
+      "question": "In welche Regionen liefern Sie?",
+      "answer": "Unser Kerngebiet umfasst Berlin und Brandenburg, mit Expresszustellung innerhalb von 80 km. Darüber hinaus bieten wir Lieferungen in ganz Deutschland und in ausgewählte EU-Länder (Polen, Tschechien, Österreich, Niederlande, Belgien) an. Bitte kontaktieren Sie uns für Fernlieferungen."
+    },
+    "q3": {
+      "question": "Wie kann ich meine Sendung verfolgen?",
+      "answer": "Nach Auftragserteilung erhalten Sie eine Sendungsnummer per E-Mail und SMS. Über unser Online-Portal oder die EKS-App können Sie Ihre Sendung in Echtzeit verfolgen. Sie erhalten automatische Statusbenachrichtigungen bei Abholung, unterwegs und bei Zustellung."
+    },
+    "q4": {
+      "question": "Bis zu welchem Gewicht nehmen Sie Sendungen an?",
+      "answer": "Standardmäßig nehmen wir Sendungen bis 30 kg je Paket an. Mit unseren Spezialfahrzeugen können wir auch schwerere Sendungen bis 500 kg transportieren. Für Palettensendungen oder Sondertransporte erstellen wir Ihnen gerne ein individuelles Angebot."
+    },
+    "q5": {
+      "question": "Sind die Sendungen versichert?",
+      "answer": "Ja, alle Sendungen sind standardmäßig bis 500 € versichert. Gegen einen geringen Aufpreis können Sie Sendungen bis zu 50.000 € absichern. Bei Wertsendungen wie Elektronik, Schmuck oder Kunstgegenständen empfehlen wir die erweiterte Versicherung."
+    },
+    "q6": {
+      "question": "Können Sie auch außerhalb der Geschäftszeiten liefern?",
+      "answer": "Ja, wir bieten auf Anfrage Abend- und Frühlieferungen an. Unser Nacht-Express-Service (22:00–06:00 Uhr) steht für medizinische und kritische Güter bereit. Samstagslieferungen sind im regulären Angebot enthalten, Sonntagslieferungen auf Anfrage möglich."
+    },
+    "q7": {
+      "question": "Wie erfolgt die Preisgestaltung?",
+      "answer": "Unsere Preise richten sich nach Entfernung, Gewicht, Maßen und Dringlichkeit der Lieferung. Unternehmen mit regelmäßigem Versandvolumen erhalten Sonderkonditionen im Rahmen eines Rahmenvertrags. Eine unverbindliche Preisübersicht erhalten Sie auf Anfrage. Alle Preise verstehen sich zzgl. gesetzlicher MwSt."
+    },
+    "q8": {
+      "question": "Was passiert, wenn niemand für die Annahme der Sendung da ist?",
+      "answer": "Ist bei Zustellung niemand anwesend, versucht unser Kurier, die Sendung bei einem Nachbarn abzugeben (nur mit Ihrer vorherigen Genehmigung). Alternativ wird eine Benachrichtigung hinterlassen und ein zweiter Zustellversuch vereinbart. Sendungen werden maximal 5 Werktage für Sie eingelagert."
+    },
+    "q9": {
+      "question": "Bieten Sie auch wiederkehrende Lieferrouten für Unternehmen an?",
+      "answer": "Ja, für Geschäftskunden richten wir feste Lieferrouten ein – täglich, wöchentlich oder nach Bedarf. Dies eignet sich besonders für Unternehmen, die regelmäßig Dokumente, Proben oder Waren versenden. Wir stellen dedizierte Kuriere bereit, die Ihre Routen und Anforderungen kennen."
+    },
+    "q10": {
+      "question": "Wie reklamiere ich eine Beschädigung oder einen Verlust?",
+      "answer": "Schäden oder Verluste müssen innerhalb von 24 Stunden nach Zustellung gemeldet werden. Bitte dokumentieren Sie den Schaden mit Fotos und kontaktieren Sie unsere Reklamationsabteilung unter reklamation@euro-kurier-su.de oder telefonisch. Wir bearbeiten alle Reklamationen innerhalb von 5 Werktagen."
+    },
+    "cta": {
+      "title": "Noch Fragen offen?",
+      "text": "Unser Team steht Ihnen gerne zur Verfügung.",
+      "button": "Kontakt aufnehmen"
+    }
+  },
+  "footer": {
+    "tagline": "Schnell. Sicher. Europaweit.",
+    "description": "Euro-Kurier-Su GmbH – Ihr zuverlässiger Partner für Express- und Kurierdienste in Deutschland und Europa seit 2012.",
+    "rights": "© 2024 Euro-Kurier-Su GmbH. Alle Rechte vorbehalten.",
+    "links": {
+      "imprint": "Impressum",
+      "privacy": "Datenschutz",
+      "terms": "AGB",
+      "cookies": "Cookie-Einstellungen"
+    },
+    "sections": {
+      "company": "Unternehmen",
+      "services": "Leistungen",
+      "contact": "Kontakt",
+      "legal": "Rechtliches"
+    },
+    "social": {
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram"
+    }
+  },
+  "imprint": {
+    "title": "Impressum",
+    "subtitle": "Pflichtangaben gemäß § 5 TMG",
+    "company": {
+      "label": "Unternehmensbezeichnung",
+      "name": "Euro-Kurier-Su GmbH",
+      "legal": "Gesellschaft mit beschränkter Haftung"
+    },
+    "address": {
+      "label": "Anschrift",
+      "street": "Berliner Allee 42",
+      "zip": "10115",
+      "city": "Berlin",
+      "country": "Deutschland"
+    },
+    "contact": {
+      "label": "Kontakt",
+      "phone": "+49 30 123 456 789",
+      "fax": "+49 30 123 456 790",
+      "email": "info@euro-kurier-su.de"
+    },
+    "registration": {
+      "label": "Handelsregister",
+      "court": "Amtsgericht Berlin-Charlottenburg",
+      "number": "HRB 198745 B"
+    },
+    "vat": {
+      "label": "Umsatzsteuer-Identifikationsnummer",
+      "number": "DE 298 765 432"
+    },
+    "director": {
+      "label": "Geschäftsführer",
+      "name": "Sergei Ulrich"
+    },
+    "responsible": {
+      "label": "Inhaltlich verantwortlich gemäß § 55 Abs. 2 RStV",
+      "name": "Sergei Ulrich",
+      "address": "Berliner Allee 42, 10115 Berlin"
+    },
+    "dispute": {
+      "title": "Streitschlichtung",
+      "text": "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: https://ec.europa.eu/consumers/odr/. Unsere E-Mail-Adresse finden Sie oben im Impressum. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen."
+    },
+    "liability": {
+      "content": {
+        "title": "Haftung für Inhalte",
+        "text": "Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen."
+      },
+      "links": {
+        "title": "Haftung für Links",
+        "text": "Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich."
+      }
+    },
+    "copyright": {
+      "title": "Urheberrecht",
+      "text": "Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers."
+    }
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung",
+    "subtitle": "Informationen gemäß DSGVO",
+    "lastUpdated": "Zuletzt aktualisiert: Januar 2024",
+    "intro": {
+      "title": "1. Einleitung und Verantwortlicher",
+      "text": "Wir nehmen den Schutz Ihrer personenbezogenen Daten sehr ernst. Diese Datenschutzerklärung informiert Sie über die Verarbeitung personenbezogener Daten auf unserer Website www.euro-kurier-su.de gemäß der Datenschutz-Grundverordnung (DSGVO) und dem Bundesdatenschutzgesetz (BDSG).\n\nVerantwortlicher im Sinne der DSGVO:\nEuro-Kurier-Su GmbH\nBerliner Allee 42\n10115 Berlin\nTelefon: +49 30 123 456 789\nE-Mail: datenschutz@euro-kurier-su.de"
+    },
+    "dataTypes": {
+      "title": "2. Arten der verarbeiteten Daten",
+      "text": "Wir verarbeiten folgende Kategorien personenbezogener Daten:\n- Bestandsdaten (Name, Anschrift, Unternehmen)\n- Kontaktdaten (E-Mail-Adresse, Telefonnummer)\n- Nutzungsdaten (besuchte Seiten, Zugriffszeiten, Browser-Informationen)\n- Kommunikationsdaten (Nachrichten, Anfragen)\n- Vertragsdaten (Auftragshistorie, Rechnungsdaten für Geschäftskunden)\n- Metadaten (IP-Adressen, Zeitstempel, technische Gerätedaten)"
+    },
+    "purposes": {
+      "title": "3. Zwecke und Rechtsgrundlagen",
+      "text": "Wir verarbeiten Ihre Daten zu folgenden Zwecken:\n\na) Vertragserfüllung (Art. 6 Abs. 1 lit. b DSGVO): Bearbeitung von Aufträgen, Koordination von Lieferungen, Kundenkommunikation.\n\nb) Berechtigte Interessen (Art. 6 Abs. 1 lit. f DSGVO): Verbesserung unserer Dienstleistungen, Sicherheit der Website, Betrugsvorbeugung.\n\nc) Einwilligung (Art. 6 Abs. 1 lit. a DSGVO): Newsletter-Versand, Analyse-Cookies, Marketingcookies (nur bei ausdrücklicher Zustimmung).\n\nd) Rechtliche Verpflichtung (Art. 6 Abs. 1 lit. c DSGVO): Steuerliche Aufbewahrungspflichten, gesetzliche Meldepflichten."
+    },
+    "retention": {
+      "title": "4. Speicherdauer",
+      "text": "Wir speichern Ihre Daten nur so lange, wie es für den jeweiligen Zweck notwendig ist:\n- Kontaktanfragen: 2 Jahre nach letztem Kontakt\n- Vertragsdaten (Geschäftskunden): 10 Jahre (gesetzliche Aufbewahrungspflicht)\n- Server-Logs: 30 Tage\n- Analyse-Cookies: 26 Monate (Google Analytics)\n- Session-Cookies: Bis zum Ende der Browser-Sitzung\n\nNach Ablauf der Speicherfrist werden die Daten automatisch gelöscht oder anonymisiert."
+    },
+    "cookies": {
+      "title": "5. Cookies und Tracking",
+      "necessary": "Notwendige Cookies: Diese sind technisch erforderlich und können nicht deaktiviert werden. Sie umfassen Session-IDs, CSRF-Tokens und Spracheinstellungen.",
+      "analytics": "Analyse-Cookies (Google Analytics): Nur mit Ihrer Einwilligung. Wir nutzen Google Analytics 4 mit IP-Anonymisierung. Google LLC verarbeitet Daten in den USA auf Basis von Standardvertragsklauseln gemäß Art. 46 DSGVO.",
+      "marketing": "Marketing-Cookies: Nur mit Ihrer ausdrücklichen Einwilligung. Diese Cookies ermöglichen personalisierte Werbung auf Drittanbieter-Plattformen."
+    },
+    "thirdParty": {
+      "title": "6. Drittanbieter und Datenübermittlung",
+      "text": "Wir nutzen folgende Drittanbieter:\n\n- Google Analytics 4 (Google LLC, USA): Web-Analyse – nur mit Einwilligung. Datenschutzerklärung: https://policies.google.com/privacy\n- Google Fonts (Google LLC, USA): Schriftarten-CDN. Beim Aufruf unserer Website werden Schriftarten von Google Servern geladen. Dabei wird Ihre IP-Adresse an Google übertragen. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO.\n- Hosting-Provider: Unsere Website wird bei einem europäischen Hosting-Provider gehostet. Eine Übermittlung in Drittländer findet nicht statt.\n\nWir haben mit allen Drittanbietern Auftragsverarbeitungsverträge gemäß Art. 28 DSGVO geschlossen."
+    },
+    "rights": {
+      "title": "7. Ihre Rechte",
+      "text": "Als betroffene Person haben Sie folgende Rechte:\n\n- Auskunftsrecht (Art. 15 DSGVO): Sie können Auskunft über die zu Ihrer Person gespeicherten Daten verlangen.\n- Berichtigungsrecht (Art. 16 DSGVO): Sie können die Berichtigung unrichtiger Daten verlangen.\n- Löschungsrecht (Art. 17 DSGVO): Sie können die Löschung Ihrer Daten verlangen, sofern keine gesetzliche Aufbewahrungspflicht entgegensteht.\n- Einschränkungsrecht (Art. 18 DSGVO): Sie können die Einschränkung der Verarbeitung verlangen.\n- Datenübertragbarkeit (Art. 20 DSGVO): Sie können Ihre Daten in einem strukturierten Format erhalten.\n- Widerspruchsrecht (Art. 21 DSGVO): Sie können der Verarbeitung auf Basis berechtigter Interessen widersprechen.\n- Widerruf der Einwilligung: Sie können eine erteilte Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.\n\nZur Ausübung Ihrer Rechte wenden Sie sich an: datenschutz@euro-kurier-su.de"
+    },
+    "complaint": {
+      "title": "8. Beschwerderecht bei der Aufsichtsbehörde",
+      "text": "Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung Ihrer personenbezogenen Daten zu beschweren. Die zuständige Aufsichtsbehörde für Berlin ist:\n\nBerliner Beauftragte für Datenschutz und Informationsfreiheit\nMajestätsweg 9-11\n13156 Berlin\nTelefon: +49 30 13889-0\nE-Mail: mailbox@datenschutz-berlin.de\nWebsite: www.datenschutz-berlin.de"
+    },
+    "security": {
+      "title": "9. Datensicherheit",
+      "text": "Wir setzen technische und organisatorische Sicherheitsmaßnahmen ein, um Ihre Daten gegen zufällige oder vorsätzliche Manipulationen, Verlust oder unberechtigten Zugriff zu schützen. Unsere Sicherheitsmaßnahmen werden entsprechend der technologischen Entwicklung fortlaufend verbessert. Die Datenübertragung auf unserer Website erfolgt verschlüsselt über HTTPS/TLS."
+    },
+    "changes": {
+      "title": "10. Änderungen dieser Datenschutzerklärung",
+      "text": "Wir behalten uns vor, diese Datenschutzerklärung anzupassen, um sie den aktuellen rechtlichen Anforderungen oder Änderungen unserer Dienstleistungen anzupassen. Die aktuelle Version ist stets auf unserer Website abrufbar. Bitte informieren Sie sich regelmäßig über den Inhalt der Datenschutzerklärung."
+    }
+  }
+}

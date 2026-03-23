@@ -1,0 +1,391 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "menu": "Open menu",
+    "close": "Close menu"
+  },
+  "common": {
+    "learnMore": "Learn more",
+    "requestQuote": "Request a quote",
+    "readMore": "Read more",
+    "backToTop": "Back to top",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "viewAll": "View all",
+    "close": "Close",
+    "send": "Send",
+    "required": "Required",
+    "optional": "Optional",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "lang": {
+    "de": "DE",
+    "en": "EN",
+    "switchTo": "Zu Deutsch wechseln",
+    "current": "Current language: English"
+  },
+  "cookies": {
+    "title": "Cookie Settings",
+    "description": "We use cookies to provide you with the best possible experience on our website. Some cookies are necessary for the website to function, while others help us improve the site and show you relevant content.",
+    "acceptAll": "Accept all",
+    "declineAll": "Decline all",
+    "customize": "Customize",
+    "save": "Save settings",
+    "details": "Details",
+    "necessary": "Necessary",
+    "analytics": "Analytics",
+    "marketing": "Marketing",
+    "necessary_desc": "These cookies are required for basic website functionality and cannot be disabled. They include session cookies, security cookies, and preference cookies.",
+    "analytics_desc": "These cookies help us understand how visitors use our website. All data is collected anonymously. We use Google Analytics only with your explicit consent.",
+    "marketing_desc": "These cookies are used to show you relevant advertisements. We do not share your data with third parties without your consent.",
+    "learnMore": "Learn more about our cookie policy",
+    "lastUpdated": "Last updated"
+  },
+  "hero": {
+    "badge": "Your partner for express deliveries",
+    "title": "Fast. Reliable. Europe-wide.",
+    "subtitle": "Euro-Kurier-Su delivers your shipments on time and securely – from Berlin to Brussels, from express to freight.",
+    "ctaPrimary": "Request a quote now",
+    "ctaSecondary": "Our services",
+    "scrollDown": "Scroll down",
+    "stats": {
+      "deliveries": "Deliveries",
+      "clients": "Regular clients",
+      "cities": "Cities",
+      "years": "Years of experience"
+    }
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Tailored courier solutions for every requirement – reliable, fast, and transparent.",
+    "cta": "View all services",
+    "express": {
+      "title": "Express Courier",
+      "desc": "Urgent shipments are collected and delivered within 2–4 hours. Ideal for time-critical documents and parcels.",
+      "icon": "⚡"
+    },
+    "sameDay": {
+      "title": "Same-Day Delivery",
+      "desc": "Guaranteed delivery on the same day by 8:00 PM. Available throughout the entire Berlin metropolitan area and surrounding regions within 80 km.",
+      "icon": "🌅"
+    },
+    "crossBorder": {
+      "title": "Cross-Border",
+      "desc": "Courier services within the EU without customs obstacles. We reliably deliver to Poland, Czech Republic, Austria, and other countries.",
+      "icon": "🌍"
+    },
+    "scheduled": {
+      "title": "Scheduled Delivery",
+      "desc": "Plan your delivery to the minute. We deliver within the agreed time window – guaranteed.",
+      "icon": "📅"
+    },
+    "b2b": {
+      "title": "B2B Logistics",
+      "desc": "Tailored logistics solutions for businesses. Regular routes, contract terms, and dedicated account managers.",
+      "icon": "🏢"
+    },
+    "tracking": {
+      "title": "Live Tracking",
+      "desc": "Track your shipment in real time. Automatic SMS and email notifications keep you always up to date.",
+      "icon": "📍"
+    },
+    "features": {
+      "title": "Why EKS?",
+      "subtitle": "We focus on quality, transparency, and personal service.",
+      "insured": {
+        "title": "Fully Insured",
+        "desc": "All shipments are insured up to €50,000."
+      },
+      "realtime": {
+        "title": "Real-Time Tracking",
+        "desc": "GPS tracking available around the clock."
+      },
+      "support": {
+        "title": "24/7 Support",
+        "desc": "Our team is always available for you."
+      },
+      "green": {
+        "title": "Eco-Friendly",
+        "desc": "Carbon-neutral delivery available on request."
+      }
+    }
+  },
+  "about": {
+    "title": "About Euro-Kurier-Su",
+    "subtitle": "For over a decade, your reliable partner for fast and secure deliveries.",
+    "story": {
+      "title": "Our Story",
+      "text": "Euro-Kurier-Su GmbH was founded in Berlin in 2012 with a simple vision: to create a courier service that combines reliability, speed, and personal service. What started with three vehicles and a small team has grown into one of Berlin and Brandenburg's leading courier services.\n\nOur founder Sergei Ulrich brought over 15 years of experience in the logistics industry and understood from the very beginning what businesses and individuals truly need: a partner they can trust. Today we employ more than 45 experienced couriers and serve over 800 regular clients.\n\nThrough continuous investment in modern technology, vehicles, and training, we ensure the highest standards for every delivery. Our digital tracking system was recognized in 2019 as one of the most advanced in the industry.",
+      "imageAlt": "EKS team at work"
+    },
+    "values": {
+      "title": "Our Values",
+      "reliability": {
+        "title": "Reliability",
+        "desc": "Punctuality is not a promise – it is our standard. 98.7% of all shipments are delivered on time."
+      },
+      "transparency": {
+        "title": "Transparency",
+        "desc": "Clear pricing, no hidden fees. You always know what you pay and where your shipment is."
+      },
+      "quality": {
+        "title": "Quality",
+        "desc": "Every courier undergoes intensive training. Regular audits ensure compliance with our high standards."
+      },
+      "partnership": {
+        "title": "Partnership",
+        "desc": "We think long-term. Your satisfaction is the benchmark of our work – personal service included."
+      }
+    },
+    "stats": {
+      "years": { "value": "12+", "label": "Years of experience" },
+      "deliveries": { "value": "500K+", "label": "Successful deliveries" },
+      "cities": { "value": "150+", "label": "Cities & regions" },
+      "clients": { "value": "800+", "label": "Regular clients" }
+    },
+    "team": {
+      "title": "Our Team",
+      "subtitle": "Experienced professionals who are passionate about your deliveries."
+    },
+    "certifications": {
+      "title": "Certifications & Partnerships"
+    }
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Have questions or want to request a quote? We look forward to hearing from you.",
+    "form": {
+      "name": "Full Name",
+      "namePlaceholder": "John Smith",
+      "email": "Email Address",
+      "emailPlaceholder": "john@company.com",
+      "company": "Company",
+      "companyPlaceholder": "Your Company Ltd (optional)",
+      "phone": "Phone Number",
+      "phonePlaceholder": "+49 30 123 456 (optional)",
+      "message": "Your Message",
+      "messagePlaceholder": "Describe your inquiry or requirements...",
+      "consent": "I agree to the processing of my personal data in accordance with the privacy policy.",
+      "submit": "Send Message",
+      "submitting": "Sending...",
+      "success": "Thank you for your message! We will get back to you within 24 hours.",
+      "error": "An error occurred while sending. Please try again or contact us by phone.",
+      "required": "Required field",
+      "errors": {
+        "nameRequired": "Please enter your name.",
+        "nameMinLength": "The name must be at least 2 characters long.",
+        "emailRequired": "Please enter your email address.",
+        "emailInvalid": "Please enter a valid email address.",
+        "messageRequired": "Please enter a message.",
+        "messageMinLength": "The message must be at least 20 characters long.",
+        "consentRequired": "Please agree to the privacy policy."
+      }
+    },
+    "info": {
+      "title": "Contact Information",
+      "address": {
+        "label": "Address",
+        "value": "Berliner Allee 42, 10115 Berlin"
+      },
+      "phone": {
+        "label": "Phone",
+        "value": "+49 30 123 456 789"
+      },
+      "email": {
+        "label": "Email",
+        "value": "info@euro-kurier-su.de"
+      },
+      "hours": {
+        "label": "Opening Hours",
+        "weekdays": "Mon–Fri: 7:00 AM–8:00 PM",
+        "saturday": "Sat: 8:00 AM–2:00 PM",
+        "sunday": "Sun: Emergency service available"
+      }
+    },
+    "map": {
+      "title": "Our Location",
+      "ariaLabel": "Map showing our location in Berlin"
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find answers to the most common questions about our courier services.",
+    "q1": {
+      "question": "How quickly can you collect a shipment?",
+      "answer": "With our express service, we collect your shipment within 60–90 minutes of placing an order. For same-day orders, collection typically takes place within 2–3 hours. For planned deliveries, you can freely choose the collection time."
+    },
+    "q2": {
+      "question": "Which regions do you deliver to?",
+      "answer": "Our core area covers Berlin and Brandenburg, with express delivery within 80 km. We also offer deliveries throughout Germany and to selected EU countries (Poland, Czech Republic, Austria, Netherlands, Belgium). Please contact us for long-distance deliveries."
+    },
+    "q3": {
+      "question": "How can I track my shipment?",
+      "answer": "After placing your order, you will receive a tracking number by email and SMS. Through our online portal or the EKS app, you can track your shipment in real time. You will receive automatic status notifications upon collection, in transit, and upon delivery."
+    },
+    "q4": {
+      "question": "What is the maximum weight you accept?",
+      "answer": "We accept shipments up to 30 kg per parcel as standard. With our specialist vehicles, we can also transport heavier shipments up to 500 kg. For pallet shipments or special transport, we are happy to provide an individual quote."
+    },
+    "q5": {
+      "question": "Are shipments insured?",
+      "answer": "Yes, all shipments are insured up to €500 as standard. For a small additional charge, you can insure shipments up to €50,000. For valuable items such as electronics, jewellery, or works of art, we recommend the extended insurance."
+    },
+    "q6": {
+      "question": "Can you also deliver outside of business hours?",
+      "answer": "Yes, we offer evening and early morning deliveries on request. Our night express service (10:00 PM–6:00 AM) is available for medical and critical goods. Saturday deliveries are included in our regular offering; Sunday deliveries are available on request."
+    },
+    "q7": {
+      "question": "How is pricing structured?",
+      "answer": "Our prices are based on distance, weight, dimensions, and urgency of delivery. Companies with regular shipping volumes receive special rates as part of a framework agreement. An indicative price list is available on request. All prices are subject to statutory VAT."
+    },
+    "q8": {
+      "question": "What happens if no one is available to receive the shipment?",
+      "answer": "If no one is present at the time of delivery, our courier will attempt to leave the shipment with a neighbour (only with your prior authorisation). Alternatively, a notification will be left and a second delivery attempt arranged. Shipments are stored for up to 5 working days on your behalf."
+    },
+    "q9": {
+      "question": "Do you offer recurring delivery routes for businesses?",
+      "answer": "Yes, we set up fixed delivery routes for business clients – daily, weekly, or as needed. This is particularly suitable for companies that regularly send documents, samples, or goods. We provide dedicated couriers who know your routes and requirements."
+    },
+    "q10": {
+      "question": "How do I report damage or loss?",
+      "answer": "Damage or loss must be reported within 24 hours of delivery. Please document the damage with photos and contact our claims department at claims@euro-kurier-su.de or by phone. We process all claims within 5 working days."
+    },
+    "cta": {
+      "title": "Still have questions?",
+      "text": "Our team is happy to help.",
+      "button": "Get in touch"
+    }
+  },
+  "footer": {
+    "tagline": "Fast. Secure. Europe-wide.",
+    "description": "Euro-Kurier-Su GmbH – your reliable partner for express and courier services in Germany and Europe since 2012.",
+    "rights": "© 2024 Euro-Kurier-Su GmbH. All rights reserved.",
+    "links": {
+      "imprint": "Legal Notice",
+      "privacy": "Privacy Policy",
+      "terms": "T&Cs",
+      "cookies": "Cookie Settings"
+    },
+    "sections": {
+      "company": "Company",
+      "services": "Services",
+      "contact": "Contact",
+      "legal": "Legal"
+    },
+    "social": {
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram"
+    }
+  },
+  "imprint": {
+    "title": "Legal Notice",
+    "subtitle": "Mandatory information pursuant to § 5 TMG",
+    "company": {
+      "label": "Company Name",
+      "name": "Euro-Kurier-Su GmbH",
+      "legal": "Limited Liability Company"
+    },
+    "address": {
+      "label": "Address",
+      "street": "Berliner Allee 42",
+      "zip": "10115",
+      "city": "Berlin",
+      "country": "Germany"
+    },
+    "contact": {
+      "label": "Contact",
+      "phone": "+49 30 123 456 789",
+      "fax": "+49 30 123 456 790",
+      "email": "info@euro-kurier-su.de"
+    },
+    "registration": {
+      "label": "Commercial Register",
+      "court": "Amtsgericht Berlin-Charlottenburg",
+      "number": "HRB 198745 B"
+    },
+    "vat": {
+      "label": "VAT Identification Number",
+      "number": "DE 298 765 432"
+    },
+    "director": {
+      "label": "Managing Director",
+      "name": "Sergei Ulrich"
+    },
+    "responsible": {
+      "label": "Responsible for content pursuant to § 55 Para. 2 RStV",
+      "name": "Sergei Ulrich",
+      "address": "Berliner Allee 42, 10115 Berlin"
+    },
+    "dispute": {
+      "title": "Dispute Resolution",
+      "text": "The European Commission provides a platform for online dispute resolution (ODR): https://ec.europa.eu/consumers/odr/. Our email address can be found above in the legal notice. We are not willing or obliged to participate in dispute resolution proceedings before a consumer arbitration board."
+    },
+    "liability": {
+      "content": {
+        "title": "Liability for Content",
+        "text": "As a service provider, we are responsible for our own content on these pages in accordance with general laws pursuant to § 7 Para. 1 TMG. According to §§ 8 to 10 TMG, however, we as a service provider are not obliged to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity."
+      },
+      "links": {
+        "title": "Liability for Links",
+        "text": "Our website contains links to external third-party websites over whose content we have no control. Therefore, we cannot accept any liability for these external contents. The respective provider or operator of the linked pages is always responsible for the content of those pages."
+      }
+    },
+    "copyright": {
+      "title": "Copyright",
+      "text": "The content and works created by the site operators on these pages are subject to German copyright law. Duplication, processing, distribution, and any form of exploitation outside the limits of copyright law require the written consent of the respective author or creator."
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "subtitle": "Information pursuant to GDPR",
+    "lastUpdated": "Last updated: January 2024",
+    "intro": {
+      "title": "1. Introduction and Controller",
+      "text": "We take the protection of your personal data very seriously. This privacy policy informs you about the processing of personal data on our website www.euro-kurier-su.de in accordance with the General Data Protection Regulation (GDPR) and the German Federal Data Protection Act (BDSG).\n\nController within the meaning of the GDPR:\nEuro-Kurier-Su GmbH\nBerliner Allee 42\n10115 Berlin\nPhone: +49 30 123 456 789\nEmail: datenschutz@euro-kurier-su.de"
+    },
+    "dataTypes": {
+      "title": "2. Types of Data Processed",
+      "text": "We process the following categories of personal data:\n- Master data (name, address, company)\n- Contact data (email address, phone number)\n- Usage data (pages visited, access times, browser information)\n- Communication data (messages, enquiries)\n- Contract data (order history, invoice data for business clients)\n- Metadata (IP addresses, timestamps, technical device data)"
+    },
+    "purposes": {
+      "title": "3. Purposes and Legal Bases",
+      "text": "We process your data for the following purposes:\n\na) Contract performance (Art. 6 Para. 1 lit. b GDPR): Processing orders, coordinating deliveries, customer communication.\n\nb) Legitimate interests (Art. 6 Para. 1 lit. f GDPR): Improving our services, website security, fraud prevention.\n\nc) Consent (Art. 6 Para. 1 lit. a GDPR): Newsletter delivery, analytics cookies, marketing cookies (only with express consent).\n\nd) Legal obligation (Art. 6 Para. 1 lit. c GDPR): Tax retention obligations, statutory reporting requirements."
+    },
+    "retention": {
+      "title": "4. Storage Duration",
+      "text": "We store your data only for as long as is necessary for the respective purpose:\n- Contact enquiries: 2 years after last contact\n- Contract data (business clients): 10 years (statutory retention obligation)\n- Server logs: 30 days\n- Analytics cookies: 26 months (Google Analytics)\n- Session cookies: Until end of browser session\n\nAfter the storage period expires, data is automatically deleted or anonymised."
+    },
+    "cookies": {
+      "title": "5. Cookies and Tracking",
+      "necessary": "Necessary cookies: These are technically required and cannot be disabled. They include session IDs, CSRF tokens, and language preferences.",
+      "analytics": "Analytics cookies (Google Analytics): Only with your consent. We use Google Analytics 4 with IP anonymisation. Google LLC processes data in the USA on the basis of standard contractual clauses pursuant to Art. 46 GDPR.",
+      "marketing": "Marketing cookies: Only with your explicit consent. These cookies enable personalised advertising on third-party platforms."
+    },
+    "thirdParty": {
+      "title": "6. Third Parties and Data Transfer",
+      "text": "We use the following third-party services:\n\n- Google Analytics 4 (Google LLC, USA): Web analytics – only with consent. Privacy policy: https://policies.google.com/privacy\n- Google Fonts (Google LLC, USA): Font CDN. When accessing our website, fonts are loaded from Google servers. Your IP address is transmitted to Google in the process. Legal basis: Art. 6 Para. 1 lit. f GDPR.\n- Hosting provider: Our website is hosted with a European hosting provider. No transfer to third countries takes place.\n\nWe have concluded data processing agreements with all third-party providers pursuant to Art. 28 GDPR."
+    },
+    "rights": {
+      "title": "7. Your Rights",
+      "text": "As a data subject, you have the following rights:\n\n- Right of access (Art. 15 GDPR): You may request information about the data stored about you.\n- Right to rectification (Art. 16 GDPR): You may request the correction of inaccurate data.\n- Right to erasure (Art. 17 GDPR): You may request the deletion of your data, provided no statutory retention obligation applies.\n- Right to restriction (Art. 18 GDPR): You may request restriction of processing.\n- Data portability (Art. 20 GDPR): You may receive your data in a structured format.\n- Right to object (Art. 21 GDPR): You may object to processing based on legitimate interests.\n- Withdrawal of consent: You may withdraw consent given at any time with effect for the future.\n\nTo exercise your rights, contact: datenschutz@euro-kurier-su.de"
+    },
+    "complaint": {
+      "title": "8. Right to Lodge a Complaint with a Supervisory Authority",
+      "text": "You have the right to lodge a complaint with a data protection supervisory authority regarding the processing of your personal data. The competent supervisory authority for Berlin is:\n\nBerliner Beauftragte für Datenschutz und Informationsfreiheit\nMajestätsweg 9-11\n13156 Berlin\nPhone: +49 30 13889-0\nEmail: mailbox@datenschutz-berlin.de\nWebsite: www.datenschutz-berlin.de"
+    },
+    "security": {
+      "title": "9. Data Security",
+      "text": "We use technical and organisational security measures to protect your data against accidental or intentional manipulation, loss, or unauthorised access. Our security measures are continuously improved in line with technological developments. Data transmission on our website is encrypted via HTTPS/TLS."
+    },
+    "changes": {
+      "title": "10. Changes to this Privacy Policy",
+      "text": "We reserve the right to adapt this privacy policy to comply with current legal requirements or changes to our services. The current version is always available on our website. Please check the content of the privacy policy regularly."
+    }
+  }
+}

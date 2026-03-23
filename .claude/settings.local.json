@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const {execSync} = require\\(''child_process''\\); try { const r = execSync\\(''npm show @angular/core version'', {encoding:''utf8''}\\); console.log\\(''latest:'', r.trim\\(\\)\\); } catch\\(e\\) { console.log\\(e.message\\); }\")",
+      "Bash(npm install:*)"
+    ]
+  }
+}

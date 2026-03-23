@@ -1,0 +1,148 @@
+@if (showBanner()) {
+  <div
+    class="cookie-banner"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="cookie-banner-title"
+    aria-describedby="cookie-banner-desc"
+    [@slideUp]
+  >
+    @if (!showCustomize()) {
+      <!-- Main consent view -->
+      <div class="cookie-banner__main" [@scaleIn]>
+        <div class="cookie-banner__header">
+          <div class="cookie-banner__icon" aria-hidden="true">🍪</div>
+          <h2 id="cookie-banner-title" class="cookie-banner__title">
+            {{ 'cookies.title' | t }}
+          </h2>
+        </div>
+
+        <p id="cookie-banner-desc" class="cookie-banner__desc">
+          {{ 'cookies.description' | t }}
+          <a
+            class="cookie-banner__privacy-link"
+            routerLink="/privacy"
+            [attr.aria-label]="'cookies.learnMore' | t"
+          >
+            {{ 'cookies.learnMore' | t }}
+          </a>
+        </p>
+
+        <div class="cookie-banner__actions">
+          <button
+            class="btn btn--primary"
+            (click)="acceptAll()"
+            type="button"
+          >
+            {{ 'cookies.acceptAll' | t }}
+          </button>
+
+          <button
+            class="btn btn--outline"
+            (click)="declineAll()"
+            type="button"
+          >
+            {{ 'cookies.declineAll' | t }}
+          </button>
+
+          <button
+            class="cookie-banner__customize-btn"
+            (click)="openCustomize()"
+            type="button"
+          >
+            {{ 'cookies.customize' | t }}
+          </button>
+        </div>
+      </div>
+    } @else {
+      <!-- Customize view -->
+      <div class="cookie-banner__customize" [@scaleIn]>
+        <div class="cookie-banner__header">
+          <button
+            class="cookie-banner__back-btn"
+            (click)="backToBanner()"
+            type="button"
+            aria-label="Zurück"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+          </button>
+          <h2 class="cookie-banner__title">{{ 'cookies.details' | t }}</h2>
+        </div>
+
+        <!-- Necessary (always on) -->
+        <div class="cookie-banner__category">
+          <div class="cookie-banner__category-header">
+            <div class="cookie-banner__category-info">
+              <span class="cookie-banner__category-name">{{ 'cookies.necessary' | t }}</span>
+              <span class="cookie-banner__category-desc">{{ 'cookies.necessary_desc' | t }}</span>
+            </div>
+            <div class="cookie-banner__toggle cookie-banner__toggle--locked" aria-label="Notwendige Cookies sind immer aktiv">
+              <span class="cookie-banner__toggle-label">{{ 'common.yes' | t }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Analytics -->
+        <div class="cookie-banner__category">
+          <div class="cookie-banner__category-header">
+            <div class="cookie-banner__category-info">
+              <span class="cookie-banner__category-name">{{ 'cookies.analytics' | t }}</span>
+              <span class="cookie-banner__category-desc">{{ 'cookies.analytics_desc' | t }}</span>
+            </div>
+            <button
+              class="cookie-banner__toggle"
+              [class.cookie-banner__toggle--on]="analyticsEnabled()"
+              (click)="toggleAnalytics()"
+              type="button"
+              role="switch"
+              [attr.aria-checked]="analyticsEnabled()"
+              [attr.aria-label]="('cookies.analytics' | t)"
+            >
+              <span class="cookie-banner__toggle-thumb"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Marketing -->
+        <div class="cookie-banner__category">
+          <div class="cookie-banner__category-header">
+            <div class="cookie-banner__category-info">
+              <span class="cookie-banner__category-name">{{ 'cookies.marketing' | t }}</span>
+              <span class="cookie-banner__category-desc">{{ 'cookies.marketing_desc' | t }}</span>
+            </div>
+            <button
+              class="cookie-banner__toggle"
+              [class.cookie-banner__toggle--on]="marketingEnabled()"
+              (click)="toggleMarketing()"
+              type="button"
+              role="switch"
+              [attr.aria-checked]="marketingEnabled()"
+              [attr.aria-label]="('cookies.marketing' | t)"
+            >
+              <span class="cookie-banner__toggle-thumb"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="cookie-banner__actions">
+          <button
+            class="btn btn--primary"
+            (click)="saveCustom()"
+            type="button"
+          >
+            {{ 'cookies.save' | t }}
+          </button>
+          <button
+            class="btn btn--outline"
+            (click)="acceptAll()"
+            type="button"
+          >
+            {{ 'cookies.acceptAll' | t }}
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+}

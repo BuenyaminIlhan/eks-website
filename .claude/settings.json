@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm start:*)",
+      "Bash(npx ng:*)",
+      "Bash(netstat -ano)",
+      "Bash(taskkill /PID 30684 /F)",
+      "Bash(cmd /c \"taskkill /PID 30684 /F\")",
+      "Bash(cmd /c \"taskkill /PID 30684 /F && echo SUCCESS || echo FAILED\")",
+      "Bash(powershell -Command \"Stop-Process -Id 30684 -Force; Write-Host ''Done''\")",
+      "Bash(gh auth:*)"
+    ]
+  }
+}

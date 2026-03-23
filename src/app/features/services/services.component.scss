@@ -1,0 +1,247 @@
+@use '../../../assets/styles/variables' as *;
+@use '../../../assets/styles/mixins' as *;
+
+// Page Header (shared pattern)
+.page-header {
+  position: relative;
+  background-color: $color-dark;
+  padding: 8rem 0 5rem;
+  overflow: hidden;
+
+  &__overlay {
+    @include absolute-overlay;
+    background: linear-gradient(135deg, rgba(15,31,46,0.96) 0%, rgba(57,130,170,0.18) 100%);
+    z-index: 0;
+  }
+
+  &__container {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__content {
+    max-width: 640px;
+  }
+
+  &__title {
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: $font-black;
+    color: $color-white;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  &__subtitle {
+    font-size: clamp(1rem, 1.75vw, 1.125rem);
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.7;
+    max-width: 560px;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Services Detail Grid
+.services-detail {
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+
+    @include respond-to('md') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to('lg') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+.service-detail-card {
+  position: relative;
+  background: $color-white;
+  border-radius: $radius-lg;
+  padding: 2rem;
+  box-shadow: $shadow-sm;
+  border: 1px solid $color-gray-200;
+  transition: transform $transition-base, box-shadow $transition-base, border-color $transition-base;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: $shadow-lg;
+    border-color: rgba(57, 130, 170, 0.2);
+  }
+
+  &--highlight {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 1px $color-primary, $shadow-md;
+
+    &:hover {
+      box-shadow: 0 0 0 2px $color-primary, $shadow-lg;
+    }
+  }
+
+  &__badge {
+    position: absolute;
+    top: -0.875rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: $color-accent;
+    color: $color-dark;
+    font-size: 0.75rem;
+    font-weight: $font-bold;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.875rem;
+    border-radius: $radius-full;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(240, 192, 64, 0.4);
+  }
+
+  &__icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+
+  &__title {
+    font-size: 1.125rem;
+    font-weight: $font-bold;
+    color: $color-dark;
+    margin-bottom: 0.75rem;
+  }
+
+  &__desc {
+    font-size: 0.9rem;
+    color: $color-text-muted;
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+
+  &__features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex: 1;
+  }
+
+  &__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: $color-text;
+    line-height: 1.5;
+
+    svg {
+      color: $color-primary;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+  }
+
+  &--highlight &__feature svg {
+    color: $color-primary;
+  }
+
+  &__cta {
+    width: 100%;
+    justify-content: center;
+    margin-top: auto;
+  }
+}
+
+// Features strip
+.features-strip {
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    @include respond-to('sm') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to('lg') {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}
+
+.feature-box {
+  background: $color-white;
+  border-radius: $radius-lg;
+  padding: 1.75rem;
+  text-align: center;
+  box-shadow: $shadow-sm;
+  border: 1px solid $color-gray-200;
+  transition: transform $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: $shadow-md;
+  }
+
+  &__icon {
+    font-size: 2.25rem;
+    margin-bottom: 0.875rem;
+    line-height: 1;
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: $font-bold;
+    color: $color-dark;
+    margin-bottom: 0.5rem;
+  }
+
+  &__desc {
+    font-size: 0.875rem;
+    color: $color-text-muted;
+    line-height: 1.6;
+  }
+}
+
+// CTA
+.services-cta {
+  &__inner {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  &__title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: $font-black;
+    color: $color-white;
+    margin-bottom: 0.875rem;
+    letter-spacing: -0.015em;
+  }
+
+  &__desc {
+    font-size: 1.0625rem;
+    color: rgba(255, 255, 255, 0.65);
+    margin-bottom: 2rem;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+}

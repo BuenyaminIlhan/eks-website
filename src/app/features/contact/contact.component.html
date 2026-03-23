@@ -1,0 +1,278 @@
+<!-- Page Header -->
+<section class="page-header" aria-label="Kontakt">
+  <div class="page-header__overlay" aria-hidden="true"></div>
+  <div class="container page-header__container">
+    <div class="page-header__content" appAnimateOnScroll>
+      <span class="eyebrow" style="color: #d4e8f4; background: rgba(212,232,244,0.12); border-left-color: #d4e8f4;">
+        {{ 'nav.contact' | t }}
+      </span>
+      <h1 class="page-header__title">{{ 'contact.title' | t }}</h1>
+      <p class="page-header__subtitle">{{ 'contact.subtitle' | t }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="section contact-section" aria-labelledby="contact-form-heading">
+  <div class="container">
+    <div class="contact-section__inner">
+
+      <!-- Contact Form -->
+      <div class="contact-form-wrapper" appAnimateOnScroll>
+        <h2 id="contact-form-heading" class="contact-form-wrapper__title">
+          Schreiben Sie uns
+        </h2>
+
+        @if (isSuccess) {
+          <!-- Success State -->
+          <div class="form-feedback form-feedback--success" role="alert" [@fadeInUp]>
+            <div class="form-feedback__icon" aria-hidden="true">✅</div>
+            <h3 class="form-feedback__title">{{ 'contact.form.success' | t }}</h3>
+            <button class="btn btn--outline" (click)="resetForm()" type="button">
+              Neue Nachricht senden
+            </button>
+          </div>
+        } @else if (isError) {
+          <!-- Error State -->
+          <div class="form-feedback form-feedback--error" role="alert" [@fadeInUp]>
+            <div class="form-feedback__icon" aria-hidden="true">❌</div>
+            <h3 class="form-feedback__title">{{ 'contact.form.error' | t }}</h3>
+            <button class="btn btn--primary" (click)="resetForm()" type="button">
+              Erneut versuchen
+            </button>
+          </div>
+        } @else {
+          <!-- Form -->
+          <form
+            class="contact-form"
+            [formGroup]="contactForm"
+            (ngSubmit)="onSubmit()"
+            novalidate
+            aria-label="Kontaktformular"
+          >
+            <div class="form-row form-row--2">
+              <!-- Name -->
+              <div class="form-group" [class.form-group--error]="isFieldInvalid('name')" [class.form-group--valid]="isFieldValid('name')">
+                <label class="form-label" for="contact-name">
+                  {{ 'contact.form.name' | t }}
+                  <span class="form-label__required" aria-label="Pflichtfeld">*</span>
+                </label>
+                <input
+                  id="contact-name"
+                  class="form-control"
+                  type="text"
+                  formControlName="name"
+                  [placeholder]="'contact.form.namePlaceholder' | t"
+                  autocomplete="name"
+                  [attr.aria-describedby]="isFieldInvalid('name') ? 'name-error' : null"
+                  [attr.aria-invalid]="isFieldInvalid('name')"
+                />
+                @if (isFieldInvalid('name')) {
+                  <p id="name-error" class="form-error" role="alert">{{ getFieldError('name') }}</p>
+                }
+              </div>
+
+              <!-- Email -->
+              <div class="form-group" [class.form-group--error]="isFieldInvalid('email')" [class.form-group--valid]="isFieldValid('email')">
+                <label class="form-label" for="contact-email">
+                  {{ 'contact.form.email' | t }}
+                  <span class="form-label__required" aria-label="Pflichtfeld">*</span>
+                </label>
+                <input
+                  id="contact-email"
+                  class="form-control"
+                  type="email"
+                  formControlName="email"
+                  [placeholder]="'contact.form.emailPlaceholder' | t"
+                  autocomplete="email"
+                  [attr.aria-describedby]="isFieldInvalid('email') ? 'email-error' : null"
+                  [attr.aria-invalid]="isFieldInvalid('email')"
+                />
+                @if (isFieldInvalid('email')) {
+                  <p id="email-error" class="form-error" role="alert">{{ getFieldError('email') }}</p>
+                }
+              </div>
+            </div>
+
+            <div class="form-row form-row--2">
+              <!-- Company -->
+              <div class="form-group">
+                <label class="form-label" for="contact-company">
+                  {{ 'contact.form.company' | t }}
+                  <span class="form-label__optional">({{ 'common.optional' | t }})</span>
+                </label>
+                <input
+                  id="contact-company"
+                  class="form-control"
+                  type="text"
+                  formControlName="company"
+                  [placeholder]="'contact.form.companyPlaceholder' | t"
+                  autocomplete="organization"
+                />
+              </div>
+
+              <!-- Phone -->
+              <div class="form-group">
+                <label class="form-label" for="contact-phone">
+                  {{ 'contact.form.phone' | t }}
+                  <span class="form-label__optional">({{ 'common.optional' | t }})</span>
+                </label>
+                <input
+                  id="contact-phone"
+                  class="form-control"
+                  type="tel"
+                  formControlName="phone"
+                  [placeholder]="'contact.form.phonePlaceholder' | t"
+                  autocomplete="tel"
+                />
+              </div>
+            </div>
+
+            <!-- Message -->
+            <div class="form-group" [class.form-group--error]="isFieldInvalid('message')" [class.form-group--valid]="isFieldValid('message')">
+              <label class="form-label" for="contact-message">
+                {{ 'contact.form.message' | t }}
+                <span class="form-label__required" aria-label="Pflichtfeld">*</span>
+              </label>
+              <textarea
+                id="contact-message"
+                class="form-control form-control--textarea"
+                formControlName="message"
+                [placeholder]="'contact.form.messagePlaceholder' | t"
+                rows="5"
+                [attr.aria-describedby]="isFieldInvalid('message') ? 'message-error' : null"
+                [attr.aria-invalid]="isFieldInvalid('message')"
+              ></textarea>
+              @if (isFieldInvalid('message')) {
+                <p id="message-error" class="form-error" role="alert">{{ getFieldError('message') }}</p>
+              }
+              <span class="form-hint">{{ contactForm.get('message')?.value?.length || 0 }} / min. 20 Zeichen</span>
+            </div>
+
+            <!-- Consent -->
+            <div class="form-group form-group--checkbox" [class.form-group--error]="isFieldInvalid('consent')">
+              <label class="form-checkbox-label">
+                <input
+                  class="form-checkbox"
+                  type="checkbox"
+                  formControlName="consent"
+                  [attr.aria-describedby]="isFieldInvalid('consent') ? 'consent-error' : null"
+                  [attr.aria-invalid]="isFieldInvalid('consent')"
+                />
+                <span class="form-checkbox-custom" aria-hidden="true"></span>
+                <span class="form-checkbox-text">
+                  {{ 'contact.form.consent' | t }}
+                  <a routerLink="/privacy" class="form-consent-link">{{ 'nav.privacy' | t }}</a>
+                  <span class="form-label__required" aria-label="Pflichtfeld">*</span>
+                </span>
+              </label>
+              @if (isFieldInvalid('consent')) {
+                <p id="consent-error" class="form-error" role="alert">{{ getFieldError('consent') }}</p>
+              }
+            </div>
+
+            <!-- Submit -->
+            <div class="form-submit">
+              <button
+                class="btn btn--primary btn--lg form-submit__btn"
+                type="submit"
+                [disabled]="isSubmitting"
+                [attr.aria-busy]="isSubmitting"
+              >
+                @if (isSubmitting) {
+                  <span class="form-submit__spinner" aria-hidden="true"></span>
+                  {{ 'contact.form.submitting' | t }}
+                } @else {
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <line x1="22" y1="2" x2="11" y2="13"/>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                  </svg>
+                  {{ 'contact.form.submit' | t }}
+                }
+              </button>
+              <p class="form-submit__note">* {{ 'contact.form.required' | t }}</p>
+            </div>
+          </form>
+        }
+      </div>
+
+      <!-- Contact Info Sidebar -->
+      <aside class="contact-info" appAnimateOnScroll [animationDelay]="120" aria-label="Kontaktinformationen">
+        <h2 class="contact-info__title">{{ 'contact.info.title' | t }}</h2>
+
+        <div class="contact-info__items">
+          <!-- Address -->
+          <div class="contact-info__item">
+            <div class="contact-info__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div class="contact-info__content">
+              <span class="contact-info__label">{{ 'contact.info.address.label' | t }}</span>
+              <address class="contact-info__value">{{ 'contact.info.address.value' | t }}</address>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="contact-info__item">
+            <div class="contact-info__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.64A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/>
+              </svg>
+            </div>
+            <div class="contact-info__content">
+              <span class="contact-info__label">{{ 'contact.info.phone.label' | t }}</span>
+              <a class="contact-info__value contact-info__value--link" href="tel:+493012345678">
+                {{ 'contact.info.phone.value' | t }}
+              </a>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="contact-info__item">
+            <div class="contact-info__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="contact-info__content">
+              <span class="contact-info__label">{{ 'contact.info.email.label' | t }}</span>
+              <a class="contact-info__value contact-info__value--link" href="mailto:info@euro-kurier-su.de">
+                {{ 'contact.info.email.value' | t }}
+              </a>
+            </div>
+          </div>
+
+          <!-- Hours -->
+          <div class="contact-info__item">
+            <div class="contact-info__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div class="contact-info__content">
+              <span class="contact-info__label">{{ 'contact.info.hours.label' | t }}</span>
+              <div class="contact-info__hours">
+                <span>{{ 'contact.info.hours.weekdays' | t }}</span>
+                <span>{{ 'contact.info.hours.saturday' | t }}</span>
+                <span>{{ 'contact.info.hours.sunday' | t }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Response time badge -->
+        <div class="contact-info__badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Antwort innerhalb von 24 Stunden garantiert
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>

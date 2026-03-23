@@ -1,0 +1,172 @@
+<!-- Page Header -->
+<section class="page-header" aria-label="Über uns">
+  <div class="page-header__overlay" aria-hidden="true"></div>
+  <div class="container page-header__container">
+    <div class="page-header__content" appAnimateOnScroll>
+      <span class="eyebrow" style="color: #d4e8f4; background: rgba(212,232,244,0.12); border-left-color: #d4e8f4;">
+        {{ 'nav.about' | t }}
+      </span>
+      <h1 class="page-header__title">{{ 'about.title' | t }}</h1>
+      <p class="page-header__subtitle">{{ 'about.subtitle' | t }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="about-stats" aria-labelledby="about-stats-heading">
+  <h2 id="about-stats-heading" class="visually-hidden">Kennzahlen</h2>
+  <div class="container">
+    <div class="about-stats__grid" role="list">
+      @for (stat of stats; track stat.labelKey; let i = $index) {
+        <div class="about-stat" role="listitem" appAnimateOnScroll [animationDelay]="i * 80">
+          <span class="about-stat__value">{{ stat.valueKey | t }}</span>
+          <span class="about-stat__label">{{ stat.labelKey | t }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Story Section -->
+<section class="section about-story" aria-labelledby="about-story-heading">
+  <div class="container">
+    <div class="about-story__inner">
+      <div class="about-story__text" appAnimateOnScroll>
+        <span class="eyebrow">{{ 'about.story.title' | t }}</span>
+        <h2 id="about-story-heading" class="heading-xl">{{ 'about.story.title' | t }}</h2>
+        <div class="about-story__paragraphs prose">
+          @for (paragraph of ('about.story.text' | t).split('\n\n'); track $index) {
+            <p>{{ paragraph }}</p>
+          }
+        </div>
+        <a class="btn btn--primary" routerLink="/contact">
+          {{ 'common.requestQuote' | t }}
+        </a>
+      </div>
+
+      <div class="about-story__timeline" appAnimateOnScroll [animationDelay]="120">
+        <h3 class="about-story__timeline-heading">Meilensteine</h3>
+        <div class="timeline">
+          @for (item of timeline; track item.year) {
+            <div class="timeline__item">
+              <div class="timeline__year">{{ item.year }}</div>
+              <div class="timeline__connector" aria-hidden="true">
+                <div class="timeline__dot"></div>
+                <div class="timeline__line"></div>
+              </div>
+              <div class="timeline__content">
+                <p class="timeline__text">{{ item.event }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Values Section -->
+<section class="section section--alt about-values" aria-labelledby="about-values-heading">
+  <div class="container">
+    <div appAnimateOnScroll>
+      <app-section-title
+        id="about-values-heading"
+        [title]="'about.values.title' | t"
+        eyebrow="Werte"
+        align="center"
+      />
+    </div>
+
+    <div class="about-values__grid">
+      @for (value of values; track value.titleKey; let i = $index) {
+        <article
+          class="value-card"
+          appAnimateOnScroll
+          [animationDelay]="i * 80"
+        >
+          <div class="value-card__icon" aria-hidden="true">{{ value.icon }}</div>
+          <h3 class="value-card__title">{{ value.titleKey | t }}</h3>
+          <p class="value-card__desc">{{ value.descKey | t }}</p>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Team / Certifications teaser -->
+<section class="section about-team" aria-labelledby="about-team-heading">
+  <div class="container">
+    <div appAnimateOnScroll>
+      <app-section-title
+        id="about-team-heading"
+        [title]="'about.team.title' | t"
+        [subtitle]="'about.team.subtitle' | t"
+        align="center"
+      />
+    </div>
+
+    <div class="about-team__grid">
+      <!-- Team member cards (representative) -->
+      <article class="team-card" appAnimateOnScroll [animationDelay]="0">
+        <div class="team-card__avatar" aria-hidden="true">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="32" fill="rgba(57,130,170,0.12)"/>
+            <circle cx="32" cy="26" r="10" fill="#3982AA" opacity="0.7"/>
+            <ellipse cx="32" cy="52" rx="16" ry="10" fill="#3982AA" opacity="0.4"/>
+          </svg>
+        </div>
+        <h3 class="team-card__name">Sergei Ulrich</h3>
+        <p class="team-card__role">Geschäftsführer & Gründer</p>
+        <p class="team-card__bio">15+ Jahre Erfahrung in der Logistikbranche. Gründer und Visionär hinter EKS.</p>
+      </article>
+
+      <article class="team-card" appAnimateOnScroll [animationDelay]="80">
+        <div class="team-card__avatar" aria-hidden="true">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="32" fill="rgba(57,130,170,0.12)"/>
+            <circle cx="32" cy="26" r="10" fill="#3982AA" opacity="0.7"/>
+            <ellipse cx="32" cy="52" rx="16" ry="10" fill="#3982AA" opacity="0.4"/>
+          </svg>
+        </div>
+        <h3 class="team-card__name">Maria Kovacs</h3>
+        <p class="team-card__role">Leiterin Operations</p>
+        <p class="team-card__bio">Koordiniert täglich über 200 Lieferungen mit Präzision und Leidenschaft.</p>
+      </article>
+
+      <article class="team-card" appAnimateOnScroll [animationDelay]="160">
+        <div class="team-card__avatar" aria-hidden="true">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="32" fill="rgba(57,130,170,0.12)"/>
+            <circle cx="32" cy="26" r="10" fill="#3982AA" opacity="0.7"/>
+            <ellipse cx="32" cy="52" rx="16" ry="10" fill="#3982AA" opacity="0.4"/>
+          </svg>
+        </div>
+        <h3 class="team-card__name">Thomas Berger</h3>
+        <p class="team-card__role">Head of Technology</p>
+        <p class="team-card__bio">Entwickler unseres preisgekrönten Tracking-Systems und digitaler Infrastruktur.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section section--dark about-cta" aria-labelledby="about-cta-heading">
+  <div class="container">
+    <div class="about-cta__inner" appAnimateOnScroll>
+      <h2 id="about-cta-heading" class="about-cta__title">
+        Werden Sie Teil unserer Erfolgsgeschichte
+      </h2>
+      <p class="about-cta__desc">
+        Vertrauen Sie auf über 12 Jahre Erfahrung und mehr als 500.000 erfolgreiche Lieferungen.
+      </p>
+      <div class="about-cta__actions">
+        <a class="btn btn--accent btn--lg" routerLink="/contact">
+          {{ 'common.requestQuote' | t }}
+        </a>
+        <a class="btn btn--secondary btn--lg" routerLink="/services">
+          {{ 'nav.services' | t }}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,164 @@
+<footer class="footer" role="contentinfo">
+  <div class="footer__main">
+    <div class="container">
+      <div class="footer__grid">
+
+        <!-- Brand Column -->
+        <div class="footer__col footer__col--brand">
+          <a class="footer__logo" routerLink="/home" aria-label="EKS Euro-Kurier-Su – Zur Startseite">
+            <svg
+              class="footer__logo-icon"
+              width="52"
+              height="34"
+              viewBox="0 0 80 50"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <line x1="2" y1="20" x2="16" y2="20" stroke="#3982AA" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="4" y1="26" x2="16" y2="26" stroke="#3982AA" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+              <line x1="6" y1="32" x2="16" y2="32" stroke="#3982AA" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+              <rect x="16" y="10" width="44" height="30" rx="2" fill="#3982AA"/>
+              <path d="M60 10 L60 40 L72 40 L76 32 L76 22 L68 10 Z" fill="#3982AA"/>
+              <path d="M61 13 L67.5 13 L73 22 L61 22 Z" fill="rgba(255,255,255,0.75)"/>
+              <rect x="18" y="14" width="12" height="10" rx="1.5" fill="rgba(255,255,255,0.6)"/>
+              <rect x="33" y="14" width="12" height="10" rx="1.5" fill="rgba(255,255,255,0.6)"/>
+              <line x1="30" y1="10" x2="30" y2="40" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+              <rect x="73" y="22" width="5" height="6" rx="1" fill="#f0c040"/>
+              <circle cx="27" cy="41" r="7" fill="#1a2b3c"/>
+              <circle cx="27" cy="41" r="4.5" fill="#3982AA"/>
+              <circle cx="27" cy="41" r="2" fill="white"/>
+              <circle cx="62" cy="41" r="7" fill="#1a2b3c"/>
+              <circle cx="62" cy="41" r="4.5" fill="#3982AA"/>
+              <circle cx="62" cy="41" r="2" fill="white"/>
+            </svg>
+            <div class="footer__logo-text">
+              <span class="footer__logo-eks">EKS</span>
+              <span class="footer__logo-tagline">EURO-KURIER-SU</span>
+            </div>
+          </a>
+
+          <p class="footer__brand-desc">{{ 'footer.description' | t }}</p>
+
+          <div class="footer__contact-quick">
+            <a
+              href="tel:+493012345678"
+              class="footer__contact-item"
+              aria-label="Telefon: +49 30 123 456 789"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.64A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/>
+              </svg>
+              +49 30 123 456 789
+            </a>
+            <a
+              href="mailto:info@euro-kurier-su.de"
+              class="footer__contact-item"
+              aria-label="E-Mail: info@euro-kurier-su.de"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              info@euro-kurier-su.de
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links Column -->
+        <div class="footer__col">
+          <h3 class="footer__col-heading">{{ 'footer.sections.company' | t }}</h3>
+          <ul class="footer__link-list" role="list">
+            @for (link of quickLinks; track link.path) {
+              <li>
+                <a class="footer__link" [routerLink]="link.path">
+                  {{ link.key | t }}
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <!-- Services Column -->
+        <div class="footer__col">
+          <h3 class="footer__col-heading">{{ 'footer.sections.services' | t }}</h3>
+          <ul class="footer__link-list" role="list">
+            @for (link of serviceLinks; track link.key) {
+              <li>
+                <a class="footer__link" [routerLink]="link.path">
+                  {{ link.key | t }}
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <!-- Contact Column -->
+        <div class="footer__col">
+          <h3 class="footer__col-heading">{{ 'footer.sections.contact' | t }}</h3>
+          <address class="footer__address">
+            <div class="footer__address-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              <span>Berliner Allee 42<br>10115 Berlin</span>
+            </div>
+            <div class="footer__address-item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <span>Mo–Fr: 07:00–20:00 Uhr<br>Sa: 08:00–14:00 Uhr</span>
+            </div>
+          </address>
+
+          <a
+            class="footer__cta btn btn--primary btn--sm"
+            routerLink="/contact"
+          >
+            {{ 'common.requestQuote' | t }}
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="footer__bottom">
+    <div class="container">
+      <div class="footer__bottom-inner">
+        <p class="footer__copyright">
+          {{ 'footer.rights' | t }}
+        </p>
+        <nav class="footer__legal-nav" aria-label="Rechtliche Links">
+          <a class="footer__legal-link" routerLink="/imprint">{{ 'footer.links.imprint' | t }}</a>
+          <span aria-hidden="true">·</span>
+          <a class="footer__legal-link" routerLink="/privacy">{{ 'footer.links.privacy' | t }}</a>
+          <span aria-hidden="true">·</span>
+          <button
+            class="footer__legal-link footer__legal-link--btn"
+            (click)="openCookieSettings()"
+            type="button"
+          >
+            {{ 'footer.links.cookies' | t }}
+          </button>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back to top -->
+  <button
+    class="footer__back-to-top"
+    (click)="scrollToTop()"
+    [attr.aria-label]="'common.backToTop' | t"
+    type="button"
+  >
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
+</footer>
