@@ -171,17 +171,44 @@
               }
             </div>
 
+            <!-- Honeypot (für Bots — von echten Nutzern nicht sichtbar) -->
+            <div class="form-honeypot" aria-hidden="true">
+              <label for="contact-website">Website</label>
+              <input
+                id="contact-website"
+                type="text"
+                formControlName="website"
+                autocomplete="off"
+                tabindex="-1"
+              />
+            </div>
+
+            <!-- reCAPTCHA v2 -->
+            <div class="form-group form-recaptcha">
+              <div id="recaptcha-container"></div>
+              @if (recaptchaError()) {
+                <p class="form-error" role="alert">
+                  Bitte bestätigen Sie, dass Sie kein Roboter sind.
+                </p>
+              }
+            </div>
+
             <!-- Submit -->
             <div class="form-submit">
               <button
                 class="btn btn--primary btn--lg form-submit__btn"
                 type="submit"
-                [disabled]="isSubmitting"
+                [disabled]="isSubmitting || spamProtection.secondsLeft() > 0"
                 [attr.aria-busy]="isSubmitting"
               >
                 @if (isSubmitting) {
                   <span class="form-submit__spinner" aria-hidden="true"></span>
                   {{ 'contact.form.submitting' | t }}
+                } @else if (spamProtection.secondsLeft() > 0) {
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  Bitte warten ({{ spamProtection.secondsLeft() }}s)
                 } @else {
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <line x1="22" y1="2" x2="11" y2="13"/>

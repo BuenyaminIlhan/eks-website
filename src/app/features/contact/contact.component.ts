@@ -3,15 +3,23 @@ import {
   ChangeDetectionStrategy,
   inject,
   OnInit,
+  AfterViewInit,
+  PLATFORM_ID,
   signal,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SeoService } from '../../core/services/seo.service';
 import { TranslationService } from '../../core/services/translation.service';
+import { SpamProtectionService, RECAPTCHA_SITE_KEY } from '../../core/services/spam-protection.service';
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scroll.directive';
 import { fadeInUp } from '../../animations/common.animations';
+
+const EMAILJS_SERVICE_ID  = 'service_q5s3qxf';
+const EMAILJS_TEMPLATE_ID = 'template_rgsiofm';
+const EMAILJS_PUBLIC_KEY  = 'sJC07S6IW594Qb9WS';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -24,20 +32,25 @@ type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, AfterViewInit {
   private readonly fb = inject(FormBuilder);
   private readonly seoService = inject(SeoService);
   private readonly translationService = inject(TranslationService);
+  private readonly platformId = inject(PLATFORM_ID);
+  readonly spamProtection = inject(SpamProtectionService);
 
   readonly formStatus = signal<FormStatus>('idle');
+  readonly recaptchaError = signal(false);
+  readonly recaptchaSiteKey = RECAPTCHA_SITE_KEY;
 
   readonly contactForm = this.fb.nonNullable.group({
-    name: ['', [Validators.required, Validators.minLength(2)]],
-    email: ['', [Validators.required, Validators.email]],
+    name:    ['', [Validators.required, Validators.minLength(2)]],
+    email:   ['', [Validators.required, Validators.email]],
     company: [''],
-    phone: [''],
+    phone:   [''],
     message: ['', [Validators.required, Validators.minLength(20)]],
     consent: [false, [Validators.requiredTrue]],
+    website: [''], // Honeypot
   });
 
   ngOnInit(): void {
@@ -49,6 +62,12 @@ export class ContactComponent implements OnInit {
         : 'Contact EKS Euro-Kurier-Su for a non-binding quote. We respond within 24 hours.',
       canonicalUrl: this.seoService.getPageUrl('contact'),
     });
+    this.spamProtection.initCooldownIfActive();
+  }
+
+  ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.spamProtection.renderRecaptcha('recaptcha-container');
   }
 
   isFieldInvalid(fieldName: string): boolean {
@@ -69,18 +88,17 @@ export class ContactComponent implements OnInit {
     const errors = control.errors;
 
     if (errors['required'] || errors['requiredTrue']) {
-      if (fieldName === 'name') return this.translationService.t('contact.form.errors.nameRequired');
-      if (fieldName === 'email') return this.translationService.t('contact.form.errors.emailRequired');
+      if (fieldName === 'name')    return this.translationService.t('contact.form.errors.nameRequired');
+      if (fieldName === 'email')   return this.translationService.t('contact.form.errors.emailRequired');
       if (fieldName === 'message') return this.translationService.t('contact.form.errors.messageRequired');
       if (fieldName === 'consent') return this.translationService.t('contact.form.errors.consentRequired');
     }
     if (errors['minlength']) {
-      if (fieldName === 'name') return this.translationService.t('contact.form.errors.nameMinLength');
+      if (fieldName === 'name')    return this.translationService.t('contact.form.errors.nameMinLength');
       if (fieldName === 'message') return this.translationService.t('contact.form.errors.messageMinLength');
     }
-    if (errors['email']) {
-      return this.translationService.t('contact.form.errors.emailInvalid');
-    }
+    if (errors['email']) return this.translationService.t('contact.form.errors.emailInvalid');
+
     return lang === 'de' ? 'Ungültige Eingabe' : 'Invalid input';
   }
 
@@ -90,36 +108,64 @@ export class ContactComponent implements OnInit {
       return;
     }
 
-    this.formStatus.set('submitting');
+    if (this.spamProtection.isRateLimited()) return;
 
-    // Simulate form submission (replace with real HTTP call in production)
-    setTimeout(() => {
-      // In production, call an API endpoint here:
-      // this.http.post('/api/contact', this.contactForm.value).subscribe(...)
-      const success = Math.random() > 0.1; // 90% success rate for demo
-      if (success) {
-        this.formStatus.set('success');
-        this.contactForm.reset();
-      } else {
-        this.formStatus.set('error');
+    // Honeypot
+    if (this.spamProtection.isHoneypotFilled(this.contactForm.value.website ?? '')) {
+      this.formStatus.set('success');
+      return;
+    }
+
+    // reCAPTCHA
+    const recaptchaToken = this.spamProtection.getRecaptchaToken();
+    if (!recaptchaToken) {
+      this.recaptchaError.set(true);
+      return;
+    }
+    this.recaptchaError.set(false);
+    this.formStatus.set('submitting');
+    this.spamProtection.recordSubmission();
+
+    const { name, email, company, phone, message } = this.contactForm.value;
+
+    fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        service_id:      EMAILJS_SERVICE_ID,
+        template_id:     EMAILJS_TEMPLATE_ID,
+        user_id:         EMAILJS_PUBLIC_KEY,
+        template_params: {
+          from_name:  name,
+          from_email: email,
+          company:    company || '–',
+          phone:      phone   || '–',
+          message:    message,
+        },
+      }),
+    }).then(async (res) => {
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`${res.status}: ${text}`);
       }
-    }, 1500);
+      this.formStatus.set('success');
+      this.contactForm.reset();
+      this.spamProtection.resetRecaptcha();
+    }).catch((err) => {
+      console.error('EmailJS error:', err);
+      this.formStatus.set('error');
+      this.spamProtection.resetRecaptcha();
+    });
   }
 
   resetForm(): void {
     this.formStatus.set('idle');
+    this.recaptchaError.set(false);
     this.contactForm.reset();
+    this.spamProtection.resetRecaptcha();
   }
 
-  get isSubmitting(): boolean {
-    return this.formStatus() === 'submitting';
-  }
-
-  get isSuccess(): boolean {
-    return this.formStatus() === 'success';
-  }
-
-  get isError(): boolean {
-    return this.formStatus() === 'error';
-  }
+  get isSubmitting(): boolean { return this.formStatus() === 'submitting'; }
+  get isSuccess(): boolean    { return this.formStatus() === 'success'; }
+  get isError(): boolean      { return this.formStatus() === 'error'; }
 }
