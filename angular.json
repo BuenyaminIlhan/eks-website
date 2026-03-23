@@ -41,6 +41,11 @@
                 "glob": "favicon.ico",
                 "input": "src",
                 "output": "/"
+              },
+              {
+                "glob": "favicon.svg",
+                "input": "src",
+                "output": "/"
               }
             ],
             "styles": ["src/styles.scss"],
