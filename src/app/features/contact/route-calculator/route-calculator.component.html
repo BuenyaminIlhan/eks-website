@@ -1,0 +1,184 @@
+<div class="route-calc">
+
+  <!-- Header -->
+  <div class="route-calc__header">
+    <h2 class="route-calc__title">{{ 'routeCalc.title' | t }}</h2>
+    <p class="route-calc__subtitle">{{ 'routeCalc.subtitle' | t }}</p>
+  </div>
+
+  <!-- Form + Result -->
+  <div class="route-calc__body">
+
+    <!-- Eingabeformular -->
+    <form
+      class="route-calc__form"
+      [formGroup]="form"
+      (ngSubmit)="onCalculate()"
+      novalidate
+      aria-label="Routenrechner"
+    >
+      <!-- PLZ Start -->
+      <div class="route-calc__field" [class.route-calc__field--error]="isFieldInvalid('plzStart')">
+        <label class="route-calc__label" for="plz-start">
+          <span class="route-calc__label-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 010 16c-4.4 0-8-3.6-8-8s3.6-8 8-8z"/>
+            </svg>
+          </span>
+          {{ 'routeCalc.plzStart' | t }}
+          <span class="route-calc__required" aria-label="Pflichtfeld">*</span>
+        </label>
+        <input
+          id="plz-start"
+          class="route-calc__input"
+          type="text"
+          inputmode="numeric"
+          maxlength="5"
+          formControlName="plzStart"
+          [placeholder]="'routeCalc.plzPlaceholder' | t"
+          autocomplete="postal-code"
+          [attr.aria-invalid]="isFieldInvalid('plzStart')"
+          aria-describedby="plz-start-error"
+        />
+        @if (isFieldInvalid('plzStart')) {
+          <p id="plz-start-error" class="route-calc__error" role="alert">
+            {{ 'routeCalc.errors.plzInvalid' | t }}
+          </p>
+        }
+      </div>
+
+      <!-- Pfeil-Trenner -->
+      <div class="route-calc__divider" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>
+        </svg>
+      </div>
+
+      <!-- PLZ Ziel -->
+      <div class="route-calc__field" [class.route-calc__field--error]="isFieldInvalid('plzEnd')">
+        <label class="route-calc__label" for="plz-end">
+          <span class="route-calc__label-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+          </span>
+          {{ 'routeCalc.plzEnd' | t }}
+          <span class="route-calc__required" aria-label="Pflichtfeld">*</span>
+        </label>
+        <input
+          id="plz-end"
+          class="route-calc__input"
+          type="text"
+          inputmode="numeric"
+          maxlength="5"
+          formControlName="plzEnd"
+          [placeholder]="'routeCalc.plzPlaceholder' | t"
+          [attr.aria-invalid]="isFieldInvalid('plzEnd')"
+          aria-describedby="plz-end-error"
+        />
+        @if (isFieldInvalid('plzEnd')) {
+          <p id="plz-end-error" class="route-calc__error" role="alert">
+            {{ 'routeCalc.errors.plzInvalid' | t }}
+          </p>
+        }
+      </div>
+
+      <!-- API-Fehlermeldung -->
+      @if (status() === 'error') {
+        <div class="route-calc__api-error" role="alert">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          {{ errorKey() | t }}
+        </div>
+      }
+
+      <!-- Submit -->
+      <button
+        class="btn btn--primary route-calc__btn"
+        type="submit"
+        [disabled]="status() === 'loading' || routingService.clientCooldownSeconds() > 0"
+        [attr.aria-busy]="status() === 'loading'"
+      >
+        @if (status() === 'loading') {
+          <span class="route-calc__spinner" aria-hidden="true"></span>
+          {{ 'routeCalc.calculating' | t }}
+        } @else if (routingService.clientCooldownSeconds() > 0) {
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Bitte warten ({{ routingService.clientCooldownSeconds() }}s)
+        } @else {
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          {{ 'routeCalc.calculate' | t }}
+        }
+      </button>
+    </form>
+
+    <!-- Ergebniskarte -->
+    @if (status() === 'success' && result(); as r) {
+      <div class="route-calc__result" role="region" aria-label="Berechnungsergebnis">
+
+        <div class="route-calc__result-grid">
+
+          <div class="route-calc__stat">
+            <span class="route-calc__stat-label">{{ 'routeCalc.result.distance' | t }}</span>
+            <span class="route-calc__stat-value">{{ r.distanceKm | number:'1.0-0' }} km</span>
+          </div>
+
+          <div class="route-calc__stat">
+            <span class="route-calc__stat-label">{{ 'routeCalc.result.duration' | t }}</span>
+            <span class="route-calc__stat-value">{{ formatDuration(r.durationMin) }}</span>
+          </div>
+
+          <div class="route-calc__stat route-calc__stat--price">
+            <span class="route-calc__stat-label">{{ 'routeCalc.result.estimatedPrice' | t }}</span>
+            <span class="route-calc__stat-value route-calc__price">
+              {{ r.price.total | number:'1.2-2' }} €
+            </span>
+          </div>
+
+        </div>
+
+        <p class="route-calc__price-note">
+          * {{ 'routeCalc.result.priceNote' | t }}
+        </p>
+
+        <button class="btn btn--outline route-calc__cta" type="button" (click)="scrollToForm()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+          {{ 'routeCalc.result.requestQuote' | t }}
+        </button>
+
+      </div>
+    }
+
+  </div>
+
+  <!-- Karte -->
+  <div class="route-calc__map-wrapper">
+    <div
+      id="route-map"
+      class="route-calc__map"
+      role="application"
+      [attr.aria-label]="'routeCalc.map.ariaLabel' | t"
+    ></div>
+    <a
+      class="route-calc__osm-link"
+      href="https://www.openstreetmap.org/?mlat=50.7748&mlon=7.1836#map=10/50.7748/7.1836"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+        <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+      OpenStreetMap
+    </a>
+  </div>
+
+</div>

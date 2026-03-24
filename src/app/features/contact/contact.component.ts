@@ -16,6 +16,7 @@ import { SpamProtectionService, RECAPTCHA_SITE_KEY } from '../../core/services/s
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scroll.directive';
 import { fadeInUp } from '../../animations/common.animations';
+import { RouteCalculatorComponent } from './route-calculator/route-calculator.component';
 
 const EMAILJS_SERVICE_ID  = 'service_q5s3qxf';
 const EMAILJS_TEMPLATE_ID = 'template_rgsiofm';
@@ -26,7 +27,7 @@ type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, TranslatePipe, AnimateOnScrollDirective],
+  imports: [ReactiveFormsModule, RouterLink, TranslatePipe, AnimateOnScrollDirective, RouteCalculatorComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInUp],
   templateUrl: './contact.component.html',
@@ -162,7 +163,8 @@ export class ContactComponent implements OnInit, AfterViewInit {
     this.formStatus.set('idle');
     this.recaptchaError.set(false);
     this.contactForm.reset();
-    this.spamProtection.resetRecaptcha();
+    // reCAPTCHA-Container wird durch @if neu erzeugt – nach DOM-Update neu rendern
+    setTimeout(() => this.spamProtection.renderRecaptcha('recaptcha-container'));
   }
 
   get isSubmitting(): boolean { return this.formStatus() === 'submitting'; }

@@ -212,6 +212,32 @@
       "ariaLabel": "Map showing our location in Sankt Augustin"
     }
   },
+  "routeCalc": {
+    "title": "Calculate Distance",
+    "subtitle": "Enter postal codes to receive a non-binding price estimate.",
+    "plzStart": "Pickup Postal Code",
+    "plzEnd": "Delivery Postal Code",
+    "plzPlaceholder": "e.g. 53757",
+    "calculate": "Calculate Route",
+    "calculating": "Calculating...",
+    "errors": {
+      "plzInvalid": "Please enter a valid 5-digit postal code.",
+      "plzStartNotFound": "Pickup postal code not found. Please check your entry.",
+      "plzEndNotFound": "Delivery postal code not found. Please check your entry.",
+      "routeError": "Route could not be calculated. Please try again.",
+      "rateLimited": "Too many requests. Please wait a moment."
+    },
+    "result": {
+      "distance": "Distance",
+      "duration": "Travel Time",
+      "estimatedPrice": "Estimated Price",
+      "priceNote": "Non-binding estimate based on placeholder rates. The binding price will be confirmed upon order.",
+      "requestQuote": "Request Binding Quote"
+    },
+    "map": {
+      "ariaLabel": "Interactive map with calculated route"
+    }
+  },
   "faq": {
     "title": "Frequently Asked Questions",
     "subtitle": "Find answers to the most common questions about our courier services.",

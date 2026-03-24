@@ -49,7 +49,7 @@
   "hero": {
     "badge": "Ihr Partner für Expresslieferungen",
     "title": "Schnell. Zuverlässig. Europaweit.",
-    "subtitle": "Euro-Kurier-Su liefert Ihre Sendungen pünktlich und sicher – von Sankt Augustin bis Brüssel, vom Express bis zur Spedition.",
+    "subtitle": "Euro-Kurier-Su liefert Ihre Sendungen pünktlich und sicher – von überall bis überall innerhalb der EU, vom Express bis zur Spedition.",
     "ctaPrimary": "Jetzt Angebot anfragen",
     "ctaSecondary": "Unsere Leistungen",
     "scrollDown": "Nach unten scrollen",
@@ -66,7 +66,7 @@
     "cta": "Alle Leistungen ansehen",
     "express": {
       "title": "Express-Kurier",
-      "desc": "Dringende Sendungen werden innerhalb von 2–4 Stunden abgeholt und zugestellt. Ideal für zeitkritische Dokumente und Pakete.",
+      "desc": "Dringende Sendungen werden innerhalb von 2–4 Stunden abgeholt und zugestellt bis 100 km und deutschlandweit. Ideal für zeitkritische Dokumente und Pakete.",
       "icon": "⚡"
     },
     "sameDay": {
@@ -194,7 +194,7 @@
       },
       "phone": {
         "label": "Telefon",
-        "value": "+49 2241 000 000"
+        "value": "+49 2241 301 97 03"
       },
       "email": {
         "label": "E-Mail",
@@ -210,6 +210,32 @@
     "map": {
       "title": "Unser Standort",
       "ariaLabel": "Karte mit unserem Standort in Sankt Augustin"
+    }
+  },
+  "routeCalc": {
+    "title": "Wegstrecke berechnen",
+    "subtitle": "PLZ eingeben und eine unverbindliche Preisschätzung erhalten.",
+    "plzStart": "PLZ Abholung",
+    "plzEnd": "PLZ Lieferung",
+    "plzPlaceholder": "z. B. 53757",
+    "calculate": "Route berechnen",
+    "calculating": "Berechne Route...",
+    "errors": {
+      "plzInvalid": "Bitte eine gültige 5-stellige PLZ eingeben.",
+      "plzStartNotFound": "Abholung-PLZ nicht gefunden. Bitte prüfen Sie Ihre Eingabe.",
+      "plzEndNotFound": "Liefer-PLZ nicht gefunden. Bitte prüfen Sie Ihre Eingabe.",
+      "routeError": "Route konnte nicht berechnet werden. Bitte versuchen Sie es erneut.",
+      "rateLimited": "Zu viele Anfragen. Bitte warten Sie kurz."
+    },
+    "result": {
+      "distance": "Entfernung",
+      "duration": "Fahrzeit",
+      "estimatedPrice": "Geschätzter Preis",
+      "priceNote": "Unverbindliche Schätzung auf Basis von Platzhalterwerten. Der verbindliche Preis wird nach Auftragsbestätigung mitgeteilt.",
+      "requestQuote": "Verbindliches Angebot anfordern"
+    },
+    "map": {
+      "ariaLabel": "Interaktive Karte mit berechneter Route"
     }
   },
   "faq": {
