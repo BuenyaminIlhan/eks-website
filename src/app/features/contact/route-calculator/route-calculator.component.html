@@ -1,15 +1,30 @@
 <div class="route-calc">
 
-  <!-- Header -->
+  <!-- ── Header ──────────────────────────────────────────────────────────────── -->
   <div class="route-calc__header">
     <h2 class="route-calc__title">{{ 'routeCalc.title' | t }}</h2>
     <p class="route-calc__subtitle">{{ 'routeCalc.subtitle' | t }}</p>
   </div>
 
-  <!-- Form + Result -->
+  <!-- ── Telefon-Banner (Wochenende ganztägig / Mo–Fr ab 22 Uhr) ───────────── -->
+  @if (showPhone()) {
+    <a class="route-calc__phone-banner" [href]="companyPhoneTel" aria-label="Jetzt anrufen">
+      <span class="route-calc__phone-banner-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.05 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/>
+        </svg>
+      </span>
+      <span class="route-calc__phone-banner-text">
+        <strong>Telefonische Anmeldung erforderlich</strong>
+        <span>{{ companyPhone }}</span>
+      </span>
+      <span class="route-calc__phone-banner-cta" aria-hidden="true">Jetzt anrufen →</span>
+    </a>
+  }
+
+  <!-- ── Form + Result ────────────────────────────────────────────────────────── -->
   <div class="route-calc__body">
 
-    <!-- Eingabeformular -->
     <form
       class="route-calc__form"
       [formGroup]="form"
@@ -17,76 +32,235 @@
       novalidate
       aria-label="Routenrechner"
     >
-      <!-- PLZ Start -->
-      <div class="route-calc__field" [class.route-calc__field--error]="isFieldInvalid('plzStart')">
-        <label class="route-calc__label" for="plz-start">
-          <span class="route-calc__label-icon" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 010 16c-4.4 0-8-3.6-8-8s3.6-8 8-8z"/>
-            </svg>
-          </span>
-          {{ 'routeCalc.plzStart' | t }}
-          <span class="route-calc__required" aria-label="Pflichtfeld">*</span>
-        </label>
-        <input
-          id="plz-start"
-          class="route-calc__input"
-          type="text"
-          inputmode="numeric"
-          maxlength="5"
-          formControlName="plzStart"
-          [placeholder]="'routeCalc.plzPlaceholder' | t"
-          autocomplete="postal-code"
-          [attr.aria-invalid]="isFieldInvalid('plzStart')"
-          aria-describedby="plz-start-error"
-        />
-        @if (isFieldInvalid('plzStart')) {
-          <p id="plz-start-error" class="route-calc__error" role="alert">
-            {{ 'routeCalc.errors.plzInvalid' | t }}
-          </p>
+
+      <!-- 1 · Fahrzeugauswahl ──────────────────────────────────────────────── -->
+      <div class="route-calc__section">
+        <p class="route-calc__section-label">Fahrzeugtyp wählen *</p>
+        <div class="route-calc__vehicles" role="radiogroup" aria-label="Fahrzeugtyp">
+
+          <!-- PKW -->
+          <div class="route-calc__vehicle">
+            <input class="route-calc__vehicle-radio" type="radio" id="v-pkw"
+              formControlName="vehicle" value="pkw"/>
+            <label class="route-calc__vehicle-label" for="v-pkw">
+              <span class="route-calc__vehicle-icon" aria-hidden="true">
+                <svg viewBox="0 0 64 36" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="19" width="58" height="12" rx="3"/>
+                  <path d="M14 19 C17 10 22 7 32 7 C42 7 47 10 50 19"/>
+                  <circle cx="14" cy="31" r="4" fill="currentColor" opacity=".25"/>
+                  <circle cx="50" cy="31" r="4" fill="currentColor" opacity=".25"/>
+                  <rect x="16" y="8" width="13" height="9" rx="1.5"/>
+                  <rect x="31" y="8" width="16" height="9" rx="1.5"/>
+                </svg>
+              </span>
+              <span class="route-calc__vehicle-name">PKW</span>
+              <span class="route-calc__vehicle-sub">max. 50 kg</span>
+              <span class="route-calc__vehicle-spec">60 × 120 × 30 cm</span>
+            </label>
+          </div>
+
+          <!-- Caddy -->
+          <div class="route-calc__vehicle">
+            <input class="route-calc__vehicle-radio" type="radio" id="v-caddy"
+              formControlName="vehicle" value="caddy"/>
+            <label class="route-calc__vehicle-label" for="v-caddy">
+              <span class="route-calc__vehicle-icon" aria-hidden="true">
+                <svg viewBox="0 0 64 36" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="14" width="58" height="17" rx="3"/>
+                  <path d="M3 14 L3 31 M3 14 L12 5 L36 5 L36 14"/>
+                  <rect x="5" y="6" width="11" height="7" rx="1.5"/>
+                  <rect x="18" y="6" width="16" height="7" rx="1.5"/>
+                  <circle cx="14" cy="31" r="4" fill="currentColor" opacity=".25"/>
+                  <circle cx="50" cy="31" r="4" fill="currentColor" opacity=".25"/>
+                </svg>
+              </span>
+              <span class="route-calc__vehicle-name">Caddy</span>
+              <span class="route-calc__vehicle-sub">max. 400 kg</span>
+              <span class="route-calc__vehicle-spec">1 Palette · H 120 cm</span>
+            </label>
+          </div>
+
+          <!-- Transporter -->
+          <div class="route-calc__vehicle">
+            <input class="route-calc__vehicle-radio" type="radio" id="v-transporter"
+              formControlName="vehicle" value="transporter"/>
+            <label class="route-calc__vehicle-label" for="v-transporter">
+              <span class="route-calc__vehicle-icon" aria-hidden="true">
+                <svg viewBox="0 0 64 36" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="58" height="20" rx="3"/>
+                  <path d="M3 11 L3 31 M3 11 L10 4 L30 4 L30 11"/>
+                  <rect x="5" y="5" width="9" height="5" rx="1.5"/>
+                  <rect x="16" y="5" width="12" height="5" rx="1.5"/>
+                  <circle cx="14" cy="31" r="4" fill="currentColor" opacity=".25"/>
+                  <circle cx="50" cy="31" r="4" fill="currentColor" opacity=".25"/>
+                  <line x1="30" y1="12" x2="30" y2="30" stroke-dasharray="2 2"/>
+                </svg>
+              </span>
+              <span class="route-calc__vehicle-name">Transporter</span>
+              <span class="route-calc__vehicle-sub">max. 1.000 kg</span>
+              <span class="route-calc__vehicle-spec">2 Paletten · H 120 cm</span>
+            </label>
+          </div>
+
+          <!-- Sprinter -->
+          <div class="route-calc__vehicle">
+            <input class="route-calc__vehicle-radio" type="radio" id="v-sprinter"
+              formControlName="vehicle" value="sprinter"/>
+            <label class="route-calc__vehicle-label" for="v-sprinter">
+              <span class="route-calc__vehicle-icon" aria-hidden="true">
+                <svg viewBox="0 0 64 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="9" width="58" height="24" rx="3"/>
+                  <path d="M3 9 L3 33 M3 9 L9 3 L28 3 L28 9"/>
+                  <rect x="5" y="4" width="8" height="4" rx="1.5"/>
+                  <rect x="15" y="4" width="11" height="4" rx="1.5"/>
+                  <circle cx="14" cy="33" r="4.5" fill="currentColor" opacity=".25"/>
+                  <circle cx="50" cy="33" r="4.5" fill="currentColor" opacity=".25"/>
+                  <line x1="28" y1="10" x2="28" y2="32" stroke-dasharray="2 2"/>
+                  <line x1="42" y1="10" x2="42" y2="32" stroke-dasharray="2 2"/>
+                </svg>
+              </span>
+              <span class="route-calc__vehicle-name">Sprinter</span>
+              <span class="route-calc__vehicle-sub">max. 1.400 kg</span>
+              <span class="route-calc__vehicle-spec">4 Paletten · H 160 cm</span>
+            </label>
+          </div>
+
+        </div>
+        @if (isFieldInvalid('vehicle')) {
+          <p class="route-calc__error" role="alert">⚠ Bitte einen Fahrzeugtyp wählen.</p>
         }
       </div>
 
-      <!-- Pfeil-Trenner -->
-      <div class="route-calc__divider" aria-hidden="true">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>
-        </svg>
-      </div>
+      <!-- 2 · Route + Datum / Zeit ─────────────────────────────────────────── -->
+      <div class="route-calc__section">
+        <p class="route-calc__section-label">Route & Abholzeit</p>
+        <div class="route-calc__route-row">
 
-      <!-- PLZ Ziel -->
-      <div class="route-calc__field" [class.route-calc__field--error]="isFieldInvalid('plzEnd')">
-        <label class="route-calc__label" for="plz-end">
-          <span class="route-calc__label-icon" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+          <!-- PLZ Abholung -->
+          <div class="route-calc__field" [class.route-calc__field--error]="isFieldInvalid('plzStart')">
+            <label class="route-calc__label" for="plz-start">
+              <span class="route-calc__label-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 010 16c-4.4 0-8-3.6-8-8s3.6-8 8-8z"/>
+                </svg>
+              </span>
+              {{ 'routeCalc.plzStart' | t }}
+              <span class="route-calc__required" aria-label="Pflichtfeld">*</span>
+            </label>
+            <input id="plz-start" class="route-calc__input" type="text"
+              inputmode="numeric" maxlength="5" formControlName="plzStart"
+              [placeholder]="'routeCalc.plzPlaceholder' | t"
+              autocomplete="postal-code"
+              [attr.aria-invalid]="isFieldInvalid('plzStart')"
+              aria-describedby="plz-start-error"/>
+            @if (isFieldInvalid('plzStart')) {
+              <p id="plz-start-error" class="route-calc__error" role="alert">
+                {{ 'routeCalc.errors.plzInvalid' | t }}
+              </p>
+            }
+          </div>
+
+          <!-- Trenner -->
+          <div class="route-calc__divider" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
             </svg>
-          </span>
-          {{ 'routeCalc.plzEnd' | t }}
-          <span class="route-calc__required" aria-label="Pflichtfeld">*</span>
-        </label>
-        <input
-          id="plz-end"
-          class="route-calc__input"
-          type="text"
-          inputmode="numeric"
-          maxlength="5"
-          formControlName="plzEnd"
-          [placeholder]="'routeCalc.plzPlaceholder' | t"
-          [attr.aria-invalid]="isFieldInvalid('plzEnd')"
-          aria-describedby="plz-end-error"
-        />
-        @if (isFieldInvalid('plzEnd')) {
-          <p id="plz-end-error" class="route-calc__error" role="alert">
-            {{ 'routeCalc.errors.plzInvalid' | t }}
-          </p>
-        }
+          </div>
+
+          <!-- PLZ Lieferung -->
+          <div class="route-calc__field" [class.route-calc__field--error]="isFieldInvalid('plzEnd')">
+            <label class="route-calc__label" for="plz-end">
+              <span class="route-calc__label-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+              </span>
+              {{ 'routeCalc.plzEnd' | t }}
+              <span class="route-calc__required" aria-label="Pflichtfeld">*</span>
+            </label>
+            <input id="plz-end" class="route-calc__input" type="text"
+              inputmode="numeric" maxlength="5" formControlName="plzEnd"
+              [placeholder]="'routeCalc.plzPlaceholder' | t"
+              [attr.aria-invalid]="isFieldInvalid('plzEnd')"
+              aria-describedby="plz-end-error"/>
+            @if (isFieldInvalid('plzEnd')) {
+              <p id="plz-end-error" class="route-calc__error" role="alert">
+                {{ 'routeCalc.errors.plzInvalid' | t }}
+              </p>
+            }
+          </div>
+
+          <!-- Datum -->
+          <div class="route-calc__field route-calc__field--date">
+            <label class="route-calc__label" for="pickup-date">
+              <span class="route-calc__label-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+              </span>
+              Abholdatum
+              <span class="route-calc__label-optional">(optional)</span>
+            </label>
+            <input id="pickup-date" class="route-calc__input" type="date"
+              formControlName="pickupDate" [min]="minDate"/>
+          </div>
+
+          <!-- Uhrzeit -->
+          <div class="route-calc__field route-calc__field--time">
+            <label class="route-calc__label" for="pickup-time">
+              <span class="route-calc__label-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </span>
+              Abholzeit
+              <span class="route-calc__label-optional">(optional)</span>
+            </label>
+            <input id="pickup-time" class="route-calc__input" type="time"
+              formControlName="pickupTime"/>
+            <p class="route-calc__hint">Leer = ~{{ pickupBufferMin }} Min.</p>
+          </div>
+
+        </div>
       </div>
 
-      <!-- API-Fehlermeldung -->
+      <!-- 3 · Bedingungen ──────────────────────────────────────────────────── -->
+      <div class="route-calc__conditions">
+
+        <!-- Stapler (nur bei Palettenfahrzeugen) -->
+        @if (requiresPallet) {
+          <label class="route-calc__check-row"
+            [class.route-calc__check-row--error]="isFieldInvalid('hasForklifts')">
+            <input class="route-calc__checkbox" type="checkbox"
+              id="has-forklifts" formControlName="hasForklifts"/>
+            <span class="route-calc__check-box" aria-hidden="true"></span>
+            <span class="route-calc__check-text">
+              <strong>Stapler vorhanden</strong> – An Be- <em>und</em> Entladeort ist
+              ein Gabelstapler zum Verladen der Palette(n) verfügbar.
+            </span>
+          </label>
+        }
+
+        <!-- Kein Gefahrgut (immer) -->
+        <label class="route-calc__check-row"
+          [class.route-calc__check-row--error]="isFieldInvalid('acceptNoHazmat')">
+          <input class="route-calc__checkbox" type="checkbox"
+            id="no-hazmat" formControlName="acceptNoHazmat"/>
+          <span class="route-calc__check-box" aria-hidden="true"></span>
+          <span class="route-calc__check-text">
+            <strong>Kein Gefahrgut</strong> – Die Sendung enthält keine
+            gefährlichen Güter (ADR/GGVSEB). Gefahrguttransporte sind
+            grundsätzlich ausgeschlossen.
+          </span>
+        </label>
+
+      </div>
+
+      <!-- Fehlerhinweis -->
       @if (status() === 'error') {
         <div class="route-calc__api-error" role="alert">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
           </svg>
           {{ errorKey() | t }}
@@ -104,23 +278,24 @@
           <span class="route-calc__spinner" aria-hidden="true"></span>
           {{ 'routeCalc.calculating' | t }}
         } @else if (routingService.clientCooldownSeconds() > 0) {
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
           </svg>
           Bitte warten ({{ routingService.clientCooldownSeconds() }}s)
         } @else {
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <circle cx="12" cy="12" r="10"/>
-            <polyline points="12 6 12 12 16 14"/>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
           </svg>
           {{ 'routeCalc.calculate' | t }}
         }
       </button>
+
     </form>
 
-    <!-- Ergebniskarte -->
+    <!-- ── Ergebnis ───────────────────────────────────────────────────────── -->
     @if (status() === 'success' && result(); as r) {
-      <div class="route-calc__result" role="region" aria-label="Berechnungsergebnis">
+      <div class="route-calc__result" role="region" aria-label="Berechnungsergebnis"
+        aria-live="polite">
 
         <div class="route-calc__result-grid">
 
@@ -130,8 +305,33 @@
           </div>
 
           <div class="route-calc__stat">
-            <span class="route-calc__stat-label">{{ 'routeCalc.result.duration' | t }}</span>
+            <span class="route-calc__stat-label">Fahrzeit (mit Verkehr)</span>
             <span class="route-calc__stat-value">{{ formatDuration(r.durationMin) }}</span>
+            @if (r.trafficDelayMin > 1) {
+              <span class="route-calc__traffic-badge">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                +{{ formatDuration(r.trafficDelayMin) }} Stau
+              </span>
+            }
+          </div>
+
+          <div class="route-calc__stat">
+            <span class="route-calc__stat-label">Fahrzeug</span>
+            <span class="route-calc__stat-value route-calc__stat-value--sm">
+              {{ r.vehicle.name }}
+            </span>
+            <span class="route-calc__stat-sub">
+              max. {{ r.vehicle.maxWeightKg >= 1000
+                ? (r.vehicle.maxWeightKg / 1000 | number:'1.0-1') + ' t'
+                : r.vehicle.maxWeightKg + ' kg' }}
+              @if (r.vehicle.maxPallets) {
+                · {{ r.vehicle.maxPallets }}
+                {{ r.vehicle.maxPallets === 1 ? 'Palette' : 'Paletten' }}
+              }
+            </span>
           </div>
 
           <div class="route-calc__stat route-calc__stat--price">
@@ -143,12 +343,86 @@
 
         </div>
 
+        <!-- Abholung → Zustellung Timeline -->
+        <div class="route-calc__delivery">
+
+          <div class="route-calc__delivery-timeline">
+            <div class="route-calc__delivery-step">
+              <span class="route-calc__delivery-icon route-calc__delivery-icon--pickup" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+              </span>
+              <div>
+                <span class="route-calc__delivery-step-label">Abholung</span>
+                <span class="route-calc__delivery-step-time">
+                  {{ formatDate(r.pickupAt) }}, {{ formatTime(r.pickupAt) }} Uhr
+                </span>
+              </div>
+            </div>
+
+            <div class="route-calc__delivery-connector" aria-hidden="true">
+              <span class="route-calc__delivery-duration">{{ formatDuration(r.durationMin) }}</span>
+            </div>
+
+            <div class="route-calc__delivery-step">
+              <span class="route-calc__delivery-icon route-calc__delivery-icon--arrival" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="1" y="3" width="15" height="13" rx="1"/>
+                  <path d="M16 8h4l3 5v4h-7V8z"/>
+                  <circle cx="5.5" cy="18.5" r="2.5"/>
+                  <circle cx="18.5" cy="18.5" r="2.5"/>
+                </svg>
+              </span>
+              <div>
+                <span class="route-calc__delivery-step-label">Voraussichtliche Zustellung</span>
+                <span class="route-calc__delivery-step-time route-calc__delivery-step-time--highlight">
+                  {{ formatDate(r.estimatedArrival) }}, {{ formatTime(r.estimatedArrival) }} Uhr
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <p class="route-calc__delivery-note">
+            Fahrzeit mit aktuellem Live-Verkehr eingerechnet
+            @if (!r.requestedPickupTime) {
+              · inkl. {{ pickupBufferMin }} Min. Abholvorbereitung
+            }
+          </p>
+
+          @if (r.bufferEnforced && r.requestedPickupTime) {
+            <div class="route-calc__delivery-warning" role="alert">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              Wunschzeit {{ r.requestedPickupTime }} Uhr ist zu kurzfristig –
+              früheste Abholung {{ formatTime(r.pickupAt) }} Uhr
+              ({{ pickupBufferMin }} Min. Mindestvorlaufzeit).
+            </div>
+          }
+
+          @if (r.nightPickup) {
+            <div class="route-calc__delivery-info" role="note">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M21 16.92A10 10 0 0 1 3.08 9a10 10 0 0 0 13.84 13.84A9.93 9.93 0 0 1 21 16.92z"/>
+              </svg>
+              Nachtabholung ab {{ nightPickupStart }}:00 Uhr –
+              bitte vorab telefonisch anmelden:
+              <a [href]="companyPhoneTel" class="route-calc__delivery-phone">
+                {{ companyPhone }}
+              </a>
+            </div>
+          }
+
+        </div>
+
         <p class="route-calc__price-note">
           * {{ 'routeCalc.result.priceNote' | t }}
         </p>
 
         <button class="btn btn--outline route-calc__cta" type="button" (click)="scrollToForm()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
           </svg>
           {{ 'routeCalc.result.requestQuote' | t }}
@@ -159,25 +433,20 @@
 
   </div>
 
-  <!-- Karte -->
+  <!-- ── Karte ──────────────────────────────────────────────────────────────── -->
   <div class="route-calc__map-wrapper">
-    <div
-      id="route-map"
-      class="route-calc__map"
+    <div id="route-map" class="route-calc__map"
       role="application"
-      [attr.aria-label]="'routeCalc.map.ariaLabel' | t"
-    ></div>
-    <a
-      class="route-calc__osm-link"
-      href="https://www.openstreetmap.org/?mlat=50.7748&mlon=7.1836#map=10/50.7748/7.1836"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      [attr.aria-label]="'routeCalc.map.ariaLabel' | t">
+    </div>
+    <a class="route-calc__osm-link"
+      href="https://www.openstreetmap.org/copyright"
+      target="_blank" rel="noopener noreferrer">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
         <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
       </svg>
-      OpenStreetMap
+      © OpenStreetMap
     </a>
   </div>
 

@@ -4,21 +4,26 @@ import {
   ChangeDetectorRef,
   AfterViewInit,
   OnDestroy,
-  PLATFORM_ID,
   inject,
   signal,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 import { DecimalPipe } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
-import { RoutingService, GeoResult, PriceBreakdown } from '../../../core/services/routing.service';
+import {
+  RoutingService,
+  GeoResult,
+  PriceBreakdown,
+  PICKUP_BUFFER_MIN,
+  NIGHT_PICKUP_START,
+  COMPANY_PHONE,
+  COMPANY_PHONE_TEL,
+  VEHICLES,
+  Vehicle,
+  isPhoneRequired,
+} from '../../../core/services/routing.service';
 
 type CalcStatus = 'idle' | 'loading' | 'success' | 'error';
-
-// Leaflet wird nur im Browser dynamisch geladen – kein SSR-Import
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type LeafletLib = any;
 
 @Component({
   selector: 'app-route-calculator',
@@ -29,42 +34,91 @@ type LeafletLib = any;
   styleUrls: ['./route-calculator.component.scss'],
 })
 export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
-  private readonly fb           = inject(FormBuilder);
-  private readonly platformId   = inject(PLATFORM_ID);
-  readonly routingService = inject(RoutingService);
-  private readonly cdr          = inject(ChangeDetectorRef);
+  private readonly fb             = inject(FormBuilder);
+  readonly routingService         = inject(RoutingService);
+  private readonly cdr            = inject(ChangeDetectorRef);
 
-  // Leaflet-Instanzen (nur Browser)
-  private L: LeafletLib = null;
-  private map: LeafletLib = null;
-  private routeLayer: LeafletLib = null;
+  // ── Konstanten für das Template ──────────────────────────────────────────────
+  readonly vehicles         = VEHICLES;
+  readonly pickupBufferMin  = PICKUP_BUFFER_MIN;
+  readonly nightPickupStart = NIGHT_PICKUP_START;
+  readonly companyPhone     = COMPANY_PHONE;
+  readonly companyPhoneTel  = COMPANY_PHONE_TEL;
 
-  readonly status    = signal<CalcStatus>('idle');
-  readonly errorKey  = signal('');
-  readonly result    = signal<{
-    distanceKm: number;
-    durationMin: number;
-    price: PriceBreakdown;
-    plzStart: string;
-    plzEnd: string;
+  /** Frühestes wählbares Datum = heute (YYYY-MM-DD) */
+  readonly minDate = new Date().toISOString().slice(0, 10);
+
+  // ── Signale ──────────────────────────────────────────────────────────────────
+  readonly showPhone   = signal(false);
+  readonly status      = signal<CalcStatus>('idle');
+  readonly errorKey    = signal('');
+
+  readonly result = signal<{
+    distanceKm:          number;
+    durationMin:         number;
+    trafficDelayMin:     number;
+    price:               PriceBreakdown;
+    plzStart:            string;
+    plzEnd:              string;
+    vehicle:             Vehicle;
+    pickupAt:            Date;
+    estimatedArrival:    Date;
+    nightPickup:         boolean;
+    bufferEnforced:      boolean;
+    requestedPickupTime: string;
   } | null>(null);
 
+  // ── Formular ─────────────────────────────────────────────────────────────────
   readonly form = this.fb.nonNullable.group({
-    plzStart: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
-    plzEnd:   ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
+    vehicle:         ['',  Validators.required],
+    plzStart:        ['',  [Validators.required, Validators.pattern(/^\d{5}$/)]],
+    plzEnd:          ['',  [Validators.required, Validators.pattern(/^\d{5}$/)]],
+    pickupDate:      [''],  // optional YYYY-MM-DD
+    pickupTime:      [''],  // optional HH:MM
+    hasForklifts:    [false],
+    acceptNoHazmat:  [false, Validators.requiredTrue],
   });
 
-  async ngAfterViewInit(): Promise<void> {
-    if (!isPlatformBrowser(this.platformId)) return;
+  // ── Map (Leaflet) ─────────────────────────────────────────────────────────────
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private L:          any = null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private map:        any = null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private routeGroup: any = null;
+
+  private phoneTimer: ReturnType<typeof setInterval> | null = null;
+
+  // ── Lifecycle ─────────────────────────────────────────────────────────────────
+
+  ngAfterViewInit(): void {
     this.routingService.initCooldownIfActive();
-    await this.initMap();
+
+    // Telefon-Anzeige initial setzen und jede Minute prüfen
+    this.showPhone.set(isPhoneRequired());
+    this.phoneTimer = setInterval(() => {
+      this.showPhone.set(isPhoneRequired());
+      this.cdr.markForCheck();
+    }, 60_000);
+
+    requestAnimationFrame(() => void this.initMap());
   }
 
   ngOnDestroy(): void {
-    if (this.map) {
-      this.map.remove();
-      this.map = null;
-    }
+    if (this.phoneTimer) clearInterval(this.phoneTimer);
+    if (this.map) { this.map.remove(); this.map = null; }
+  }
+
+  // ── Computed / Getter ────────────────────────────────────────────────────────
+
+  /** Gibt das aktuell gewählte Fahrzeug-Objekt zurück */
+  get selectedVehicle(): Vehicle | undefined {
+    return VEHICLES.find(v => v.id === this.form.getRawValue().vehicle);
+  }
+
+  /** Wahr wenn das gewählte Fahrzeug Paletten transportiert */
+  get requiresPallet(): boolean {
+    return this.selectedVehicle?.requiresPallet ?? false;
   }
 
   isFieldInvalid(field: string): boolean {
@@ -72,13 +126,33 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
     return !!(ctrl?.invalid && (ctrl.dirty || ctrl.touched));
   }
 
+  // ── Berechnung ───────────────────────────────────────────────────────────────
+
   async onCalculate(): Promise<void> {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+    // Manuelle Validierung: Fahrzeug + Paletten-Stapler + Gefahrgut-Bestätigung
+    this.form.markAllAsTouched();
+
+    if (this.form.get('vehicle')?.invalid) return;
+
+    if (this.requiresPallet && !this.form.getRawValue().hasForklifts) {
+      this.errorKey.set('routeCalc.errors.forkliftsRequired');
+      this.status.set('error');
+      this.cdr.markForCheck();
       return;
     }
 
-    // Client-seitiges Rate-Limit prüfen
+    if (!this.form.getRawValue().acceptNoHazmat) {
+      this.errorKey.set('routeCalc.errors.hazmatRequired');
+      this.status.set('error');
+      this.cdr.markForCheck();
+      return;
+    }
+
+    if (
+      this.form.get('plzStart')?.invalid ||
+      this.form.get('plzEnd')?.invalid
+    ) return;
+
     if (this.routingService.isClientRateLimited()) {
       this.errorKey.set('routeCalc.errors.rateLimited');
       this.status.set('error');
@@ -91,9 +165,9 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
     this.errorKey.set('');
     this.cdr.markForCheck();
 
-    const { plzStart, plzEnd } = this.form.getRawValue();
+    const { plzStart, plzEnd, pickupTime, pickupDate, vehicle } =
+      this.form.getRawValue();
 
-    // Beide PLZ parallel geocodieren
     const [geoStart, geoEnd] = await Promise.all([
       this.routingService.geocodePlz(plzStart),
       this.routingService.geocodePlz(plzEnd),
@@ -120,21 +194,34 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    // Anfrage zählen (vor Ergebnisanzeige)
     this.routingService.recordClientRequest();
-
     this.drawRoute(geoStart, geoEnd, route.geometry, plzStart, plzEnd);
 
+    const delivery = this.routingService.calculateEstimatedDelivery(
+      route.durationMin,
+      pickupTime  || undefined,
+      pickupDate  || undefined,
+    );
+
     this.result.set({
-      distanceKm: route.distanceKm,
-      durationMin: route.durationMin,
-      price: this.routingService.calculatePrice(route.distanceKm),
+      distanceKm:          route.distanceKm,
+      durationMin:         route.durationMin,
+      trafficDelayMin:     route.trafficDelayMin,
+      price:               this.routingService.calculatePrice(route.distanceKm),
       plzStart,
       plzEnd,
+      vehicle:             VEHICLES.find(v => v.id === vehicle)!,
+      pickupAt:            delivery.pickupAt,
+      estimatedArrival:    delivery.arrival,
+      nightPickup:         delivery.nightPickup,
+      bufferEnforced:      delivery.bufferEnforced,
+      requestedPickupTime: pickupTime,
     });
     this.status.set('success');
     this.cdr.markForCheck();
   }
+
+  // ── Hilfsmethoden ────────────────────────────────────────────────────────────
 
   formatDuration(minutes: number): string {
     const h = Math.floor(minutes / 60);
@@ -142,72 +229,117 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
     return h > 0 ? `${h} Std. ${m} Min.` : `${m} Min.`;
   }
 
-  scrollToForm(): void {
-    document.getElementById('contact-form-heading')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  formatTime(date: Date): string {
+    return date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
   }
 
-  // ── Karte ───────────────────────────────────────────────────────────────────
+  formatDate(date: Date): string {
+    const today    = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    if (date.toDateString() === today.toDateString())    return 'heute';
+    if (date.toDateString() === tomorrow.toDateString()) return 'morgen';
+    return date.toLocaleDateString('de-DE', {
+      weekday: 'short', day: '2-digit', month: '2-digit',
+    });
+  }
+
+  scrollToForm(): void {
+    document
+      .getElementById('contact-form-heading')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ── Karte (Leaflet + OpenStreetMap) ──────────────────────────────────────────
+
+  private loadScript(src: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
+      const s = document.createElement('script');
+      s.src = src;
+      s.onload  = () => resolve();
+      s.onerror = () => reject(new Error(`Script-Ladefehler: ${src}`));
+      document.head.appendChild(s);
+    });
+  }
 
   private async initMap(): Promise<void> {
-    const L = await import('leaflet');
+    const container = document.getElementById('route-map');
+    if (!container) return;
+
+    if (!document.querySelector('link[href*="leaflet@"]')) {
+      const link = document.createElement('link');
+      link.rel  = 'stylesheet';
+      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(link);
+    }
+
+    await this.loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js');
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const L = (window as any)['L'];
+    if (!L) { console.error('Leaflet nicht geladen'); return; }
     this.L = L;
 
-    // Leaflet-Marker-Icons manuell setzen (bekanntes Angular-Build-Problem)
-    const icon = L.icon({
-      iconUrl:       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-      iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-      shadowUrl:     'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-      iconSize:   [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41],
+    this.map = L.map(container, {
+      center:    [50.7748, 7.1836],
+      zoom:      9,
+      zoomSnap:  0,
+      zoomDelta: 1,
     });
-    L.Marker.prototype.options.icon = icon;
 
-    this.map = L.map('route-map', { zoomControl: true }).setView([50.7748, 7.1836], 9);
+    // CartoDB Voyager – professionelles Kartendesign
+    L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+      {
+        attribution:
+          '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> ' +
+          '© <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20,
+      },
+    ).addTo(this.map);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
-      maxZoom: 18,
+    // HERE Traffic Flow Overlay (server-seitig proxied)
+    L.tileLayer('/api/traffictile/{z}/{x}/{y}', {
+      opacity:     0.80,
+      maxZoom:     19,
+      attribution: 'Traffic © HERE',
     }).addTo(this.map);
 
-    // Standort-Marker der Firma
-    L.marker([50.7748, 7.1836])
-      .addTo(this.map)
-      .bindPopup('<b>EKS Euro-Kurier-Su</b><br>Ilmenaustr. 16, 53757 Sankt Augustin')
-      .openPopup();
+    L.marker([50.7748, 7.1836]).addTo(this.map);
   }
 
   private drawRoute(
     start: GeoResult,
     end: GeoResult,
-    geometry: GeoJSON.LineString,
-    plzStart: string,
-    plzEnd: string,
+    geometry: { coordinates: number[][] },
+    _plzStart: string,
+    _plzEnd: string,
   ): void {
     if (!this.map || !this.L) return;
-
-    // Vorherige Route entfernen
-    if (this.routeLayer) {
-      this.routeLayer.remove();
-      this.routeLayer = null;
-    }
-
     const L = this.L;
 
-    const routeLine = L.geoJSON(geometry, {
-      style: { color: '#3982AA', weight: 5, opacity: 0.85 },
+    if (this.routeGroup) { this.routeGroup.remove(); this.routeGroup = null; }
+
+    const latlngs = geometry.coordinates.map(
+      (pos: number[]) => [pos[1], pos[0]] as [number, number],
+    );
+
+    const routeOutline = L.polyline(latlngs, {
+      color: '#ffffff', weight: 11, opacity: 0.8,
+      lineJoin: 'round', lineCap: 'round',
+    });
+    const routeLine = L.polyline(latlngs, {
+      color: '#1a73e8', weight: 6, opacity: 1,
+      lineJoin: 'round', lineCap: 'round',
     });
 
-    const markerStart = L.marker([start.lat, start.lon])
-      .bindPopup(`<b>Abholung</b><br>PLZ ${plzStart}<br><small>${start.name.split(',').slice(0, 2).join(',')}</small>`);
+    const markerStart = L.marker([start.lat, start.lon]);
+    const markerEnd   = L.marker([end.lat,   end.lon]);
 
-    const markerEnd = L.marker([end.lat, end.lon])
-      .bindPopup(`<b>Lieferung</b><br>PLZ ${plzEnd}<br><small>${end.name.split(',').slice(0, 2).join(',')}</small>`);
-
-    this.routeLayer = L.layerGroup([routeLine, markerStart, markerEnd]).addTo(this.map);
-
-    this.map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
+    this.routeGroup = L.layerGroup([routeOutline, routeLine, markerStart, markerEnd]);
+    this.routeGroup.addTo(this.map);
+    this.map.fitBounds(routeLine.getBounds(), { padding: [40, 40] });
   }
 }

@@ -40,6 +40,8 @@ export class ContactComponent implements OnInit, AfterViewInit {
   private readonly platformId = inject(PLATFORM_ID);
   readonly spamProtection = inject(SpamProtectionService);
 
+  readonly isBrowser = isPlatformBrowser(this.platformId);
+
   readonly formStatus = signal<FormStatus>('idle');
   readonly recaptchaError = signal(false);
   readonly recaptchaSiteKey = RECAPTCHA_SITE_KEY;

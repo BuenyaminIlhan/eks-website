@@ -225,7 +225,9 @@
       "plzStartNotFound": "Abholung-PLZ nicht gefunden. Bitte prüfen Sie Ihre Eingabe.",
       "plzEndNotFound": "Liefer-PLZ nicht gefunden. Bitte prüfen Sie Ihre Eingabe.",
       "routeError": "Route konnte nicht berechnet werden. Bitte versuchen Sie es erneut.",
-      "rateLimited": "Zu viele Anfragen. Bitte warten Sie kurz."
+      "rateLimited": "Zu viele Anfragen. Bitte warten Sie kurz.",
+      "forkliftsRequired": "Bitte bestätigen Sie, dass an Be- und Entladeort ein Gabelstapler vorhanden ist.",
+      "hazmatRequired": "Bitte bestätigen Sie, dass die Sendung kein Gefahrgut enthält."
     },
     "result": {
       "distance": "Entfernung",

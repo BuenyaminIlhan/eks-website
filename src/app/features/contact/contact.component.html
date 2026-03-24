@@ -304,9 +304,11 @@
   </div>
 </section>
 
-<!-- Route Calculator + Karte -->
-<section class="section route-calc-section">
-  <div class="container">
-    <app-route-calculator />
-  </div>
-</section>
+<!-- Route Calculator + Karte (nur Browser – verhindert SSR-Konflikte mit Leaflet) -->
+@if (isBrowser) {
+  <section class="section route-calc-section">
+    <div class="container">
+      <app-route-calculator />
+    </div>
+  </section>
+}

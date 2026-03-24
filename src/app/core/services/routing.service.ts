@@ -1,6 +1,7 @@
 import { Injectable, PLATFORM_ID, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../../environments/environment';
+import type { LineString } from 'geojson';
 
 export interface GeoResult {
   lat: number;
@@ -11,13 +12,89 @@ export interface GeoResult {
 export interface RouteResult {
   distanceKm: number;
   durationMin: number;
-  geometry: GeoJSON.LineString;
+  trafficDelayMin: number; // 0 wenn kein Live-Traffic verfügbar
+  geometry: LineString;
 }
 
 export interface PriceBreakdown {
   basePrice: number;
   perKmRate: number;
   total: number;
+}
+
+// ── Zustellzeit-Konfiguration ─────────────────────────────────────────────────
+/** Minuten zwischen Auftragseingang und Abfahrt (Ladezeit, Papiere, etc.) */
+export const PICKUP_BUFFER_MIN = 90;
+
+/** Ab dieser Stunde (Mo–Fr) ist telefonische Anmeldung erforderlich */
+export const NIGHT_PICKUP_START = 22;
+export const NIGHT_PICKUP_END   = 6;
+
+/** Firmennummer für zeitabhängige Einblendung */
+export const COMPANY_PHONE     = '+49 2241 301 97 03';
+export const COMPANY_PHONE_TEL = 'tel:+4922413019703';
+
+// ── Fahrzeugtypen ─────────────────────────────────────────────────────────────
+export interface Vehicle {
+  id:               'pkw' | 'caddy' | 'transporter' | 'sprinter';
+  name:             string;
+  subtitle:         string;
+  maxWeightKg:      number;
+  requiresPallet:   boolean;
+  maxPallets?:      number;
+  maxPalletHeightCm?: number;
+  dimensions?: { widthCm: number; lengthCm: number; heightCm: number };
+}
+
+export const VEHICLES: readonly Vehicle[] = [
+  {
+    id:            'pkw',
+    name:          'PKW',
+    subtitle:      'Kleine Sendungen',
+    maxWeightKg:   50,
+    requiresPallet: false,
+    dimensions:    { widthCm: 60, lengthCm: 120, heightCm: 30 },
+  },
+  {
+    id:               'caddy',
+    name:             'Caddy',
+    subtitle:         'Kompakt-Transporter',
+    maxWeightKg:      400,
+    requiresPallet:   true,
+    maxPallets:       1,
+    maxPalletHeightCm: 120,
+  },
+  {
+    id:               'transporter',
+    name:             'Transporter',
+    subtitle:         'Standard-Transporter',
+    maxWeightKg:      1000,
+    requiresPallet:   true,
+    maxPallets:       2,
+    maxPalletHeightCm: 120,
+  },
+  {
+    id:               'sprinter',
+    name:             'Sprinter',
+    subtitle:         'Groß-Transporter',
+    maxWeightKg:      1400,
+    requiresPallet:   true,
+    maxPallets:       4,
+    maxPalletHeightCm: 160,
+  },
+];
+
+/**
+ * Gibt zurück ob die Telefonnummer eingeblendet werden soll:
+ * Mo–Fr ab 22:00, Wochenende ganztägig.
+ */
+export function isPhoneRequired(): boolean {
+  const now  = new Date();
+  const day  = now.getDay();  // 0=So … 6=Sa
+  const hour = now.getHours();
+  const isWeekend    = day === 0 || day === 6;
+  const isNightWeek  = day >= 1 && day <= 5 && hour >= NIGHT_PICKUP_START;
+  return isWeekend || isNightWeek;
 }
 
 // ── Platzhalter-Preistabelle ──────────────────────────────────────────────────
@@ -143,7 +220,9 @@ export class RoutingService {
     if (!isPlatformBrowser(this.platformId)) return null;
 
     try {
-      let route: { distance: number; duration: number; geometry: GeoJSON.LineString };
+      let route: { distance: number; duration: number; geometry: LineString };
+
+      let raw: { distance: number; duration: number; trafficDelay?: number; geometry: LineString };
 
       if (environment.production) {
         const params = new URLSearchParams({
@@ -152,28 +231,109 @@ export class RoutingService {
         });
         const res = await fetch(`/api/route?${params}`);
         if (!res.ok) return null;
-        route = (await res.json()) as typeof route;
+        raw = (await res.json()) as typeof raw;
       } else {
-        // Dev: direkt an OSRM
+        // Dev: direkt an OSRM (kein API-Key nötig)
         const url =
           `https://router.project-osrm.org/route/v1/driving/` +
           `${start.lon},${start.lat};${end.lon},${end.lat}` +
           `?overview=full&geometries=geojson`;
         const res = await fetch(url);
         if (!res.ok) return null;
-        const data = (await res.json()) as { code: string; routes: typeof route[] };
+        const data = (await res.json()) as { code: string; routes: Array<{ distance: number; duration: number; geometry: LineString }> };
         if (data.code !== 'Ok' || !data.routes.length) return null;
-        route = data.routes[0];
+        raw = { ...data.routes[0], trafficDelay: 0 };
       }
 
       return {
-        distanceKm: route.distance / 1000,
-        durationMin: route.duration / 60,
-        geometry:    route.geometry,
+        distanceKm:      raw.distance / 1000,
+        durationMin:     raw.duration / 60,
+        trafficDelayMin: (raw.trafficDelay ?? 0) / 60,
+        geometry:        raw.geometry,
       };
     } catch {
       return null;
     }
+  }
+
+  // ── Zustellzeit-Berechnung ───────────────────────────────────────────────────
+
+  /**
+   * Berechnet Abholzeit und voraussichtliche Zustellzeit mit Traffic.
+   *
+   * Logik Abholzeit:
+   *  - Kein Wunsch → jetzt + PICKUP_BUFFER_MIN (Mindestvorbereitung)
+   *  - Wunschzeit > jetzt + PICKUP_BUFFER_MIN → Wunschzeit wird verwendet (kein Puffer nötig)
+   *  - Wunschzeit < jetzt + PICKUP_BUFFER_MIN → Mindestvorbereitung greift, Wunsch nicht haltbar
+   */
+  /**
+   * Berechnet Abholzeit und voraussichtliche Zustellzeit.
+   *
+   * Puffer-Logik:
+   *  - Zukunfts-Datum gewählt → Wunschzeit gilt direkt, kein Puffer nötig
+   *  - Kein Datum / heutiges Datum → Mindestpuffer PICKUP_BUFFER_MIN prüfen
+   *  - Wunschzeit zu kurzfristig → Puffer erzwingen
+   */
+  calculateEstimatedDelivery(
+    durationMin: number,
+    requestedPickupTime?: string, // "HH:MM"
+    requestedPickupDate?: string, // "YYYY-MM-DD"
+  ): {
+    pickupAt:       Date;
+    arrival:        Date;
+    nightPickup:    boolean;
+    bufferEnforced: boolean;
+  } {
+    const now     = new Date();
+    const todayStr = now.toISOString().slice(0, 10);
+    const isFutureDate =
+      !!requestedPickupDate && requestedPickupDate > todayStr;
+
+    const earliestPickup = new Date(now.getTime() + PICKUP_BUFFER_MIN * 60 * 1000);
+
+    let pickupAt: Date;
+    let bufferEnforced = false;
+
+    if (requestedPickupDate || requestedPickupTime) {
+      // Basis-Datum ermitteln
+      const baseDate = requestedPickupDate
+        ? new Date(requestedPickupDate + 'T00:00:00')
+        : new Date(now);
+
+      if (requestedPickupTime) {
+        const [h, m] = requestedPickupTime.split(':').map(Number);
+        baseDate.setHours(h, m, 0, 0);
+      } else {
+        // Kein Wunsch-Zeit + Zukunfts-Datum → 08:00 Uhr annehmen
+        baseDate.setHours(8, 0, 0, 0);
+      }
+
+      // Heute ohne Datum: falls Wunschzeit in der Vergangenheit liegt → morgen
+      if (!requestedPickupDate && baseDate <= now) {
+        baseDate.setDate(baseDate.getDate() + 1);
+      }
+
+      if (isFutureDate) {
+        // Zukunfts-Buchung → kein Puffer, Wunschzeit direkt
+        pickupAt = baseDate;
+      } else if (baseDate >= earliestPickup) {
+        pickupAt = baseDate;
+      } else {
+        // Kurzfristig → Mindestpuffer erzwingen
+        pickupAt       = earliestPickup;
+        bufferEnforced = true;
+      }
+    } else {
+      // Keine Angaben → frühestmöglich
+      pickupAt = earliestPickup;
+    }
+
+    const arrival    = new Date(pickupAt.getTime() + durationMin * 60 * 1000);
+    const pickupHour = pickupAt.getHours();
+    const nightPickup =
+      pickupHour >= NIGHT_PICKUP_START || pickupHour < NIGHT_PICKUP_END;
+
+    return { pickupAt, arrival, nightPickup, bufferEnforced };
   }
 
   // ── Preisberechnung ─────────────────────────────────────────────────────────
