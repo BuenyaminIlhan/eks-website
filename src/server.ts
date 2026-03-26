@@ -108,52 +108,103 @@ function addApiRoutes(server: express.Express): void {
 
     try {
       if (HERE_API_KEY) {
-        // ── HERE Routing API (Live-Traffic) ──────────────────────────────────
+        // ── HERE Routing API (Live-Traffic + Span-Daten) ─────────────────────
         const params = new URLSearchParams({
-          transportMode: 'car',
-          origin:        `${startLat},${startLon}`,
-          destination:   `${endLat},${endLon}`,
-          return:        'summary,polyline',
-          apikey:        HERE_API_KEY,
+          transportMode:  'car',
+          origin:         `${startLat},${startLon}`,
+          destination:    `${endLat},${endLon}`,
+          return:         'summary,polyline',
+          spans:          'dynamicSpeedInfo',
+          departureTime:  new Date().toISOString(),
+          apikey:         HERE_API_KEY,
         });
 
         const upstream = await fetch(`${HERE_ROUTER_URL}?${params}`);
-        if (!upstream.ok) { res.status(502).json({ error: 'Routing fehlgeschlagen' }); return; }
+        if (!upstream.ok) {
+          const errBody = await upstream.text().catch(() => '');
+          console.error(`[HERE] Fehler ${upstream.status}: ${errBody.slice(0, 300)}`);
+          res.status(502).json({ error: 'Routing fehlgeschlagen' }); return;
+        }
 
         const data = await upstream.json() as {
           routes: Array<{
             sections: Array<{
               summary: { duration: number; length: number; baseDuration: number };
               polyline: string;
+              spans?: Array<{
+                offset: number;
+                dynamicSpeedInfo?: { trafficSpeed: number; baseSpeed: number };
+              }>;
             }>;
           }>;
         };
 
         if (!data.routes?.length || !data.routes[0].sections?.length) {
+          console.error('[HERE] Keine Route in Antwort:', JSON.stringify(data).slice(0, 500));
           res.status(404).json({ error: 'Keine Route gefunden' }); return;
         }
 
-        // Alle Sections summieren (Fähren, etc.) und Polylines zusammenführen
+        const firstSection = data.routes[0].sections[0];
+        console.log(`[HERE] Spans: ${firstSection.spans?.length ?? 0}, ` +
+          `Duration: ${firstSection.summary.duration}s, ` +
+          `BaseDuration: ${firstSection.summary.baseDuration}s, ` +
+          `TrafficDelay: ${firstSection.summary.duration - firstSection.summary.baseDuration}s`);
+
+        type TrafficLevel = 'none' | 'moderate' | 'heavy';
+        type TrafficSegment = { coords: [number, number][]; level: TrafficLevel };
+
+        function speedRatioToLevel(trafficSpeed: number, baseSpeed: number): TrafficLevel {
+          if (baseSpeed <= 0) return 'none';
+          const ratio = trafficSpeed / baseSpeed;
+          if (ratio >= 0.75) return 'none';      // < 25% Verlangsamung → kein Stau
+          if (ratio >= 0.45) return 'moderate';  // 25–55% Verlangsamung → mäßig
+          return 'heavy';                         // > 55% Verlangsamung → stockend
+        }
+
+        // Alle Sections summieren (Fähren, etc.) und Polylines + Segments zusammenführen
         const sections = data.routes[0].sections;
         const totalDistance = sections.reduce((s, sec) => s + sec.summary.length, 0);
         const totalDuration = sections.reduce((s, sec) => s + sec.summary.duration, 0);
         const baseDuration  = sections.reduce((s, sec) => s + sec.summary.baseDuration, 0);
 
-        // HERE Flexible Polyline → GeoJSON LineString
         const allCoords: [number, number][] = [];
+        const trafficSegments: TrafficSegment[] = [];
+
         for (const section of sections) {
           const decoded = decodeFlexPolyline(section.polyline);
-          for (const point of decoded.polyline) {
-            allCoords.push([point[1], point[0]]); // HERE: [lat,lng] → GeoJSON: [lng,lat]
+          const pts = decoded.polyline; // [lat, lng, ...]
+
+          // HERE: [lat,lng] → GeoJSON: [lng,lat]
+          const sectionCoords: [number, number][] = pts.map(p => [p[1], p[0]]);
+          allCoords.push(...sectionCoords);
+
+          // Spans → farbige Segmente
+          const spans = section.spans ?? [];
+          if (spans.length === 0) {
+            trafficSegments.push({ coords: sectionCoords, level: 'none' });
+          } else {
+            for (let i = 0; i < spans.length; i++) {
+              const start = spans[i].offset;
+              const end   = i + 1 < spans.length ? spans[i + 1].offset + 1 : sectionCoords.length;
+              const segCoords = sectionCoords.slice(start, end);
+              if (segCoords.length < 2) continue;
+
+              const dsi = spans[i].dynamicSpeedInfo;
+              const level = dsi
+                ? speedRatioToLevel(dsi.trafficSpeed, dsi.baseSpeed)
+                : 'none';
+              trafficSegments.push({ coords: segCoords, level });
+            }
           }
         }
 
         res.json({
-          distance:     totalDistance,
-          duration:     totalDuration,
-          baseDuration: baseDuration,
-          trafficDelay: Math.max(0, totalDuration - baseDuration),
-          geometry: { type: 'LineString', coordinates: allCoords },
+          distance:        totalDistance,
+          duration:        totalDuration,
+          baseDuration:    baseDuration,
+          trafficDelay:    Math.max(0, totalDuration - baseDuration),
+          geometry:        { type: 'LineString', coordinates: allCoords },
+          trafficSegments,
         });
 
       } else {
@@ -164,7 +215,10 @@ function addApiRoutes(server: express.Express): void {
           `?overview=full&geometries=geojson`;
 
         const upstream = await fetch(url);
-        if (!upstream.ok) { res.status(502).json({ error: 'Routing fehlgeschlagen' }); return; }
+        if (!upstream.ok) {
+          console.error(`[OSRM] Fehler ${upstream.status}`);
+          res.status(502).json({ error: 'Routing fehlgeschlagen' }); return;
+        }
 
         const osrm = await upstream.json() as { code: string; routes: Array<{ distance: number; duration: number; geometry: unknown }> };
         if (osrm.code !== 'Ok' || !osrm.routes.length) {

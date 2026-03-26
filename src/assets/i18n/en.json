@@ -213,17 +213,23 @@
     }
   },
   "routeCalc": {
-    "title": "Calculate Distance",
-    "subtitle": "Enter postal codes to receive a non-binding price estimate.",
+    "title": "Route Calculator Germany",
+    "subtitle": "Free price estimate for your shipment – quick, non-binding and without registration.",
+    "germanyOnly": "Route calculator for Germany",
+    "germanyOnlyHint": "Valid for all German postal codes",
+    "internationalBannerSub": "For EU deliveries, send us a request – we will get back to you within 24 hours with a quote.",
+    "internationalBannerBtn": "Request EU quote",
+    "internationalNote": "For international shipments, please contact us directly.",
+    "contactFormLink": "Go to contact form",
     "plzStart": "Pickup Postal Code",
     "plzEnd": "Delivery Postal Code",
     "plzPlaceholder": "e.g. 53757",
     "calculate": "Calculate Route",
     "calculating": "Calculating...",
     "errors": {
-      "plzInvalid": "Please enter a valid 5-digit postal code.",
-      "plzStartNotFound": "Pickup postal code not found. Please check your entry.",
-      "plzEndNotFound": "Delivery postal code not found. Please check your entry.",
+      "plzInvalid": "Please enter a valid 5-digit German postal code.",
+      "plzStartNotFound": "Pickup postcode not found in Germany. Typo or foreign postal code?",
+      "plzEndNotFound": "Delivery postcode not found in Germany. Typo or foreign postal code?",
       "routeError": "Route could not be calculated. Please try again.",
       "rateLimited": "Too many requests. Please wait a moment."
     },

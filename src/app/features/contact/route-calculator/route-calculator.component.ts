@@ -14,6 +14,7 @@ import {
   RoutingService,
   GeoResult,
   PriceBreakdown,
+  TrafficSegment,
   PICKUP_BUFFER_MIN,
   NIGHT_PICKUP_START,
   COMPANY_PHONE,
@@ -54,29 +55,34 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
   readonly errorKey    = signal('');
 
   readonly result = signal<{
-    distanceKm:          number;
-    durationMin:         number;
-    trafficDelayMin:     number;
-    price:               PriceBreakdown;
-    plzStart:            string;
-    plzEnd:              string;
-    vehicle:             Vehicle;
-    pickupAt:            Date;
-    estimatedArrival:    Date;
-    nightPickup:         boolean;
-    bufferEnforced:      boolean;
-    requestedPickupTime: string;
+    distanceKm:           number;
+    durationMin:          number;
+    trafficDelayMin:      number;
+    trafficSegments:      TrafficSegment[];
+    price:                PriceBreakdown;
+    plzStart:             string;
+    plzEnd:               string;
+    vehicle:              Vehicle;
+    pickupAt:             Date;
+    estimatedArrival:     Date;
+    nightPickup:          boolean;
+    bufferEnforced:       boolean;
+    requestedPickupTime:  string;
+    desiredDelivery:      Date | null;   // Wunsch-Zustellzeit (null = keine Angabe)
+    deliveryFeasible:     boolean | null; // null = keine Angabe
   } | null>(null);
 
   // ── Formular ─────────────────────────────────────────────────────────────────
   readonly form = this.fb.nonNullable.group({
-    vehicle:         ['',  Validators.required],
-    plzStart:        ['',  [Validators.required, Validators.pattern(/^\d{5}$/)]],
-    plzEnd:          ['',  [Validators.required, Validators.pattern(/^\d{5}$/)]],
-    pickupDate:      [''],  // optional YYYY-MM-DD
-    pickupTime:      [''],  // optional HH:MM
-    hasForklifts:    [false],
-    acceptNoHazmat:  [false, Validators.requiredTrue],
+    vehicle:          ['',  Validators.required],
+    plzStart:         ['',  [Validators.required, Validators.pattern(/^\d{5}$/)]],
+    plzEnd:           ['',  [Validators.required, Validators.pattern(/^\d{5}$/)]],
+    pickupDate:       [''],  // optional YYYY-MM-DD
+    pickupTime:       [''],  // optional HH:MM
+    deliveryDate:     [''],  // optional YYYY-MM-DD
+    deliveryTime:     [''],  // optional HH:MM
+    hasForklifts:     [false],
+    acceptNoHazmat:   [false, Validators.requiredTrue],
   });
 
   // ── Map (Leaflet) ─────────────────────────────────────────────────────────────
@@ -165,7 +171,7 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
     this.errorKey.set('');
     this.cdr.markForCheck();
 
-    const { plzStart, plzEnd, pickupTime, pickupDate, vehicle } =
+    const { plzStart, plzEnd, pickupTime, pickupDate, deliveryDate, deliveryTime, vehicle } =
       this.form.getRawValue();
 
     const [geoStart, geoEnd] = await Promise.all([
@@ -195,33 +201,76 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
     }
 
     this.routingService.recordClientRequest();
-    this.drawRoute(geoStart, geoEnd, route.geometry, plzStart, plzEnd);
+    this.drawRoute(geoStart, geoEnd, route.geometry, route.trafficSegments, plzStart, plzEnd);
 
     const delivery = this.routingService.calculateEstimatedDelivery(
-      route.durationMin,
+      route.durationMin + route.trafficDelayMin,
       pickupTime  || undefined,
       pickupDate  || undefined,
     );
 
+    // ── Wunsch-Zustellzeit berechnen ──────────────────────────────────────────
+    let desiredDelivery: Date | null = null;
+    let deliveryFeasible: boolean | null = null;
+
+    if (deliveryDate || deliveryTime) {
+      // Basis-Datum: explizites Datum oder Ankunftsdatum als Fallback
+      const base = deliveryDate
+        ? new Date(deliveryDate + 'T00:00:00')
+        : new Date(delivery.arrival);
+
+      if (deliveryTime) {
+        const [h, m] = deliveryTime.split(':').map(Number);
+        base.setHours(h, m, 0, 0);
+      } else {
+        // Nur Datum angegeben → Ende des Geschäftstags (18:00) als Wunsch
+        base.setHours(18, 0, 0, 0);
+      }
+
+      desiredDelivery  = base;
+      deliveryFeasible = desiredDelivery >= delivery.arrival;
+    }
+
     this.result.set({
-      distanceKm:          route.distanceKm,
-      durationMin:         route.durationMin,
-      trafficDelayMin:     route.trafficDelayMin,
-      price:               this.routingService.calculatePrice(route.distanceKm),
+      distanceKm:           route.distanceKm,
+      durationMin:          route.durationMin,
+      trafficDelayMin:      route.trafficDelayMin,
+      trafficSegments:      route.trafficSegments,
+      price:                this.routingService.calculatePrice(route.distanceKm),
       plzStart,
       plzEnd,
-      vehicle:             VEHICLES.find(v => v.id === vehicle)!,
-      pickupAt:            delivery.pickupAt,
-      estimatedArrival:    delivery.arrival,
-      nightPickup:         delivery.nightPickup,
-      bufferEnforced:      delivery.bufferEnforced,
-      requestedPickupTime: pickupTime,
+      vehicle:              VEHICLES.find(v => v.id === vehicle)!,
+      pickupAt:             delivery.pickupAt,
+      estimatedArrival:     delivery.arrival,
+      nightPickup:          delivery.nightPickup,
+      bufferEnforced:       delivery.bufferEnforced,
+      requestedPickupTime:  pickupTime,
+      desiredDelivery,
+      deliveryFeasible,
     });
     this.status.set('success');
     this.cdr.markForCheck();
   }
 
   // ── Hilfsmethoden ────────────────────────────────────────────────────────────
+
+  /** Verkehrsstufe aus Segment-Daten ableiten (dominanteste Stufe > 20 % der Route) */
+  getTrafficLevel(delayMin: number, totalMin: number): 'none' | 'moderate' | 'heavy' {
+    const r = this.result();
+    if (r?.trafficSegments?.length) {
+      const total    = r.trafficSegments.reduce((n: number, s: TrafficSegment) => n + s.coords.length, 0);
+      const heavy    = r.trafficSegments.filter((s: TrafficSegment) => s.level === 'heavy')   .reduce((n: number, s: TrafficSegment) => n + s.coords.length, 0);
+      const moderate = r.trafficSegments.filter((s: TrafficSegment) => s.level === 'moderate').reduce((n: number, s: TrafficSegment) => n + s.coords.length, 0);
+      if (total > 0 && heavy    / total > 0.1) return 'heavy';
+      if (total > 0 && moderate / total > 0.1) return 'moderate';
+      return 'none';
+    }
+    // Fallback: Delay-basiert (OSRM oder HERE ohne Spans)
+    if (delayMin < 1) return 'none';
+    const baseMin = totalMin - delayMin;
+    const ratio   = baseMin > 0 ? delayMin / baseMin : 0;
+    return (delayMin >= 15 || ratio >= 0.2) ? 'heavy' : 'moderate';
+  }
 
   formatDuration(minutes: number): string {
     const h = Math.floor(minutes / 60);
@@ -314,6 +363,7 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
     start: GeoResult,
     end: GeoResult,
     geometry: { coordinates: number[][] },
+    trafficSegments: TrafficSegment[],
     _plzStart: string,
     _plzEnd: string,
   ): void {
@@ -322,24 +372,43 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
 
     if (this.routeGroup) { this.routeGroup.remove(); this.routeGroup = null; }
 
-    const latlngs = geometry.coordinates.map(
-      (pos: number[]) => [pos[1], pos[0]] as [number, number],
-    );
+    const trafficColors = { none: '#1a73e8', moderate: '#f97316', heavy: '#dc2626' };
+    const layers: unknown[] = [];
 
-    const routeOutline = L.polyline(latlngs, {
-      color: '#ffffff', weight: 11, opacity: 0.8,
-      lineJoin: 'round', lineCap: 'round',
-    });
-    const routeLine = L.polyline(latlngs, {
-      color: '#1a73e8', weight: 6, opacity: 1,
-      lineJoin: 'round', lineCap: 'round',
-    });
+    if (trafficSegments.length > 0) {
+      // ── Segment-Färbung (HERE Span-Daten) ──────────────────────────────────
+      // HERE liefert [lng,lat] (GeoJSON) → Leaflet erwartet [lat,lng]
+      // Erst alle weißen Outlines, dann farbige Linien → klares Bild
+      for (const seg of trafficSegments) {
+        const latlngs = seg.coords.map(([lng, lat]) => [lat, lng] as [number, number]);
+        layers.push(L.polyline(latlngs, {
+          color: '#ffffff', weight: 11, opacity: 0.75,
+          lineJoin: 'round', lineCap: 'butt',
+        }));
+      }
+      for (const seg of trafficSegments) {
+        const latlngs = seg.coords.map(([lng, lat]) => [lat, lng] as [number, number]);
+        layers.push(L.polyline(latlngs, {
+          color: trafficColors[seg.level], weight: 5, opacity: 0.95,
+          lineJoin: 'round', lineCap: 'butt',
+        }));
+      }
+    } else {
+      // ── Fallback: einfarbige Route (OSRM) ──────────────────────────────────
+      const latlngs = geometry.coordinates.map((pos: number[]) => [pos[1], pos[0]] as [number, number]);
+      layers.push(L.polyline(latlngs, { color: '#ffffff', weight: 11, opacity: 0.8, lineJoin: 'round', lineCap: 'round' }));
+      layers.push(L.polyline(latlngs, { color: '#1a73e8', weight: 6,  opacity: 1,   lineJoin: 'round', lineCap: 'round' }));
+    }
 
     const markerStart = L.marker([start.lat, start.lon]);
     const markerEnd   = L.marker([end.lat,   end.lon]);
 
-    this.routeGroup = L.layerGroup([routeOutline, routeLine, markerStart, markerEnd]);
+    // Bounding Box aus der Gesamtgeometrie berechnen
+    const allLatlngs = geometry.coordinates.map((pos: number[]) => [pos[1], pos[0]] as [number, number]);
+    const boundsLine = L.polyline(allLatlngs);
+
+    this.routeGroup = L.layerGroup([...layers, markerStart, markerEnd]);
     this.routeGroup.addTo(this.map);
-    this.map.fitBounds(routeLine.getBounds(), { padding: [40, 40] });
+    this.map.fitBounds(boundsLine.getBounds(), { padding: [40, 40] });
   }
 }

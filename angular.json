@@ -50,6 +50,11 @@
             ],
             "styles": ["node_modules/leaflet/dist/leaflet.css", "src/styles.scss"],
             "scripts": [],
+            "allowedCommonJsDependencies": [
+              "dotenv/config",
+              "@here/flexpolyline",
+              "ip-address"
+            ],
             "server": "src/main.server.ts",
             "ssr": {
               "entry": "src/server.ts"
@@ -65,7 +70,7 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "10kB",
+                  "maximumWarning": "12kB",
                   "maximumError": "20kB"
                 }
               ],
@@ -82,6 +87,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "eks-website:build:production"

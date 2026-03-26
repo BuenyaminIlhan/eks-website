@@ -1,6 +1,5 @@
 import { Injectable, PLATFORM_ID, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { environment } from '../../../environments/environment';
 import type { LineString } from 'geojson';
 
 export interface GeoResult {
@@ -9,11 +8,19 @@ export interface GeoResult {
   name: string;
 }
 
+export type TrafficLevel = 'none' | 'moderate' | 'heavy';
+
+export interface TrafficSegment {
+  coords: [number, number][];
+  level: TrafficLevel;
+}
+
 export interface RouteResult {
   distanceKm: number;
   durationMin: number;
-  trafficDelayMin: number; // 0 wenn kein Live-Traffic verfügbar
+  trafficDelayMin: number;       // 0 wenn kein Live-Traffic verfügbar
   geometry: LineString;
+  trafficSegments: TrafficSegment[]; // leer = OSRM-Fallback (kein Segmentdaten)
 }
 
 export interface PriceBreakdown {
@@ -185,25 +192,10 @@ export class RoutingService {
     if (this.geoCache.has(plz)) return this.geoCache.get(plz)!;
 
     try {
-      let data: GeoResult;
-
-      if (environment.production) {
-        const res = await fetch(`/api/geocode?plz=${encodeURIComponent(plz)}`);
-        if (!res.ok) return null;
-        data = (await res.json()) as GeoResult;
-      } else {
-        // Dev: direkt an Nominatim
-        const url =
-          `https://nominatim.openstreetmap.org/search` +
-          `?postalcode=${encodeURIComponent(plz)}&country=DE&format=json&limit=1`;
-        const res = await fetch(url, {
-          headers: { 'Accept-Language': 'de', 'User-Agent': 'EKS-Website-Dev/1.0' },
-        });
-        if (!res.ok) return null;
-        const raw = (await res.json()) as Array<{ lat: string; lon: string; display_name: string }>;
-        if (!raw.length) return null;
-        data = { lat: parseFloat(raw[0].lat), lon: parseFloat(raw[0].lon), name: raw[0].display_name };
-      }
+      // Immer via Server-Proxy (schützt Nominatim-Rate-Limit und User-Agent)
+      const res = await fetch(`/api/geocode?plz=${encodeURIComponent(plz)}`);
+      if (!res.ok) return null;
+      const data = (await res.json()) as GeoResult;
 
       this.geoCache.set(plz, data);
       return data;
@@ -220,36 +212,29 @@ export class RoutingService {
     if (!isPlatformBrowser(this.platformId)) return null;
 
     try {
-      let route: { distance: number; duration: number; geometry: LineString };
+      let raw: {
+        distance: number;
+        duration: number;
+        trafficDelay?: number;
+        geometry: LineString;
+        trafficSegments?: TrafficSegment[];
+      };
 
-      let raw: { distance: number; duration: number; trafficDelay?: number; geometry: LineString };
-
-      if (environment.production) {
-        const params = new URLSearchParams({
-          startLat: String(start.lat), startLon: String(start.lon),
-          endLat:   String(end.lat),   endLon:   String(end.lon),
-        });
-        const res = await fetch(`/api/route?${params}`);
-        if (!res.ok) return null;
-        raw = (await res.json()) as typeof raw;
-      } else {
-        // Dev: direkt an OSRM (kein API-Key nötig)
-        const url =
-          `https://router.project-osrm.org/route/v1/driving/` +
-          `${start.lon},${start.lat};${end.lon},${end.lat}` +
-          `?overview=full&geometries=geojson`;
-        const res = await fetch(url);
-        if (!res.ok) return null;
-        const data = (await res.json()) as { code: string; routes: Array<{ distance: number; duration: number; geometry: LineString }> };
-        if (data.code !== 'Ok' || !data.routes.length) return null;
-        raw = { ...data.routes[0], trafficDelay: 0 };
-      }
+      // Immer via Server-Proxy (HERE API mit Live-Traffic in Prod/Dev, OSRM-Fallback ohne Key)
+      const params = new URLSearchParams({
+        startLat: String(start.lat), startLon: String(start.lon),
+        endLat:   String(end.lat),   endLon:   String(end.lon),
+      });
+      const res = await fetch(`/api/route?${params}`);
+      if (!res.ok) return null;
+      raw = (await res.json()) as typeof raw;
 
       return {
         distanceKm:      raw.distance / 1000,
         durationMin:     raw.duration / 60,
         trafficDelayMin: (raw.trafficDelay ?? 0) / 60,
         geometry:        raw.geometry,
+        trafficSegments: raw.trafficSegments ?? [],
       };
     } catch {
       return null;
