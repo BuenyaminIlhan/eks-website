@@ -189,7 +189,7 @@ export class RoutingService {
     if (!isPlatformBrowser(this.platformId)) return null;
 
     // Cache-Hit?
-    if (this.geoCache.has(plz)) return this.geoCache.get(plz)!;
+    if (this.geoCache.has(plz)) return this.geoCache.get(plz) ?? null;
 
     try {
       // Immer via Server-Proxy (schützt Nominatim-Rate-Limit und User-Agent)
@@ -324,7 +324,7 @@ export class RoutingService {
   // ── Preisberechnung ─────────────────────────────────────────────────────────
 
   calculatePrice(distanceKm: number): PriceBreakdown {
-    const tier = PRICE_TIERS.find((t) => distanceKm <= t.maxKm)!;
+    const tier = PRICE_TIERS.find((t) => distanceKm <= t.maxKm) ?? PRICE_TIERS[PRICE_TIERS.length - 1];
     const total = tier.basePrice + distanceKm * tier.perKm;
     return {
       basePrice:  tier.basePrice,

@@ -1,8 +1,9 @@
-import { Injectable, inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID, DestroyRef } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { isPlatformBrowser } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslationService } from './translation.service';
 
 export interface SeoConfig {
@@ -16,6 +17,8 @@ export interface SeoConfig {
   canonicalUrl?: string;
   noIndex?: boolean;
   jsonLd?: object;
+  /** Pfad für hreflang-Links (z. B. 'home', 'services'). Setzt DE + EN + x-default. */
+  hreflangPath?: string;
 }
 
 @Injectable({
@@ -28,13 +31,17 @@ export class SeoService {
   private readonly translationService = inject(TranslationService);
   private readonly platformId = inject(PLATFORM_ID);
 
+  private readonly destroyRef = inject(DestroyRef);
   private readonly siteName = 'EKS - Euro-Kurier-Su';
   private readonly siteUrl = 'https://www.euro-kurier-su.de';
   private readonly defaultOgImage = `${this.siteUrl}/assets/images/og-image.jpg`;
 
   init(): void {
     this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        takeUntilDestroyed(this.destroyRef),
+      )
       .subscribe(() => {
         // Auto-scroll to top on navigation
         if (isPlatformBrowser(this.platformId)) {
@@ -112,6 +119,10 @@ export class SeoService {
       this.updateCanonical(config.canonicalUrl);
     }
 
+    if (config.hreflangPath && isPlatformBrowser(this.platformId)) {
+      this.updateHreflang(config.hreflangPath);
+    }
+
     // Twitter Card
     this.metaService.updateTag({
       name: 'twitter:card',
@@ -134,6 +145,31 @@ export class SeoService {
     if (config.jsonLd && isPlatformBrowser(this.platformId)) {
       this.updateJsonLd(config.jsonLd);
     }
+  }
+
+  private updateHreflang(path: string): void {
+    const langs: Array<'de' | 'en'> = ['de', 'en'];
+    langs.forEach((lang) => {
+      const id = `hreflang-${lang}`;
+      let link = document.querySelector<HTMLLinkElement>(`link[id="${id}"]`);
+      if (!link) {
+        link = document.createElement('link');
+        link.id = id;
+        link.setAttribute('rel', 'alternate');
+        link.setAttribute('hreflang', lang);
+        document.head.appendChild(link);
+      }
+      link.setAttribute('href', `${this.siteUrl}/${path}`);
+    });
+
+    let xDefault = document.querySelector<HTMLLinkElement>('link[hreflang="x-default"]');
+    if (!xDefault) {
+      xDefault = document.createElement('link');
+      xDefault.setAttribute('rel', 'alternate');
+      xDefault.setAttribute('hreflang', 'x-default');
+      document.head.appendChild(xDefault);
+    }
+    xDefault.setAttribute('href', `${this.siteUrl}/${path}`);
   }
 
   private updateCanonical(url: string): void {

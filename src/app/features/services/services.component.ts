@@ -116,6 +116,39 @@ export class ServicesComponent implements OnInit {
         : 'Express courier, same-day delivery, B2B logistics and more. Discover all services from EKS Euro-Kurier-Su.',
       keywords: 'Express Kurier, Same-Day Lieferung, B2B Logistik, Kurierdienst Leistungen',
       canonicalUrl: this.seoService.getPageUrl('services'),
+      hreflangPath: 'services',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Startseite', item: 'https://www.euro-kurier-su.de/home' },
+              { '@type': 'ListItem', position: 2, name: 'Leistungen', item: 'https://www.euro-kurier-su.de/services' },
+            ],
+          },
+          {
+            '@type': 'Service',
+            serviceType: 'Kurierdienst',
+            provider: {
+              '@type': 'Organization',
+              name: 'Euro-Kurier-Su GmbH',
+              url: 'https://www.euro-kurier-su.de',
+            },
+            areaServed: { '@type': 'Country', name: 'Germany' },
+            hasOfferCatalog: {
+              '@type': 'OfferCatalog',
+              name: 'Kurierdienste',
+              itemListElement: [
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Express-Kurier', description: 'Abholung in 60–90 Min., Zustellung in 2–4 Stunden' } },
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Same-Day-Lieferung', description: 'Garantierte Zustellung bis 20:00 Uhr' } },
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Grenzüberschreitende Lieferung', description: 'EU-weite Lieferungen' } },
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'B2B-Logistik', description: 'Rahmenverträge und tägliche Lieferrouten' } },
+              ],
+            },
+          },
+        ],
+      },
     });
   }
 }

@@ -65,6 +65,27 @@ export class AboutComponent implements OnInit {
         ? 'Erfahren Sie mehr über EKS Euro-Kurier-Su: unsere Geschichte, Werte und das Familienunternehmen Ilhan aus Sankt Augustin.'
         : 'Learn more about EKS Euro-Kurier-Su: our history, values and the Ilhan family business from Sankt Augustin.',
       canonicalUrl: this.seoService.getPageUrl('about'),
+      hreflangPath: 'about',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Startseite', item: 'https://www.euro-kurier-su.de/home' },
+              { '@type': 'ListItem', position: 2, name: 'Über uns', item: 'https://www.euro-kurier-su.de/about' },
+            ],
+          },
+          {
+            '@type': 'AboutPage',
+            name: lang === 'de' ? 'Über uns – Euro-Kurier-Su GmbH' : 'About Us – Euro-Kurier-Su GmbH',
+            url: 'https://www.euro-kurier-su.de/about',
+            description: lang === 'de'
+              ? 'Erfahren Sie mehr über EKS Euro-Kurier-Su: unsere Geschichte, Werte und das Familienunternehmen Ilhan aus Sankt Augustin.'
+              : 'Learn more about EKS Euro-Kurier-Su: our history, values and the Ilhan family business from Sankt Augustin.',
+          },
+        ],
+      },
     });
   }
 }

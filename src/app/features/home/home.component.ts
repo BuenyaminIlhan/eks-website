@@ -77,12 +77,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
         : 'EKS Euro-Kurier-Su – Your reliable express courier service in Berlin and Europe. Same-day, B2B logistics and cross-border deliveries.',
       keywords: 'Kurierdienst Berlin, Express Lieferung, Same-Day Kurier, B2B Logistik, Grenzüberschreitend',
       canonicalUrl: this.seoService.getPageUrl('home'),
+      hreflangPath: 'home',
       jsonLd: {
         '@context': 'https://schema.org',
-        '@type': 'WebPage',
-        name: 'EKS Euro-Kurier-Su – Startseite',
-        url: this.seoService.getPageUrl('home'),
-        description: 'Zuverlässige Kurierdienste in Deutschland und Europa.',
+        '@graph': [
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Startseite', item: 'https://www.euro-kurier-su.de/home' },
+            ],
+          },
+          {
+            '@type': 'WebPage',
+            name: 'EKS Euro-Kurier-Su – Startseite',
+            url: this.seoService.getPageUrl('home'),
+            description: 'Zuverlässige Kurierdienste in Deutschland und Europa.',
+          },
+        ],
       },
     });
   }

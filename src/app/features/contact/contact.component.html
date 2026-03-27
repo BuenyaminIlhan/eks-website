@@ -67,9 +67,11 @@
                   [attr.aria-describedby]="isFieldInvalid('name') ? 'name-error' : null"
                   [attr.aria-invalid]="isFieldInvalid('name')"
                 />
-                @if (isFieldInvalid('name')) {
-                  <p id="name-error" class="form-error" role="alert">{{ getFieldError('name') }}</p>
-                }
+                <div aria-live="polite">
+                  @if (isFieldInvalid('name')) {
+                    <p id="name-error" class="form-error">{{ getFieldError('name') }}</p>
+                  }
+                </div>
               </div>
 
               <!-- Email -->
@@ -88,9 +90,11 @@
                   [attr.aria-describedby]="isFieldInvalid('email') ? 'email-error' : null"
                   [attr.aria-invalid]="isFieldInvalid('email')"
                 />
-                @if (isFieldInvalid('email')) {
-                  <p id="email-error" class="form-error" role="alert">{{ getFieldError('email') }}</p>
-                }
+                <div aria-live="polite">
+                  @if (isFieldInvalid('email')) {
+                    <p id="email-error" class="form-error">{{ getFieldError('email') }}</p>
+                  }
+                </div>
               </div>
             </div>
 
@@ -143,9 +147,11 @@
                 [attr.aria-describedby]="isFieldInvalid('message') ? 'message-error' : null"
                 [attr.aria-invalid]="isFieldInvalid('message')"
               ></textarea>
-              @if (isFieldInvalid('message')) {
-                <p id="message-error" class="form-error" role="alert">{{ getFieldError('message') }}</p>
-              }
+              <div aria-live="polite">
+                @if (isFieldInvalid('message')) {
+                  <p id="message-error" class="form-error">{{ getFieldError('message') }}</p>
+                }
+              </div>
               <span class="form-hint">{{ contactForm.get('message')?.value?.length || 0 }} / min. 20 Zeichen</span>
             </div>
 
@@ -166,9 +172,11 @@
                   <span class="form-label__required" aria-label="Pflichtfeld">*</span>
                 </span>
               </label>
-              @if (isFieldInvalid('consent')) {
-                <p id="consent-error" class="form-error" role="alert">{{ getFieldError('consent') }}</p>
-              }
+              <div aria-live="polite">
+                @if (isFieldInvalid('consent')) {
+                  <p id="consent-error" class="form-error">{{ getFieldError('consent') }}</p>
+                }
+              </div>
             </div>
 
             <!-- Honeypot (für Bots — von echten Nutzern nicht sichtbar) -->

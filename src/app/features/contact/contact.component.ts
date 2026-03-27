@@ -6,6 +6,7 @@ import {
   AfterViewInit,
   PLATFORM_ID,
   signal,
+  ElementRef,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, AbstractControl } from '@angular/forms';
@@ -18,9 +19,6 @@ import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scr
 import { fadeInUp } from '../../animations/common.animations';
 import { RouteCalculatorComponent } from './route-calculator/route-calculator.component';
 
-const EMAILJS_SERVICE_ID  = 'service_q5s3qxf';
-const EMAILJS_TEMPLATE_ID = 'template_rgsiofm';
-const EMAILJS_PUBLIC_KEY  = 'sJC07S6IW594Qb9WS';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -38,6 +36,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
   private readonly seoService = inject(SeoService);
   private readonly translationService = inject(TranslationService);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly elRef = inject(ElementRef);
   readonly spamProtection = inject(SpamProtectionService);
 
   readonly isBrowser = isPlatformBrowser(this.platformId);
@@ -64,6 +63,27 @@ export class ContactComponent implements OnInit, AfterViewInit {
         ? 'Kontaktieren Sie EKS Euro-Kurier-Su für ein unverbindliches Angebot. Wir antworten innerhalb von 24 Stunden.'
         : 'Contact EKS Euro-Kurier-Su for a non-binding quote. We respond within 24 hours.',
       canonicalUrl: this.seoService.getPageUrl('contact'),
+      hreflangPath: 'contact',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Startseite', item: 'https://www.euro-kurier-su.de/home' },
+              { '@type': 'ListItem', position: 2, name: 'Kontakt', item: 'https://www.euro-kurier-su.de/contact' },
+            ],
+          },
+          {
+            '@type': 'ContactPage',
+            name: lang === 'de' ? 'Kontakt – Angebot anfragen' : 'Contact – Request a Quote',
+            url: 'https://www.euro-kurier-su.de/contact',
+            description: lang === 'de'
+              ? 'Kontaktieren Sie EKS Euro-Kurier-Su für ein unverbindliches Angebot. Wir antworten innerhalb von 24 Stunden.'
+              : 'Contact EKS Euro-Kurier-Su for a non-binding quote. We respond within 24 hours.',
+          },
+        ],
+      },
     });
     this.spamProtection.initCooldownIfActive();
   }
@@ -105,9 +125,22 @@ export class ContactComponent implements OnInit, AfterViewInit {
     return lang === 'de' ? 'Ungültige Eingabe' : 'Invalid input';
   }
 
+  /** Fokus auf das erste ungültige Feld setzen – wichtig für Screen-Reader */
+  private focusFirstInvalidField(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    // Kurze Verzögerung damit das @if im Template das Element rendern kann
+    setTimeout(() => {
+      const invalid = (this.elRef.nativeElement as HTMLElement).querySelector<HTMLElement>(
+        '[aria-invalid="true"], .ng-invalid:not(form)'
+      );
+      invalid?.focus();
+    }, 50);
+  }
+
   onSubmit(): void {
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
+      this.focusFirstInvalidField();
       return;
     }
 
@@ -131,21 +164,10 @@ export class ContactComponent implements OnInit, AfterViewInit {
 
     const { name, email, company, phone, message } = this.contactForm.value;
 
-    fetch('https://api.emailjs.com/api/v1.0/email/send', {
+    fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        service_id:      EMAILJS_SERVICE_ID,
-        template_id:     EMAILJS_TEMPLATE_ID,
-        user_id:         EMAILJS_PUBLIC_KEY,
-        template_params: {
-          from_name:  name,
-          from_email: email,
-          company:    company || '–',
-          phone:      phone   || '–',
-          message:    message,
-        },
-      }),
+      body: JSON.stringify({ name, email, company, phone, message }),
     }).then(async (res) => {
       if (!res.ok) {
         const text = await res.text();
@@ -155,7 +177,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
       this.contactForm.reset();
       this.spamProtection.resetRecaptcha();
     }).catch((err) => {
-      console.error('EmailJS error:', err);
+      console.error('Contact form error:', err);
       this.formStatus.set('error');
       this.spamProtection.resetRecaptcha();
     });

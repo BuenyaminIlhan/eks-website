@@ -813,6 +813,17 @@
     @include respond-to('lg') { height: 480px; }
   }
 
+  &__map-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    height: 200px;
+    color: $color-text-muted;
+    font-size: 0.875rem;
+    background: $color-gray-100;
+  }
+
   &__osm-link {
     position: absolute;
     bottom: 0.75rem;

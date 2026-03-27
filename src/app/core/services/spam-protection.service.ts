@@ -92,10 +92,19 @@ export class SpamProtectionService {
 
       try {
         grecaptcha.render(container, { sitekey: RECAPTCHA_SITE_KEY });
-      } catch { /* Script noch nicht geladen */ }
+      } catch { /* Script noch nicht vollständig geladen */ }
     };
 
-    // Falls das Script noch lädt, warten und erneut versuchen
+    // Script nur einmal laden (lazy – nicht global in index.html)
+    if (!document.querySelector('script[src*="recaptcha/api.js"]')) {
+      const script = document.createElement('script');
+      script.src = 'https://www.google.com/recaptcha/api.js';
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+
+    // Warten bis grecaptcha verfügbar ist
     if (typeof grecaptcha !== 'undefined') {
       tryRender();
     } else {

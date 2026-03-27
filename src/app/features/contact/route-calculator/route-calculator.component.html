@@ -20,6 +20,7 @@
   </div>
 
   <!-- ── Telefon-Banner (Wochenende ganztägig / Mo–Fr ab 22 Uhr) ───────────── -->
+  <div aria-live="polite" aria-atomic="true">
   @if (showPhone()) {
     <a class="route-calc__phone-banner" [href]="companyPhoneTel" aria-label="Jetzt anrufen">
       <span class="route-calc__phone-banner-icon" aria-hidden="true">
@@ -34,6 +35,7 @@
       <span class="route-calc__phone-banner-cta" aria-hidden="true">Jetzt anrufen →</span>
     </a>
   }
+  </div>
 
   <!-- ── Form + Result ────────────────────────────────────────────────────────── -->
   <div class="route-calc__body">
@@ -586,10 +588,19 @@
 
   <!-- ── Karte ──────────────────────────────────────────────────────────────── -->
   <div class="route-calc__map-wrapper">
-    <div id="route-map" class="route-calc__map"
-      role="application"
-      [attr.aria-label]="'routeCalc.map.ariaLabel' | t">
-    </div>
+    @if (mapLoadError()) {
+      <div class="route-calc__map-error" role="alert">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        Karte konnte nicht geladen werden. Bitte Seite neu laden.
+      </div>
+    } @else {
+      <div id="route-map" class="route-calc__map"
+        role="application"
+        [attr.aria-label]="'routeCalc.map.ariaLabel' | t">
+      </div>
+    }
     <a class="route-calc__osm-link"
       href="https://www.openstreetmap.org/copyright"
       target="_blank" rel="noopener noreferrer">

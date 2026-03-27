@@ -1,13 +1,13 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   AfterViewInit,
   OnDestroy,
   inject,
   signal,
 } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
+import type * as LeafletType from 'leaflet';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 import {
@@ -37,7 +37,6 @@ type CalcStatus = 'idle' | 'loading' | 'success' | 'error';
 export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
   private readonly fb             = inject(FormBuilder);
   readonly routingService         = inject(RoutingService);
-  private readonly cdr            = inject(ChangeDetectorRef);
 
   // ── Konstanten für das Template ──────────────────────────────────────────────
   readonly vehicles         = VEHICLES;
@@ -53,6 +52,7 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
   readonly showPhone   = signal(false);
   readonly status      = signal<CalcStatus>('idle');
   readonly errorKey    = signal('');
+  readonly mapLoadError = signal(false);
 
   readonly result = signal<{
     distanceKm:           number;
@@ -85,13 +85,10 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
     acceptNoHazmat:   [false, Validators.requiredTrue],
   });
 
-  // ── Map (Leaflet) ─────────────────────────────────────────────────────────────
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private L:          any = null;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private map:        any = null;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private routeGroup: any = null;
+  // ── Map (Leaflet – npm, kein CDN) ────────────────────────────────────────────
+  private L:          typeof LeafletType | null = null;
+  private map:        LeafletType.Map | null = null;
+  private routeGroup: LeafletType.LayerGroup | null = null;
 
   private phoneTimer: ReturnType<typeof setInterval> | null = null;
 
@@ -104,7 +101,6 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
     this.showPhone.set(isPhoneRequired());
     this.phoneTimer = setInterval(() => {
       this.showPhone.set(isPhoneRequired());
-      this.cdr.markForCheck();
     }, 60_000);
 
     requestAnimationFrame(() => void this.initMap());
@@ -143,14 +139,12 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
     if (this.requiresPallet && !this.form.getRawValue().hasForklifts) {
       this.errorKey.set('routeCalc.errors.forkliftsRequired');
       this.status.set('error');
-      this.cdr.markForCheck();
       return;
     }
 
     if (!this.form.getRawValue().acceptNoHazmat) {
       this.errorKey.set('routeCalc.errors.hazmatRequired');
       this.status.set('error');
-      this.cdr.markForCheck();
       return;
     }
 
@@ -162,14 +156,12 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
     if (this.routingService.isClientRateLimited()) {
       this.errorKey.set('routeCalc.errors.rateLimited');
       this.status.set('error');
-      this.cdr.markForCheck();
       return;
     }
 
     this.status.set('loading');
     this.result.set(null);
     this.errorKey.set('');
-    this.cdr.markForCheck();
 
     const { plzStart, plzEnd, pickupTime, pickupDate, deliveryDate, deliveryTime, vehicle } =
       this.form.getRawValue();
@@ -182,13 +174,11 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
     if (!geoStart) {
       this.errorKey.set('routeCalc.errors.plzStartNotFound');
       this.status.set('error');
-      this.cdr.markForCheck();
       return;
     }
     if (!geoEnd) {
       this.errorKey.set('routeCalc.errors.plzEndNotFound');
       this.status.set('error');
-      this.cdr.markForCheck();
       return;
     }
 
@@ -196,7 +186,13 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
     if (!route) {
       this.errorKey.set('routeCalc.errors.routeError');
       this.status.set('error');
-      this.cdr.markForCheck();
+      return;
+    }
+
+    const foundVehicle = VEHICLES.find(v => v.id === vehicle);
+    if (!foundVehicle) {
+      this.errorKey.set('routeCalc.errors.routeError');
+      this.status.set('error');
       return;
     }
 
@@ -239,7 +235,7 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
       price:                this.routingService.calculatePrice(route.distanceKm),
       plzStart,
       plzEnd,
-      vehicle:              VEHICLES.find(v => v.id === vehicle)!,
+      vehicle:              foundVehicle,
       pickupAt:             delivery.pickupAt,
       estimatedArrival:     delivery.arrival,
       nightPickup:          delivery.nightPickup,
@@ -249,7 +245,6 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
       deliveryFeasible,
     });
     this.status.set('success');
-    this.cdr.markForCheck();
   }
 
   // ── Hilfsmethoden ────────────────────────────────────────────────────────────
@@ -299,36 +294,22 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
       ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  // ── Karte (Leaflet + OpenStreetMap) ──────────────────────────────────────────
-
-  private loadScript(src: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
-      const s = document.createElement('script');
-      s.src = src;
-      s.onload  = () => resolve();
-      s.onerror = () => reject(new Error(`Script-Ladefehler: ${src}`));
-      document.head.appendChild(s);
-    });
-  }
+  // ── Karte (Leaflet – npm Bundle, kein CDN) ───────────────────────────────────
 
   private async initMap(): Promise<void> {
     const container = document.getElementById('route-map');
     if (!container) return;
 
-    if (!document.querySelector('link[href*="leaflet@"]')) {
-      const link = document.createElement('link');
-      link.rel  = 'stylesheet';
-      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-      document.head.appendChild(link);
+    // Dynamischer Import → wird als eigener Chunk gebaut, läuft nie server-seitig
+    try {
+      this.L = await import('leaflet');
+    } catch {
+      console.error('Leaflet konnte nicht geladen werden');
+      this.mapLoadError.set(true);
+      return;
     }
 
-    await this.loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js');
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const L = (window as any)['L'];
-    if (!L) { console.error('Leaflet nicht geladen'); return; }
-    this.L = L;
+    const L = this.L;
 
     this.map = L.map(container, {
       center:    [50.7748, 7.1836],
@@ -373,7 +354,7 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
     if (this.routeGroup) { this.routeGroup.remove(); this.routeGroup = null; }
 
     const trafficColors = { none: '#1a73e8', moderate: '#f97316', heavy: '#dc2626' };
-    const layers: unknown[] = [];
+    const layers: LeafletType.Layer[] = [];
 
     if (trafficSegments.length > 0) {
       // ── Segment-Färbung (HERE Span-Daten) ──────────────────────────────────

@@ -46,6 +46,16 @@
                 "glob": "favicon.svg",
                 "input": "src",
                 "output": "/"
+              },
+              {
+                "glob": "robots.txt",
+                "input": "src",
+                "output": "/"
+              },
+              {
+                "glob": "sitemap.xml",
+                "input": "src",
+                "output": "/"
               }
             ],
             "styles": ["node_modules/leaflet/dist/leaflet.css", "src/styles.scss"],
@@ -53,7 +63,10 @@
             "allowedCommonJsDependencies": [
               "dotenv/config",
               "@here/flexpolyline",
-              "ip-address"
+              "ip-address",
+              "compression",
+              "winston",
+              "leaflet"
             ],
             "server": "src/main.server.ts",
             "ssr": {
