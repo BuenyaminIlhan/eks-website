@@ -32,8 +32,10 @@ export class CookieConsentService {
     marketing: false,
   });
 
+  private readonly initialized = signal(false);
+
   readonly showBanner = computed(
-    () => this.consentStatus() === 'pending'
+    () => this.initialized() && this.consentStatus() === 'pending'
   );
 
   readonly showCustomizePanel = signal(false);
@@ -66,12 +68,14 @@ export class CookieConsentService {
           });
         } else {
           // Version changed, reset consent
-          this.resetConsent();
+          this.consentStatus.set('pending');
         }
       } catch {
-        this.resetConsent();
+        this.consentStatus.set('pending');
       }
     }
+
+    this.initialized.set(true);
   }
 
   acceptAll(): void {

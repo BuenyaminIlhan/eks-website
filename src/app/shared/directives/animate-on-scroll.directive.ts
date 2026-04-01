@@ -83,11 +83,13 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
 
   private makeVisible(): void {
     this.renderer.removeClass(this.el.nativeElement, 'aos-hidden');
-    this.renderer.addClass(this.el.nativeElement, this.animationClass);
+    const cls = this.animationClass || 'aos-visible';
+    this.renderer.addClass(this.el.nativeElement, cls);
   }
 
   private makeHidden(): void {
-    this.renderer.removeClass(this.el.nativeElement, this.animationClass);
+    const cls = this.animationClass || 'aos-visible';
+    this.renderer.removeClass(this.el.nativeElement, cls);
     this.renderer.addClass(this.el.nativeElement, 'aos-hidden');
   }
 }

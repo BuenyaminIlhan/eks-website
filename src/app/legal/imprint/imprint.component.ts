@@ -27,8 +27,8 @@ export class ImprintComponent implements OnInit {
     this.seoService.updateSeo({
       title: lang === 'de' ? 'Impressum' : 'Legal Notice',
       description: lang === 'de'
-        ? 'Pflichtangaben gemäß § 5 TMG für Euro-Kurier-Su GmbH, Berlin.'
-        : 'Mandatory information pursuant to § 5 TMG for Euro-Kurier-Su GmbH, Berlin.',
+        ? 'Pflichtangaben gemäß § 5 TMG für Euro-Kurier-Su, Sankt Augustin.'
+        : 'Mandatory information pursuant to § 5 TMG for Euro-Kurier-Su, Sankt Augustin.',
       noIndex: true,
       canonicalUrl: this.seoService.getPageUrl('imprint'),
     });

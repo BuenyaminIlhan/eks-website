@@ -41,10 +41,33 @@
                 "glob": "favicon.ico",
                 "input": "src",
                 "output": "/"
+              },
+              {
+                "glob": "favicon.svg",
+                "input": "src",
+                "output": "/"
+              },
+              {
+                "glob": "robots.txt",
+                "input": "src",
+                "output": "/"
+              },
+              {
+                "glob": "sitemap.xml",
+                "input": "src",
+                "output": "/"
               }
             ],
-            "styles": ["src/styles.scss"],
+            "styles": ["node_modules/leaflet/dist/leaflet.css", "src/styles.scss"],
             "scripts": [],
+            "allowedCommonJsDependencies": [
+              "dotenv/config",
+              "@here/flexpolyline",
+              "ip-address",
+              "compression",
+              "winston",
+              "leaflet"
+            ],
             "server": "src/main.server.ts",
             "ssr": {
               "entry": "src/server.ts"
@@ -60,8 +83,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "12kB",
+                  "maximumError": "20kB"
                 }
               ],
               "outputHashing": "all",
@@ -77,6 +100,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "eks-website:build:production"

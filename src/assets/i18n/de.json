@@ -49,7 +49,7 @@
   "hero": {
     "badge": "Ihr Partner für Expresslieferungen",
     "title": "Schnell. Zuverlässig. Europaweit.",
-    "subtitle": "Euro-Kurier-Su liefert Ihre Sendungen pünktlich und sicher – von Berlin bis Brüssel, vom Express bis zur Spedition.",
+    "subtitle": "Euro-Kurier-Su liefert Ihre Sendungen pünktlich und sicher – von überall bis überall innerhalb der EU, vom Express bis zur Spedition.",
     "ctaPrimary": "Jetzt Angebot anfragen",
     "ctaSecondary": "Unsere Leistungen",
     "scrollDown": "Nach unten scrollen",
@@ -66,12 +66,12 @@
     "cta": "Alle Leistungen ansehen",
     "express": {
       "title": "Express-Kurier",
-      "desc": "Dringende Sendungen werden innerhalb von 2–4 Stunden abgeholt und zugestellt. Ideal für zeitkritische Dokumente und Pakete.",
+      "desc": "Dringende Sendungen werden innerhalb von 2–4 Stunden abgeholt und zugestellt bis 100 km und deutschlandweit. Ideal für zeitkritische Dokumente und Pakete.",
       "icon": "⚡"
     },
     "sameDay": {
       "title": "Same-Day-Lieferung",
-      "desc": "Garantierte Zustellung am selben Tag bis 20:00 Uhr. Verfügbar im gesamten Berliner Stadtgebiet und Umland bis 80 km.",
+      "desc": "Garantierte Zustellung am selben Tag bis 20:00 Uhr. Verfügbar in Sankt Augustin, Bonn und dem Rhein-Sieg-Kreis bis 80 km.",
       "icon": "🌅"
     },
     "crossBorder": {
@@ -120,7 +120,7 @@
     "subtitle": "Seit über einem Jahrzehnt Ihr verlässlicher Partner für schnelle und sichere Zustellungen.",
     "story": {
       "title": "Unsere Geschichte",
-      "text": "Euro-Kurier-Su GmbH wurde 2012 in Berlin gegründet mit einer einfachen Vision: einen Kurierdienst zu schaffen, der Zuverlässigkeit, Schnelligkeit und persönlichen Service vereint. Was mit drei Fahrzeugen und einem kleinen Team begann, ist heute zu einem der führenden Kurierdienste Berlins und Brandenburgs gewachsen.\n\nUnser Gründer Sergei Ulrich brachte mehr als 15 Jahre Erfahrung in der Logistikbranche mit und verstand von Anfang an, was Unternehmen und Privatpersonen wirklich brauchen: einen Partner, dem man vertrauen kann. Heute beschäftigen wir über 45 erfahrene Kuriere und bedienen mehr als 800 Stammkunden.\n\nDurch kontinuierliche Investitionen in moderne Technologie, Fahrzeuge und Schulungen gewährleisten wir höchste Standards bei jeder Lieferung. Unser digitales Tracking-System wurde 2019 als eines der fortschrittlichsten in der Branche ausgezeichnet.",
+      "text": "Euro-Kurier-Su wurde 2008 von Osman Ilhan in Sankt Augustin gegründet – mit einer einfachen Vision: einen Kurierdienst zu schaffen, der Zuverlässigkeit, Schnelligkeit und persönlichen Service vereint. Was mit drei Fahrzeugen und einem kleinen Familienbetrieb begann, ist heute zu einem der führenden Kurierdienste der Region Bonn/Rhein-Sieg gewachsen.\n\nAls echtes Familienunternehmen stehen die Werte der Familie Ilhan im Mittelpunkt: Vertrauen, Verlässlichkeit und persönlicher Einsatz. Heute führt Didem Ilhan das Unternehmen als Geschäftsinhaberin, unterstützt von Enes Ilhan in der Betriebsleitung und Bünyamin Ilhan in der technischen Leitung.\n\nDurch kontinuierliche Investitionen in moderne Technologie, Fahrzeuge und Schulungen gewährleisten wir höchste Standards bei jeder Lieferung. Heute bedienen wir mehr als 800 Stammkunden und haben über 500.000 Sendungen erfolgreich zugestellt.",
       "imageAlt": "EKS Team bei der Arbeit"
     },
     "values": {
@@ -143,7 +143,7 @@
       }
     },
     "stats": {
-      "years": { "value": "12+", "label": "Jahre Erfahrung" },
+      "years": { "value": "17+", "label": "Jahre Erfahrung" },
       "deliveries": { "value": "500K+", "label": "Erfolgreiche Lieferungen" },
       "cities": { "value": "150+", "label": "Städte & Regionen" },
       "clients": { "value": "800+", "label": "Stammkunden" }
@@ -190,11 +190,11 @@
       "title": "Kontaktinformationen",
       "address": {
         "label": "Adresse",
-        "value": "Berliner Allee 42, 10115 Berlin"
+        "value": "Ilmenaustr. 16, 53757 Sankt Augustin"
       },
       "phone": {
         "label": "Telefon",
-        "value": "+49 30 123 456 789"
+        "value": "+49 2241 301 97 03"
       },
       "email": {
         "label": "E-Mail",
@@ -209,7 +209,41 @@
     },
     "map": {
       "title": "Unser Standort",
-      "ariaLabel": "Karte mit unserem Standort in Berlin"
+      "ariaLabel": "Karte mit unserem Standort in Sankt Augustin"
+    }
+  },
+  "routeCalc": {
+    "title": "Routenrechner Deutschland",
+    "subtitle": "Kostenlose Preisschätzung für Ihre Sendung – schnell, unverbindlich und ohne Anmeldung.",
+    "germanyOnly": "Routenrechner für Deutschland",
+    "germanyOnlyHint": "Gültig für alle deutschen Postleitzahlen",
+    "internationalBannerSub": "Für EU-Lieferungen stellen Sie uns eine Anfrage – wir melden uns innerhalb von 24 Stunden mit einem Angebot.",
+    "internationalBannerBtn": "EU-Anfrage stellen",
+    "internationalNote": "Für internationale Sendungen kontaktieren Sie uns bitte direkt.",
+    "contactFormLink": "Zum Kontaktformular",
+    "plzStart": "PLZ Abholung",
+    "plzEnd": "PLZ Lieferung",
+    "plzPlaceholder": "z. B. 53757",
+    "calculate": "Route berechnen",
+    "calculating": "Berechne Route...",
+    "errors": {
+      "plzInvalid": "Bitte eine gültige 5-stellige deutsche PLZ eingeben.",
+      "plzStartNotFound": "Abholung-PLZ wurde in Deutschland nicht gefunden. Tippfehler oder ausländische PLZ?",
+      "plzEndNotFound": "Liefer-PLZ wurde in Deutschland nicht gefunden. Tippfehler oder ausländische PLZ?",
+      "routeError": "Route konnte nicht berechnet werden. Bitte versuchen Sie es erneut.",
+      "rateLimited": "Zu viele Anfragen. Bitte warten Sie kurz.",
+      "forkliftsRequired": "Bitte bestätigen Sie, dass an Be- und Entladeort ein Gabelstapler vorhanden ist.",
+      "hazmatRequired": "Bitte bestätigen Sie, dass die Sendung kein Gefahrgut enthält."
+    },
+    "result": {
+      "distance": "Entfernung",
+      "duration": "Fahrzeit",
+      "estimatedPrice": "Geschätzter Preis",
+      "priceNote": "Unverbindliche Schätzung auf Basis von Platzhalterwerten. Der verbindliche Preis wird nach Auftragsbestätigung mitgeteilt.",
+      "requestQuote": "Verbindliches Angebot anfordern"
+    },
+    "map": {
+      "ariaLabel": "Interaktive Karte mit berechneter Route"
     }
   },
   "faq": {
@@ -221,7 +255,7 @@
     },
     "q2": {
       "question": "In welche Regionen liefern Sie?",
-      "answer": "Unser Kerngebiet umfasst Berlin und Brandenburg, mit Expresszustellung innerhalb von 80 km. Darüber hinaus bieten wir Lieferungen in ganz Deutschland und in ausgewählte EU-Länder (Polen, Tschechien, Österreich, Niederlande, Belgien) an. Bitte kontaktieren Sie uns für Fernlieferungen."
+      "answer": "Unser Kerngebiet umfasst Sankt Augustin, Bonn und den Rhein-Sieg-Kreis mit Expresszustellung innerhalb von 80 km. Darüber hinaus bieten wir Lieferungen in ganz Deutschland und in ausgewählte EU-Länder (Polen, Tschechien, Österreich, Niederlande, Belgien) an. Bitte kontaktieren Sie uns für Fernlieferungen."
     },
     "q3": {
       "question": "Wie kann ich meine Sendung verfolgen?",
@@ -263,8 +297,8 @@
   },
   "footer": {
     "tagline": "Schnell. Sicher. Europaweit.",
-    "description": "Euro-Kurier-Su GmbH – Ihr zuverlässiger Partner für Express- und Kurierdienste in Deutschland und Europa seit 2012.",
-    "rights": "© 2024 Euro-Kurier-Su GmbH. Alle Rechte vorbehalten.",
+    "description": "Euro-Kurier-Su – Ihr zuverlässiger Partner für Express- und Kurierdienste in Deutschland und Europa seit 2008.",
+    "rights": "© 2024 Euro-Kurier-Su. Alle Rechte vorbehalten.",
     "links": {
       "imprint": "Impressum",
       "privacy": "Datenschutz",
@@ -293,34 +327,34 @@
     },
     "address": {
       "label": "Anschrift",
-      "street": "Berliner Allee 42",
-      "zip": "10115",
-      "city": "Berlin",
+      "street": "Ilmenaustr. 16",
+      "zip": "53757",
+      "city": "Sankt Augustin",
       "country": "Deutschland"
     },
     "contact": {
       "label": "Kontakt",
-      "phone": "+49 30 123 456 789",
-      "fax": "+49 30 123 456 790",
+      "phone": "+49 2241 000 000",
+      "fax": "+49 2241 000 001",
       "email": "info@euro-kurier-su.de"
     },
     "registration": {
       "label": "Handelsregister",
-      "court": "Amtsgericht Berlin-Charlottenburg",
-      "number": "HRB 198745 B"
+      "court": "Amtsgericht Siegburg",
+      "number": "HRB 000000"
     },
     "vat": {
       "label": "Umsatzsteuer-Identifikationsnummer",
       "number": "DE 298 765 432"
     },
     "director": {
-      "label": "Geschäftsführer",
-      "name": "Sergei Ulrich"
+      "label": "Geschäftsinhaberin",
+      "name": "Didem Ilhan"
     },
     "responsible": {
       "label": "Inhaltlich verantwortlich gemäß § 55 Abs. 2 RStV",
-      "name": "Sergei Ulrich",
-      "address": "Berliner Allee 42, 10115 Berlin"
+      "name": "Didem Ilhan",
+      "address": "Ilmenaustr. 16, 53757 Sankt Augustin"
     },
     "dispute": {
       "title": "Streitschlichtung",
@@ -347,7 +381,7 @@
     "lastUpdated": "Zuletzt aktualisiert: Januar 2024",
     "intro": {
       "title": "1. Einleitung und Verantwortlicher",
-      "text": "Wir nehmen den Schutz Ihrer personenbezogenen Daten sehr ernst. Diese Datenschutzerklärung informiert Sie über die Verarbeitung personenbezogener Daten auf unserer Website www.euro-kurier-su.de gemäß der Datenschutz-Grundverordnung (DSGVO) und dem Bundesdatenschutzgesetz (BDSG).\n\nVerantwortlicher im Sinne der DSGVO:\nEuro-Kurier-Su GmbH\nBerliner Allee 42\n10115 Berlin\nTelefon: +49 30 123 456 789\nE-Mail: datenschutz@euro-kurier-su.de"
+      "text": "Wir nehmen den Schutz Ihrer personenbezogenen Daten sehr ernst. Diese Datenschutzerklärung informiert Sie über die Verarbeitung personenbezogener Daten auf unserer Website www.euro-kurier-su.de gemäß der Datenschutz-Grundverordnung (DSGVO) und dem Bundesdatenschutzgesetz (BDSG).\n\nVerantwortlicher im Sinne der DSGVO:\nEuro-Kurier-Su\nIlmenaustr. 16\n53757 Sankt Augustin\nTelefon: +49 2241 000 000\nE-Mail: info@euro-kurier-su.de"
     },
     "dataTypes": {
       "title": "2. Arten der verarbeiteten Daten",
@@ -377,7 +411,7 @@
     },
     "complaint": {
       "title": "8. Beschwerderecht bei der Aufsichtsbehörde",
-      "text": "Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung Ihrer personenbezogenen Daten zu beschweren. Die zuständige Aufsichtsbehörde für Berlin ist:\n\nBerliner Beauftragte für Datenschutz und Informationsfreiheit\nMajestätsweg 9-11\n13156 Berlin\nTelefon: +49 30 13889-0\nE-Mail: mailbox@datenschutz-berlin.de\nWebsite: www.datenschutz-berlin.de"
+      "text": "Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung Ihrer personenbezogenen Daten zu beschweren. Die zuständige Aufsichtsbehörde für Nordrhein-Westfalen ist:\n\nLandesbeauftragte für Datenschutz und Informationsfreiheit NRW\nKavalleriestr. 2-4\n40213 Düsseldorf\nTelefon: +49 211 38424-0\nE-Mail: poststelle@ldi.nrw.de\nWebsite: www.ldi.nrw.de"
     },
     "security": {
       "title": "9. Datensicherheit",

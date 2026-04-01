@@ -52,10 +52,22 @@ export class FaqComponent implements OnInit {
         ? 'Antworten auf häufig gestellte Fragen zu den Kurierdiensten von EKS Euro-Kurier-Su: Abholung, Tracking, Preise und mehr.'
         : 'Answers to frequently asked questions about EKS Euro-Kurier-Su courier services: collection, tracking, pricing and more.',
       canonicalUrl: this.seoService.getPageUrl('faq'),
+      hreflangPath: 'faq',
       jsonLd: {
         '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: this.buildFaqSchema(),
+        '@graph': [
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Startseite', item: 'https://www.euro-kurier-su.de/home' },
+              { '@type': 'ListItem', position: 2, name: 'FAQ', item: 'https://www.euro-kurier-su.de/faq' },
+            ],
+          },
+          {
+            '@type': 'FAQPage',
+            mainEntity: this.buildFaqSchema(),
+          },
+        ],
       },
     });
   }

@@ -49,7 +49,7 @@
   "hero": {
     "badge": "Your partner for express deliveries",
     "title": "Fast. Reliable. Europe-wide.",
-    "subtitle": "Euro-Kurier-Su delivers your shipments on time and securely – from Berlin to Brussels, from express to freight.",
+    "subtitle": "Euro-Kurier-Su delivers your shipments on time and securely – from Sankt Augustin to Brussels, from express to freight.",
     "ctaPrimary": "Request a quote now",
     "ctaSecondary": "Our services",
     "scrollDown": "Scroll down",
@@ -71,7 +71,7 @@
     },
     "sameDay": {
       "title": "Same-Day Delivery",
-      "desc": "Guaranteed delivery on the same day by 8:00 PM. Available throughout the entire Berlin metropolitan area and surrounding regions within 80 km.",
+      "desc": "Guaranteed delivery on the same day by 8:00 PM. Available throughout Sankt Augustin, Bonn and the Rhein-Sieg district within 80 km.",
       "icon": "🌅"
     },
     "crossBorder": {
@@ -120,7 +120,7 @@
     "subtitle": "For over a decade, your reliable partner for fast and secure deliveries.",
     "story": {
       "title": "Our Story",
-      "text": "Euro-Kurier-Su GmbH was founded in Berlin in 2012 with a simple vision: to create a courier service that combines reliability, speed, and personal service. What started with three vehicles and a small team has grown into one of Berlin and Brandenburg's leading courier services.\n\nOur founder Sergei Ulrich brought over 15 years of experience in the logistics industry and understood from the very beginning what businesses and individuals truly need: a partner they can trust. Today we employ more than 45 experienced couriers and serve over 800 regular clients.\n\nThrough continuous investment in modern technology, vehicles, and training, we ensure the highest standards for every delivery. Our digital tracking system was recognized in 2019 as one of the most advanced in the industry.",
+      "text": "Euro-Kurier-Su was founded in 2008 by Osman Ilhan in Sankt Augustin with a simple vision: to create a courier service that combines reliability, speed, and personal service. What started with three vehicles and a small family business has grown into one of the leading courier services in the Bonn/Rhein-Sieg region.\n\nAs a true family business, the values of the Ilhan family are at the heart of everything we do: trust, reliability, and personal commitment. Today, Didem Ilhan leads the company as owner, supported by Enes Ilhan in operations management and Bünyamin Ilhan in technical leadership.\n\nThrough continuous investment in modern technology, vehicles, and training, we ensure the highest standards for every delivery. Today we serve more than 800 regular clients and have successfully delivered over 500,000 shipments.",
       "imageAlt": "EKS team at work"
     },
     "values": {
@@ -143,7 +143,7 @@
       }
     },
     "stats": {
-      "years": { "value": "12+", "label": "Years of experience" },
+      "years": { "value": "17+", "label": "Years of experience" },
       "deliveries": { "value": "500K+", "label": "Successful deliveries" },
       "cities": { "value": "150+", "label": "Cities & regions" },
       "clients": { "value": "800+", "label": "Regular clients" }
@@ -190,11 +190,11 @@
       "title": "Contact Information",
       "address": {
         "label": "Address",
-        "value": "Berliner Allee 42, 10115 Berlin"
+        "value": "Ilmenaustr. 16, 53757 Sankt Augustin"
       },
       "phone": {
         "label": "Phone",
-        "value": "+49 30 123 456 789"
+        "value": "+49 2241 000 000"
       },
       "email": {
         "label": "Email",
@@ -209,7 +209,39 @@
     },
     "map": {
       "title": "Our Location",
-      "ariaLabel": "Map showing our location in Berlin"
+      "ariaLabel": "Map showing our location in Sankt Augustin"
+    }
+  },
+  "routeCalc": {
+    "title": "Route Calculator Germany",
+    "subtitle": "Free price estimate for your shipment – quick, non-binding and without registration.",
+    "germanyOnly": "Route calculator for Germany",
+    "germanyOnlyHint": "Valid for all German postal codes",
+    "internationalBannerSub": "For EU deliveries, send us a request – we will get back to you within 24 hours with a quote.",
+    "internationalBannerBtn": "Request EU quote",
+    "internationalNote": "For international shipments, please contact us directly.",
+    "contactFormLink": "Go to contact form",
+    "plzStart": "Pickup Postal Code",
+    "plzEnd": "Delivery Postal Code",
+    "plzPlaceholder": "e.g. 53757",
+    "calculate": "Calculate Route",
+    "calculating": "Calculating...",
+    "errors": {
+      "plzInvalid": "Please enter a valid 5-digit German postal code.",
+      "plzStartNotFound": "Pickup postcode not found in Germany. Typo or foreign postal code?",
+      "plzEndNotFound": "Delivery postcode not found in Germany. Typo or foreign postal code?",
+      "routeError": "Route could not be calculated. Please try again.",
+      "rateLimited": "Too many requests. Please wait a moment."
+    },
+    "result": {
+      "distance": "Distance",
+      "duration": "Travel Time",
+      "estimatedPrice": "Estimated Price",
+      "priceNote": "Non-binding estimate based on placeholder rates. The binding price will be confirmed upon order.",
+      "requestQuote": "Request Binding Quote"
+    },
+    "map": {
+      "ariaLabel": "Interactive map with calculated route"
     }
   },
   "faq": {
@@ -221,7 +253,7 @@
     },
     "q2": {
       "question": "Which regions do you deliver to?",
-      "answer": "Our core area covers Berlin and Brandenburg, with express delivery within 80 km. We also offer deliveries throughout Germany and to selected EU countries (Poland, Czech Republic, Austria, Netherlands, Belgium). Please contact us for long-distance deliveries."
+      "answer": "Our core area covers Sankt Augustin, Bonn and the Rhein-Sieg district, with express delivery within 80 km. We also offer deliveries throughout Germany and to selected EU countries (Poland, Czech Republic, Austria, Netherlands, Belgium). Please contact us for long-distance deliveries."
     },
     "q3": {
       "question": "How can I track my shipment?",
@@ -263,8 +295,8 @@
   },
   "footer": {
     "tagline": "Fast. Secure. Europe-wide.",
-    "description": "Euro-Kurier-Su GmbH – your reliable partner for express and courier services in Germany and Europe since 2012.",
-    "rights": "© 2024 Euro-Kurier-Su GmbH. All rights reserved.",
+    "description": "Euro-Kurier-Su – your reliable partner for express and courier services in Germany and Europe since 2008.",
+    "rights": "© 2024 Euro-Kurier-Su. All rights reserved.",
     "links": {
       "imprint": "Legal Notice",
       "privacy": "Privacy Policy",
@@ -293,34 +325,34 @@
     },
     "address": {
       "label": "Address",
-      "street": "Berliner Allee 42",
-      "zip": "10115",
-      "city": "Berlin",
+      "street": "Ilmenaustr. 16",
+      "zip": "53757",
+      "city": "Sankt Augustin",
       "country": "Germany"
     },
     "contact": {
       "label": "Contact",
-      "phone": "+49 30 123 456 789",
-      "fax": "+49 30 123 456 790",
+      "phone": "+49 2241 000 000",
+      "fax": "+49 2241 000 001",
       "email": "info@euro-kurier-su.de"
     },
     "registration": {
       "label": "Commercial Register",
-      "court": "Amtsgericht Berlin-Charlottenburg",
-      "number": "HRB 198745 B"
+      "court": "Amtsgericht Siegburg",
+      "number": "HRB 000000"
     },
     "vat": {
       "label": "VAT Identification Number",
       "number": "DE 298 765 432"
     },
     "director": {
-      "label": "Managing Director",
-      "name": "Sergei Ulrich"
+      "label": "Owner",
+      "name": "Didem Ilhan"
     },
     "responsible": {
       "label": "Responsible for content pursuant to § 55 Para. 2 RStV",
-      "name": "Sergei Ulrich",
-      "address": "Berliner Allee 42, 10115 Berlin"
+      "name": "Didem Ilhan",
+      "address": "Ilmenaustr. 16, 53757 Sankt Augustin"
     },
     "dispute": {
       "title": "Dispute Resolution",
@@ -347,7 +379,7 @@
     "lastUpdated": "Last updated: January 2024",
     "intro": {
       "title": "1. Introduction and Controller",
-      "text": "We take the protection of your personal data very seriously. This privacy policy informs you about the processing of personal data on our website www.euro-kurier-su.de in accordance with the General Data Protection Regulation (GDPR) and the German Federal Data Protection Act (BDSG).\n\nController within the meaning of the GDPR:\nEuro-Kurier-Su GmbH\nBerliner Allee 42\n10115 Berlin\nPhone: +49 30 123 456 789\nEmail: datenschutz@euro-kurier-su.de"
+      "text": "We take the protection of your personal data very seriously. This privacy policy informs you about the processing of personal data on our website www.euro-kurier-su.de in accordance with the General Data Protection Regulation (GDPR) and the German Federal Data Protection Act (BDSG).\n\nController within the meaning of the GDPR:\nEuro-Kurier-Su\nIlmenaustr. 16\n53757 Sankt Augustin\nPhone: +49 2241 000 000\nEmail: info@euro-kurier-su.de"
     },
     "dataTypes": {
       "title": "2. Types of Data Processed",
@@ -377,7 +409,7 @@
     },
     "complaint": {
       "title": "8. Right to Lodge a Complaint with a Supervisory Authority",
-      "text": "You have the right to lodge a complaint with a data protection supervisory authority regarding the processing of your personal data. The competent supervisory authority for Berlin is:\n\nBerliner Beauftragte für Datenschutz und Informationsfreiheit\nMajestätsweg 9-11\n13156 Berlin\nPhone: +49 30 13889-0\nEmail: mailbox@datenschutz-berlin.de\nWebsite: www.datenschutz-berlin.de"
+      "text": "You have the right to lodge a complaint with a data protection supervisory authority regarding the processing of your personal data. The competent supervisory authority for North Rhine-Westphalia is:\n\nLandesbeauftragte für Datenschutz und Informationsfreiheit NRW\nKavalleriestr. 2-4\n40213 Düsseldorf\nPhone: +49 211 38424-0\nEmail: poststelle@ldi.nrw.de\nWebsite: www.ldi.nrw.de"
     },
     "security": {
       "title": "9. Data Security",
