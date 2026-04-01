@@ -301,8 +301,10 @@ export class RouteCalculatorComponent implements AfterViewInit, OnDestroy {
     if (!container) return;
 
     // Dynamischer Import → wird als eigener Chunk gebaut, läuft nie server-seitig
+    // esbuild (Angular 19 production) wraps CJS modules: exports land under .default
     try {
-      this.L = await import('leaflet');
+      const mod = await import('leaflet');
+      this.L = ((mod as unknown as { default: typeof LeafletType }).default ?? mod) as typeof LeafletType;
     } catch {
       console.error('Leaflet konnte nicht geladen werden');
       this.mapLoadError.set(true);
