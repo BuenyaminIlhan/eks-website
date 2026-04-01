@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 220" fill="none">
+  <!-- Sprinter body silhouette (facing right) — high-roof, long body -->
+  <path d="
+    M 18 166
+    L 18 36
+    Q 18 12 34 12
+    L 272 12
+    Q 286 12 304 22
+    L 366 22
+    Q 398 22 420 48
+    L 438 74
+    Q 448 92 448 114
+    L 448 166
+    L 404 166
+    Q 404 140 378 140
+    Q 352 140 352 166
+    L 120 166
+    Q 120 140 94 140
+    Q 68 140 68 166
+    Z
+  " fill="#1E5A7A"/>
+
+  <!-- High roof cargo section top -->
+  <path d="M 18 22 L 272 22" stroke="white" stroke-opacity="0.12" stroke-width="2"/>
+
+  <!-- Cargo door partition lines (double rear doors + sliding side) -->
+  <path d="M 144 14 L 144 164" stroke="white" stroke-opacity="0.14" stroke-width="1.5"/>
+  <path d="M 270 14 L 270 164" stroke="white" stroke-opacity="0.14" stroke-width="1.5"/>
+
+  <!-- Cab window (tall, Hochdach proportion) -->
+  <path d="
+    M 276 20
+    L 364 20
+    Q 394 20 416 48
+    L 434 74
+    Q 440 90 440 112
+    L 440 122
+    L 276 122
+    Z
+  " fill="white" fill-opacity="0.13"/>
+
+  <!-- Rear lights (tall) -->
+  <rect x="13" y="40" width="7" height="38" rx="2" fill="white" fill-opacity="0.25"/>
+
+  <!-- Headlights -->
+  <rect x="443" y="92" width="7" height="26" rx="2" fill="white" fill-opacity="0.25"/>
+
+  <!-- Rear wheel -->
+  <circle cx="94" cy="166" r="30" fill="#0F1F2E"/>
+  <circle cx="94" cy="166" r="30" stroke="white" stroke-opacity="0.1" stroke-width="1"/>
+  <circle cx="94" cy="166" r="12" fill="#1E5A7A"/>
+
+  <!-- Front wheel -->
+  <circle cx="378" cy="166" r="30" fill="#0F1F2E"/>
+  <circle cx="378" cy="166" r="30" stroke="white" stroke-opacity="0.1" stroke-width="1"/>
+  <circle cx="378" cy="166" r="12" fill="#1E5A7A"/>
+</svg>
