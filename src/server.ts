@@ -379,8 +379,8 @@ export function app(): express.Express {
         fontSrc:     ["'self'", 'https://fonts.gstatic.com'],
         // data: für Leaflet-Icons; https: für Map-Tiles
         imgSrc:      ["'self'", 'data:', 'https://basemaps.cartocdn.com', 'https://*.basemaps.cartocdn.com'],
-        // Alle API-Aufrufe gehen über unseren Proxy → nur 'self' nötig
-        connectSrc:  ["'self'"],
+        // reCAPTCHA benötigt Verbindung zu Google
+        connectSrc:  ["'self'", 'https://www.google.com'],
         // reCAPTCHA läuft in einem iframe
         frameSrc:    ['https://www.google.com'],
         objectSrc:      ["'none'"],
