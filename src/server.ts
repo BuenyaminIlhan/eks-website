@@ -33,13 +33,14 @@ const HERE_API_KEY        = process.env['HERE_API_KEY']        ?? '';
 const EMAILJS_SERVICE_ID  = process.env['EMAILJS_SERVICE_ID']  ?? '';
 const EMAILJS_TEMPLATE_ID = process.env['EMAILJS_TEMPLATE_ID'] ?? '';
 const EMAILJS_PUBLIC_KEY  = process.env['EMAILJS_PUBLIC_KEY']  ?? '';
+const EMAILJS_PRIVATE_KEY = process.env['EMAILJS_PRIVATE_KEY'] ?? '';
 
 if (HERE_API_KEY) {
   logger.info('HERE Routing API aktiv (Live-Traffic aktiviert)');
 } else {
   logger.warn('HERE_API_KEY nicht gesetzt – Fallback auf OSRM (kein Live-Traffic)');
 }
-if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY || !EMAILJS_PRIVATE_KEY) {
   logger.warn('EmailJS-Credentials unvollständig – Kontaktformular nicht funktionsfähig');
 }
 
@@ -138,7 +139,7 @@ function addApiRoutes(server: express.Express): void {
       res.status(400).json({ error: 'Ungültige Telefonnummer' }); return;
     }
 
-    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY || !EMAILJS_PRIVATE_KEY) {
       res.status(503).json({ error: 'E-Mail-Dienst nicht konfiguriert' }); return;
     }
 
@@ -150,6 +151,7 @@ function addApiRoutes(server: express.Express): void {
           service_id:      EMAILJS_SERVICE_ID,
           template_id:     EMAILJS_TEMPLATE_ID,
           user_id:         EMAILJS_PUBLIC_KEY,
+          accessToken:     EMAILJS_PRIVATE_KEY,
           template_params: {
             from_name:  name.trim(),
             from_email: email.trim(),
