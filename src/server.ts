@@ -84,7 +84,9 @@ function isValidEmail(email: string): boolean {
 
 // ── API-Routen ────────────────────────────────────────────────────────────────
 function addApiRoutes(server: express.Express): void {
-  server.use('/api/', apiLimiter);
+  // Rate-Limit nur auf teure Routen – Traffic-Tiles sind gecachte Bilder und kommen pro Kartenansicht massenhaft
+  server.use('/api/geocode', apiLimiter);
+  server.use('/api/route', apiLimiter);
 
   // GET /api/geocode?plz=53757
   server.get('/api/geocode', async (req, res) => {
