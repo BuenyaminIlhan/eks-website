@@ -5,6 +5,7 @@ declare const grecaptcha: {
   getResponse(widgetId?: number): string;
   reset(widgetId?: number): void;
   render(container: string | HTMLElement, params: Record<string, string>): number;
+  ready(callback: () => void): void;
 };
 
 const RATE_LIMIT_KEY = 'eks_last_submission';
@@ -104,16 +105,14 @@ export class SpamProtectionService {
       document.head.appendChild(script);
     }
 
-    // Warten bis grecaptcha verfügbar ist
-    if (typeof grecaptcha !== 'undefined') {
-      tryRender();
-    } else {
-      const interval = setInterval(() => {
-        if (typeof grecaptcha !== 'undefined') {
-          clearInterval(interval);
-          tryRender();
-        }
-      }, 100);
-    }
+    // grecaptcha.ready() wartet bis die API vollständig initialisiert ist
+    const waitAndRender = () => {
+      if (typeof grecaptcha !== 'undefined' && typeof grecaptcha.ready === 'function') {
+        grecaptcha.ready(() => tryRender());
+      } else {
+        setTimeout(waitAndRender, 100);
+      }
+    };
+    waitAndRender();
   }
 }
