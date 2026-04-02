@@ -1,0 +1,255 @@
+{
+  "global": {
+    "color": {
+      "primary": {
+        "DEFAULT":     { "value": "#3982AA", "type": "color", "description": "Steel Blue" },
+        "light":       { "value": "#5ba0c8", "type": "color" },
+        "dark":        { "value": "#2d6e94", "type": "color" },
+        "xdark":       { "value": "#1e4f6b", "type": "color" }
+      },
+      "dark": {
+        "DEFAULT":     { "value": "#0F1F2E", "type": "color", "description": "Navy" },
+        "mid":         { "value": "#1a2f42", "type": "color" },
+        "light":       { "value": "#243b52", "type": "color" }
+      },
+      "accent": {
+        "DEFAULT":     { "value": "#f0c040", "type": "color", "description": "Amber" },
+        "light":       { "value": "#f8d670", "type": "color" },
+        "dark":        { "value": "#d4a800", "type": "color" }
+      },
+      "text": {
+        "DEFAULT":     { "value": "#1a2b3c", "type": "color" },
+        "muted":       { "value": "#5a7080", "type": "color" }
+      },
+      "gray": {
+        "100":         { "value": "#f0f5f8", "type": "color" },
+        "200":         { "value": "#e0eaf0", "type": "color" },
+        "300":         { "value": "#c8d8e4", "type": "color" },
+        "400":         { "value": "#9eb5c4", "type": "color" },
+        "500":         { "value": "#6e8fa0", "type": "color" },
+        "600":         { "value": "#4e6e80", "type": "color" },
+        "700":         { "value": "#2e4e60", "type": "color" }
+      },
+      "white":         { "value": "#ffffff", "type": "color" },
+      "offWhite":      { "value": "#f8fafc", "type": "color" },
+      "iceBlue":       { "value": "#d4e8f4", "type": "color" },
+      "success":       { "value": "#28a745", "type": "color" },
+      "warning":       { "value": "#ffc107", "type": "color" },
+      "error":         { "value": "#dc3545", "type": "color" },
+      "info":          { "value": "#17a2b8", "type": "color" }
+    },
+
+    "fontFamilies": {
+      "primary":       { "value": "Montserrat", "type": "fontFamilies" },
+      "mono":          { "value": "Courier New", "type": "fontFamilies" }
+    },
+
+    "fontWeights": {
+      "light":         { "value": "Light",      "type": "fontWeights" },
+      "regular":       { "value": "Regular",    "type": "fontWeights" },
+      "medium":        { "value": "Medium",     "type": "fontWeights" },
+      "semibold":      { "value": "SemiBold",   "type": "fontWeights" },
+      "bold":          { "value": "Bold",       "type": "fontWeights" },
+      "extrabold":     { "value": "ExtraBold",  "type": "fontWeights" },
+      "black":         { "value": "Black",      "type": "fontWeights" }
+    },
+
+    "fontSize": {
+      "xs":            { "value": "12",  "type": "fontSizes" },
+      "sm":            { "value": "14",  "type": "fontSizes" },
+      "base":          { "value": "16",  "type": "fontSizes" },
+      "lg":            { "value": "18",  "type": "fontSizes" },
+      "xl":            { "value": "20",  "type": "fontSizes" },
+      "2xl":           { "value": "24",  "type": "fontSizes" },
+      "3xl":           { "value": "30",  "type": "fontSizes" },
+      "4xl":           { "value": "36",  "type": "fontSizes" },
+      "5xl":           { "value": "48",  "type": "fontSizes" },
+      "6xl":           { "value": "60",  "type": "fontSizes" }
+    },
+
+    "lineHeights": {
+      "tight":         { "value": "1.2",   "type": "lineHeights" },
+      "snug":          { "value": "1.375", "type": "lineHeights" },
+      "normal":        { "value": "1.5",   "type": "lineHeights" },
+      "relaxed":       { "value": "1.625", "type": "lineHeights" },
+      "body":          { "value": "1.7",   "type": "lineHeights" },
+      "loose":         { "value": "2.0",   "type": "lineHeights" }
+    },
+
+    "letterSpacing": {
+      "tightest":      { "value": "-0.02em",  "type": "letterSpacing", "description": "display-1" },
+      "tighter":       { "value": "-0.015em", "type": "letterSpacing", "description": "display-2" },
+      "tight":         { "value": "-0.01em",  "type": "letterSpacing", "description": "heading-xl" },
+      "normal":        { "value": "0",        "type": "letterSpacing" },
+      "wide":          { "value": "0.03em",   "type": "letterSpacing", "description": "label" },
+      "wider":         { "value": "0.05em",   "type": "letterSpacing", "description": "caption" },
+      "widest":        { "value": "0.1em",    "type": "letterSpacing", "description": "eyebrow" }
+    },
+
+    "borderRadius": {
+      "sm":            { "value": "4",    "type": "borderRadius" },
+      "md":            { "value": "8",    "type": "borderRadius" },
+      "lg":            { "value": "16",   "type": "borderRadius" },
+      "xl":            { "value": "24",   "type": "borderRadius" },
+      "full":          { "value": "9999", "type": "borderRadius" }
+    },
+
+    "spacing": {
+      "1":             { "value": "4",   "type": "spacing" },
+      "2":             { "value": "8",   "type": "spacing" },
+      "3":             { "value": "12",  "type": "spacing" },
+      "4":             { "value": "16",  "type": "spacing" },
+      "5":             { "value": "20",  "type": "spacing" },
+      "6":             { "value": "24",  "type": "spacing" },
+      "8":             { "value": "32",  "type": "spacing" },
+      "10":            { "value": "40",  "type": "spacing" },
+      "12":            { "value": "48",  "type": "spacing" },
+      "16":            { "value": "64",  "type": "spacing" },
+      "20":            { "value": "80",  "type": "spacing" },
+      "24":            { "value": "96",  "type": "spacing" },
+      "32":            { "value": "128", "type": "spacing" }
+    }
+  },
+
+  "typography": {
+    "display1": {
+      "value": {
+        "fontFamily":    "{global.fontFamilies.primary}",
+        "fontWeight":    "{global.fontWeights.black}",
+        "fontSize":      "72",
+        "lineHeight":    "1.05",
+        "letterSpacing": "{global.letterSpacing.tightest}"
+      },
+      "type": "typography",
+      "description": "Größte Überschrift — Hero-Bereiche. Responsive: 40–72px"
+    },
+    "display2": {
+      "value": {
+        "fontFamily":    "{global.fontFamilies.primary}",
+        "fontWeight":    "{global.fontWeights.extrabold}",
+        "fontSize":      "56",
+        "lineHeight":    "1.1",
+        "letterSpacing": "{global.letterSpacing.tighter}"
+      },
+      "type": "typography",
+      "description": "Responsive: 32–56px"
+    },
+    "headingXl": {
+      "value": {
+        "fontFamily":    "{global.fontFamilies.primary}",
+        "fontWeight":    "{global.fontWeights.bold}",
+        "fontSize":      "44",
+        "lineHeight":    "1.15",
+        "letterSpacing": "{global.letterSpacing.tight}"
+      },
+      "type": "typography",
+      "description": "Section-Überschriften. Responsive: 28–44px"
+    },
+    "headingLg": {
+      "value": {
+        "fontFamily":    "{global.fontFamilies.primary}",
+        "fontWeight":    "{global.fontWeights.bold}",
+        "fontSize":      "36",
+        "lineHeight":    "1.2",
+        "letterSpacing": "{global.letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "Responsive: 24–36px"
+    },
+    "headingMd": {
+      "value": {
+        "fontFamily":    "{global.fontFamilies.primary}",
+        "fontWeight":    "{global.fontWeights.semibold}",
+        "fontSize":      "28",
+        "lineHeight":    "1.3",
+        "letterSpacing": "{global.letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "Responsive: 20–28px"
+    },
+    "headingSm": {
+      "value": {
+        "fontFamily":    "{global.fontFamilies.primary}",
+        "fontWeight":    "{global.fontWeights.semibold}",
+        "fontSize":      "20",
+        "lineHeight":    "1.4",
+        "letterSpacing": "{global.letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "Responsive: 16–20px"
+    },
+    "bodyLg": {
+      "value": {
+        "fontFamily":    "{global.fontFamilies.primary}",
+        "fontWeight":    "{global.fontWeights.regular}",
+        "fontSize":      "{global.fontSize.lg}",
+        "lineHeight":    "1.75",
+        "letterSpacing": "{global.letterSpacing.normal}"
+      },
+      "type": "typography"
+    },
+    "bodyBase": {
+      "value": {
+        "fontFamily":    "{global.fontFamilies.primary}",
+        "fontWeight":    "{global.fontWeights.regular}",
+        "fontSize":      "{global.fontSize.base}",
+        "lineHeight":    "1.7",
+        "letterSpacing": "{global.letterSpacing.normal}"
+      },
+      "type": "typography"
+    },
+    "bodySm": {
+      "value": {
+        "fontFamily":    "{global.fontFamilies.primary}",
+        "fontWeight":    "{global.fontWeights.regular}",
+        "fontSize":      "{global.fontSize.sm}",
+        "lineHeight":    "1.65",
+        "letterSpacing": "{global.letterSpacing.normal}"
+      },
+      "type": "typography"
+    },
+    "lead": {
+      "value": {
+        "fontFamily":    "{global.fontFamilies.primary}",
+        "fontWeight":    "{global.fontWeights.regular}",
+        "fontSize":      "20",
+        "lineHeight":    "1.7",
+        "letterSpacing": "{global.letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "Einleitungstext unter Headings. Responsive: 16–20px"
+    },
+    "label": {
+      "value": {
+        "fontFamily":    "{global.fontFamilies.primary}",
+        "fontWeight":    "{global.fontWeights.semibold}",
+        "fontSize":      "{global.fontSize.sm}",
+        "lineHeight":    "{global.lineHeights.normal}",
+        "letterSpacing": "{global.letterSpacing.wide}"
+      },
+      "type": "typography"
+    },
+    "caption": {
+      "value": {
+        "fontFamily":    "{global.fontFamilies.primary}",
+        "fontWeight":    "{global.fontWeights.medium}",
+        "fontSize":      "{global.fontSize.xs}",
+        "lineHeight":    "{global.lineHeights.normal}",
+        "letterSpacing": "{global.letterSpacing.wider}"
+      },
+      "type": "typography",
+      "description": "Uppercase"
+    },
+    "eyebrow": {
+      "value": {
+        "fontFamily":    "{global.fontFamilies.primary}",
+        "fontWeight":    "{global.fontWeights.bold}",
+        "fontSize":      "{global.fontSize.sm}",
+        "lineHeight":    "{global.lineHeights.normal}",
+        "letterSpacing": "{global.letterSpacing.widest}"
+      },
+      "type": "typography",
+      "description": "Uppercase. Badge über Überschriften — Farbe: primary #3982AA"
+    }
+  }
+}
